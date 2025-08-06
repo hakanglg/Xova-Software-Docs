@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - Pixarro | XovaSoftware</title>
+    <meta name="description" content="Get help with Pixarro AI Photo Enhancement App. Contact support, find answers to common questions, and submit feature requests.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero-section h2 {
+            font-size: 1.8rem;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .support-card {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .support-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .support-card .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .support-card h3 {
+            font-size: 1.3rem;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .support-card p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .support-card .action-btn {
+            background: #4f46e5;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .support-card .action-btn:hover {
+            background: #3730a3;
+            transform: translateY(-1px);
+        }
+
+        .faq-section {
+            margin-bottom: 50px;
+        }
+
+        .faq-title {
+            font-size: 2rem;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: #f8fafc;
+            padding: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f1f5f9;
+        }
+
+        .faq-answer {
+            padding: 20px;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 40px;
+            margin: 50px -30px -40px -30px;
+            text-align: center;
+        }
+
+        .contact-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-section p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .contact-item {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-item .contact-link {
+            color: #93c5fd;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .contact-item .contact-link:hover {
+            color: white;
+        }
+
+        .response-time {
+            background: rgba(34, 197, 94, 0.2);
+            padding: 15px 25px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .support-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Support Center</h1>
+            <p class="subtitle">Get help with Pixarro AI Photo Enhancement</p>
+        </div>
+
+        <div class="content">
+            <div class="hero-section">
+                <h2>How can we help you today?</h2>
+                <p>Whether you need technical support, have questions about features, or want to share feedback, we're here to help you get the most out of Pixarro.</p>
+            </div>
+
+            <div class="support-grid">
+                <div class="support-card">
+                    <div class="icon">📧</div>
+                    <h3>Contact Support</h3>
+                    <p>Get direct help from our support team. We typically respond within 24-48 hours.</p>
+                    <a href="mailto:xovasoftware@gmail.com?subject=Pixarro Support Request" class="action-btn">Send Email</a>
+                </div>
+
+                <div class="support-card">
+                    <div class="icon">💡</div>
+                    <h3>Feature Requests</h3>
+                    <p>Have an idea for Pixarro? We love hearing suggestions from our users!</p>
+                    <a href="mailto:xovasoftware@gmail.com?subject=Pixarro Feature Request" class="action-btn">Share Idea</a>
+                </div>
+
+                <div class="support-card">
+                    <div class="icon">🐛</div>
+                    <h3>Report Bug</h3>
+                    <p>Found something that's not working right? Let us know so we can fix it quickly.</p>
+                    <a href="mailto:xovasoftware@gmail.com?subject=Pixarro Bug Report" class="action-btn">Report Issue</a>
+                </div>
+            </div>
+
+            <div class="faq-section">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I get more credits?</div>
+                    <div class="faq-answer">
+                        You can purchase additional credits through the in-app store. Simply tap on the credits counter in the app and choose your preferred credit package. Each enhancement costs 1 credit.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What photo formats are supported?</div>
+                    <div class="faq-answer">
+                        Pixarro supports JPG, PNG, and HEIC formats. For best results, use high-resolution photos (at least 512x512 pixels). The app works with photos from your gallery or camera.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How long does photo processing take?</div>
+                    <div class="faq-answer">
+                        Most enhancements complete in 5-10 seconds, depending on your internet connection and the complexity of the enhancement. Face restoration may take slightly longer for optimal results.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I use Pixarro offline?</div>
+                    <div class="faq-answer">
+                        Pixarro requires an internet connection for AI processing as our advanced algorithms run on powerful cloud servers. This ensures you get the highest quality results possible.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Are my photos kept private?</div>
+                    <div class="faq-answer">
+                        Your privacy is our priority. Photos are processed securely and are not stored on our servers after processing. Please review our <a href="/pixarro/privacy-policy.html" style="color: #4f46e5;">Privacy Policy</a> for complete details.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What artistic styles are available?</div>
+                    <div class="faq-answer">
+                        Pixarro offers 10+ artistic styles including Cyberpunk, Pixar Animation, Studio Ghibli, Van Gogh, Hollywood Glamour, Vintage, and more. New styles are added regularly based on user feedback.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I restore very old or damaged photos?</div>
+                    <div class="faq-answer">
+                        Yes! Pixarro specializes in restoring old, damaged, or low-quality photos. Our AI can repair scratches, improve clarity, and enhance faces in vintage photographs. Results may vary based on the original photo quality.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How do I cancel or refund purchases?</div>
+                    <div class="faq-answer">
+                        Credit purchases are managed through the App Store. To request a refund, visit the App Store, go to your purchase history, and follow Apple's refund process. You can also contact us for assistance.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h3>Still Need Help?</h3>
+            <p>Our support team is ready to assist you with any questions about Pixarro.</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h4>📧 Email Support</h4>
+                    <a href="mailto:xovasoftware@gmail.com" class="contact-link">xovasoftware@gmail.com</a>
+                </div>
+                
+                <div class="contact-item">
+                    <h4>🌐 Developer</h4>
+                    <a href="https://xovasoftware.co" class="contact-link">XovaSoftware</a>
+                </div>
+            </div>
+
+            <div class="response-time">
+                ⚡ We typically respond within 24-48 hours
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
