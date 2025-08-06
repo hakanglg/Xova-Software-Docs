@@ -1,37 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pixarro by Xova Software</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="/favicon.ico" />
+    <title>Xova Software</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #111827;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .apps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 1rem;
+            max-width: 280px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            margin: 2rem 0;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-    <div class="min-h-screen flex flex-col items-center justify-center text-center p-6">
-        <h1 class="text-4xl sm:text-5xl font-bold mb-4">📸 Pixarro</h1>
-        <p class="text-lg sm:text-xl mb-6 max-w-xl">
-            Restore and colorize old photos with the power of AI.
-        </p>
+    <header>
+        <h1>Xova Software</h1>
+        <p>Mobil uygulamalar geliştiriyoruz. Üretkenlik, fotoğrafçılık ve eğlence odaklı basit ama güçlü araçlar.</p>
+    </header>
 
-        <a href="https://apps.apple.com/app/idYOUR_APP_ID"
-            class="bg-black text-white px-6 py-3 rounded-lg shadow hover:bg-gray-800 transition">
-            Download on the App Store
-        </a>
-
-        <div class="mt-8">
-            <a href="/pixarro/privacy-policy.html" class="text-sm text-blue-600 hover:underline">
-                Privacy Policy
-            </a>
+    <section class="apps">
+        <div class="card">
+            <h2>Pixarro</h2>
+            <p>Eski fotoğraflarınızı renklendirin ve canlandırın – yapay zekayla!</p>
+            <a href="https://apps.apple.com/app/idYOURPIXARROID" target="_blank">App Store’da Görüntüle</a>
         </div>
 
-        <footer class="mt-12 text-xs text-gray-500">
-            © 2025 Xova Software
-        </footer>
-    </div>
+        <div class="card">
+            <h2>Notex</h2>
+            <p>Basit, reklamsız ve hızlı not alma uygulaması.</p>
+            <a href="https://apps.apple.com/app/idYOURNOTEXID" target="_blank">App Store’da Görüntüle</a>
+        </div>
+
+        <div class="card">
+            <h2>VoiceFix</h2>
+            <p>Ses kayıtlarınızı netleştirin, parazitleri kaldırın.</p>
+            <a href="https://apps.apple.com/app/idYOURVOICEFIXID" target="_blank">App Store’da Görüntüle</a>
+        </div>
+
+        <!-- Yeni uygulama eklemek için bu bloğu kopyalayabilirsin -->
+    </section>
+
+    <footer>
+        © 2025 Xova Software — Tüm hakları saklıdır.
+    </footer>
 
 </body>
 
