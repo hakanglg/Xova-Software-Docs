@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -588,6 +588,119 @@
                 behavior: 'smooth'
             });
         });
+    </script>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xova Software</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script>
+        const translations = {
+            en: {
+                heroTitle: "We Build Intelligent Mobile Apps",
+                heroSubtitle: "Xova Software specializes in AI-powered mobile experiences. Explore our apps below.",
+                appsTitle: "Our Applications",
+                appPixarro: "Pixarro - Restore & Colorize Old Photos with AI",
+                appTatarai: "Tatarai - Instantly Identify Plants Around You",
+                lang: "Language",
+            },
+            tr: {
+                heroTitle: "Akıllı Mobil Uygulamalar Geliştiriyoruz",
+                heroSubtitle: "Xova Software, yapay zeka destekli mobil deneyimlerde uzmanlaşır. Uygulamalarımızı keşfedin.",
+                appsTitle: "Uygulamalarımız",
+                appPixarro: "Pixarro - Eski Fotoğrafları Yapay Zeka ile Yenile ve Renklendir",
+                appTatarai: "Tatarai - Çevrendeki Bitkileri Anında Tanı",
+                lang: "Dil",
+            },
+            de: {
+                heroTitle: "Wir Entwickeln Intelligente Mobile Apps",
+                heroSubtitle: "Xova Software ist auf KI-gestützte mobile Erlebnisse spezialisiert. Entdecken Sie unsere Apps.",
+                appsTitle: "Unsere Anwendungen",
+                appPixarro: "Pixarro - Restaurieren & Kolorieren Sie Alte Fotos mit KI",
+                appTatarai: "Tatarai - Erkennen Sie Pflanzen Sofort",
+                lang: "Sprache",
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem("lang", lang);
+            document.getElementById("hero-title").innerText = translations[lang].heroTitle;
+            document.getElementById("hero-subtitle").innerText = translations[lang].heroSubtitle;
+            document.getElementById("apps-title").innerText = translations[lang].appsTitle;
+            document.getElementById("pixarro-title").innerText = translations[lang].appPixarro;
+            document.getElementById("tatarai-title").innerText = translations[lang].appTatarai;
+            document.getElementById("lang-label").innerText = translations[lang].lang;
+        }
+
+        window.onload = () => {
+            const savedLang = localStorage.getItem("lang") || "en";
+            setLanguage(savedLang);
+        };
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+    <header class="bg-white shadow">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <img src="assets/xova_logo.png" alt="Xova Software" class="h-10" />
+            <div>
+                <label id="lang-label" for="lang-select" class="mr-2 font-medium">Language</label>
+                <select id="lang-select" class="p-1 border rounded" onchange="setLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="tr">Türkçe</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <section class="text-center py-20 px-4 bg-gradient-to-b from-blue-50 to-white">
+        <h1 id="hero-title" class="text-4xl sm:text-5xl font-bold mb-4">We Build Intelligent Mobile Apps</h1>
+        <p id="hero-subtitle" class="text-lg sm:text-xl max-w-2xl mx-auto">Xova Software specializes in AI-powered
+            mobile experiences. Explore our apps below.</p>
+    </section>
+
+    <section class="py-16 px-4">
+        <div class="container mx-auto">
+            <h2 id="apps-title" class="text-3xl font-bold text-center mb-12">Our Applications</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Pixarro -->
+                <div class="bg-white shadow rounded-2xl p-6 flex items-center space-x-6">
+                    <img src="assets/pixarro.png" alt="Pixarro Logo" class="w-20 h-20 rounded-xl" />
+                    <div>
+                        <h3 id="pixarro-title" class="text-xl font-semibold mb-2">Pixarro - Restore & Colorize Old
+                            Photos with AI</h3>
+                        <a href="https://apps.apple.com/app/idYOURPIXARROID" target="_blank"
+                            class="text-blue-600 hover:underline">Download on App Store</a>
+                    </div>
+                </div>
+                <!-- Tatarai -->
+                <div class="bg-white shadow rounded-2xl p-6 flex items-center space-x-6">
+                    <img src="assets/tatarai.png" alt="Tatarai Logo" class="w-20 h-20 rounded-xl" />
+                    <div>
+                        <h3 id="tatarai-title" class="text-xl font-semibold mb-2">Tatarai - Instantly Identify Plants
+                            Around You</h3>
+                        <a href="https://apps.apple.com/app/idYOURTATARAID" target="_blank"
+                            class="text-blue-600 hover:underline">Download on App Store</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-100 py-6 text-center text-sm text-gray-500">
+        © <span id="year"></span> Xova Software. All rights reserved.
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
     </script>
 </body>
 
