@@ -1,112 +1,594 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Xova Software</title>
+    <title data-i18n="title">Xova Software - Mobile App Development</title>
+    <meta name="description" data-i18n="description" content="We develop mobile applications focused on productivity, photography and entertainment. Simple yet powerful tools.">
     <style>
-        body {
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --gradient-hero: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
 
         header {
-            background-color: #111827;
+            position: relative;
+            background: var(--gradient-hero);
             color: white;
-            padding: 2rem;
-            text-align: center;
+            padding: 2rem 0;
+            overflow: hidden;
         }
 
-        h1 {
-            margin: 0;
-            font-size: 2rem;
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="20" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .language-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 3;
+        }
+
+        .language-switcher select {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .language-switcher select:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .language-switcher option {
+            background: var(--text-primary);
+            color: white;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            display: block;
+            filter: drop-shadow(var(--shadow-md));
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-cta:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 4rem 0 2rem;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .apps {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0 4rem;
         }
 
         .card {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 1rem;
-            max-width: 280px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-hero);
+            transform: scaleX(0);
+            transition: var(--transition);
         }
 
         .card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-hero);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
         }
 
         .card h2 {
-            font-size: 1.2rem;
-            margin: 0.5rem 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
         }
 
         .card p {
-            font-size: 0.9rem;
-            color: #555;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
         }
 
-        .card a {
-            display: inline-block;
-            margin-top: 0.5rem;
-            color: #2563eb;
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-color);
+            color: white;
             text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .card-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            background: var(--bg-primary);
+            padding: 4rem 0;
+            margin: 4rem 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--text-secondary);
+            font-weight: 500;
         }
 
         footer {
+            background: var(--text-primary);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #d1d5db;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 2rem;
             text-align: center;
-            font-size: 0.8rem;
-            color: #888;
-            margin: 2rem 0;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .apps {
+                grid-template-columns: 1fr;
+                padding: 2rem 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 
 <body>
-
     <header>
-        <h1>Xova Software</h1>
-        <p>Mobil uygulamalar geliştiriyoruz. Üretkenlik, fotoğrafçılık ve eğlence odaklı basit ama güçlü araçlar.</p>
+        <div class="language-switcher">
+            <select id="languageSelect" onchange="changeLanguage(this.value)">
+                <option value="en">🇺🇸 English</option>
+                <option value="tr">🇹🇷 Türkçe</option>
+                <option value="de">🇩🇪 Deutsch</option>
+            </select>
+        </div>
+        
+        <div class="container">
+            <div class="header-content">
+                <img src="assets/xova_logo_transparent.png" alt="Xova Software Logo" class="logo">
+                <h1 class="hero-title" data-i18n="company_name">Xova Software</h1>
+                <p class="hero-subtitle" data-i18n="hero_subtitle">We develop mobile applications focused on productivity, photography and entertainment. Simple yet powerful tools.</p>
+                <a href="#apps" class="hero-cta" data-i18n="hero_cta">
+                    <span>Explore Our Apps</span>
+                    <span>↓</span>
+                </a>
+            </div>
+        </div>
     </header>
 
-    <section class="apps">
-        <div class="card">
-            <h2>Pixarro</h2>
-            <p>Eski fotoğraflarınızı renklendirin ve canlandırın – yapay zekayla!</p>
-            <a href="https://apps.apple.com/app/idYOURPIXARROID" target="_blank">App Store’da Görüntüle</a>
-        </div>
+    <main>
+        <div class="container">
+            <div class="stats fade-in">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3 data-i18n="stat_apps">3+</h3>
+                        <p data-i18n="stat_apps_label">Mobile Apps</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 data-i18n="stat_downloads">10K+</h3>
+                        <p data-i18n="stat_downloads_label">Downloads</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 data-i18n="stat_users">5K+</h3>
+                        <p data-i18n="stat_users_label">Active Users</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 data-i18n="stat_rating">4.8★</h3>
+                        <p data-i18n="stat_rating_label">App Store Rating</p>
+                    </div>
+                </div>
+            </div>
 
-        <div class="card">
-            <h2>Notex</h2>
-            <p>Basit, reklamsız ve hızlı not alma uygulaması.</p>
-            <a href="https://apps.apple.com/app/idYOURNOTEXID" target="_blank">App Store’da Görüntüle</a>
-        </div>
+            <h2 class="section-title fade-in" data-i18n="apps_title">Our Applications</h2>
+            
+            <section class="apps" id="apps">
+                <div class="card fade-in">
+                    <div class="card-icon">📸</div>
+                    <h2>Pixarro</h2>
+                    <p data-i18n="pixarro_description">Colorize and bring your old photos to life with AI! Transform black and white memories into vibrant, colorful images.</p>
+                    <a href="https://apps.apple.com/app/idYOURPIXARROID" target="_blank" class="card-link" data-i18n="view_app_store">
+                        <span>View on App Store</span>
+                        <span>→</span>
+                    </a>
+                </div>
 
-        <div class="card">
-            <h2>VoiceFix</h2>
-            <p>Ses kayıtlarınızı netleştirin, parazitleri kaldırın.</p>
-            <a href="https://apps.apple.com/app/idYOURVOICEFIXID" target="_blank">App Store’da Görüntüle</a>
-        </div>
+                <div class="card fade-in">
+                    <div class="card-icon">📝</div>
+                    <h2>Notex</h2>
+                    <p data-i18n="notex_description">Simple, ad-free and fast note-taking application. Clean interface, instant sync, and powerful search capabilities.</p>
+                    <a href="https://apps.apple.com/app/idYOURNOTEXID" target="_blank" class="card-link" data-i18n="view_app_store">
+                        <span>View on App Store</span>
+                        <span>→</span>
+                    </a>
+                </div>
 
-        <!-- Yeni uygulama eklemek için bu bloğu kopyalayabilirsin -->
-    </section>
+                <div class="card fade-in">
+                    <div class="card-icon">🎤</div>
+                    <h2>VoiceFix</h2>
+                    <p data-i18n="voicefix_description">Enhance your voice recordings, remove noise and improve clarity. Professional audio processing in your pocket.</p>
+                    <a href="https://apps.apple.com/app/idYOURVOICEFIXID" target="_blank" class="card-link" data-i18n="view_app_store">
+                        <span>View on App Store</span>
+                        <span>→</span>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
 
     <footer>
-        © 2025 Xova Software — Tüm hakları saklıdır.
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 data-i18n="footer_company">Company</h3>
+                    <p data-i18n="footer_about">Xova Software is dedicated to creating innovative mobile applications that enhance productivity and creativity.</p>
+                </div>
+                <div class="footer-section">
+                    <h3 data-i18n="footer_contact">Contact</h3>
+                    <a href="mailto:info@xovasoftware.com">info@xovasoftware.com</a>
+                    <a href="mailto:support@xovasoftware.com" data-i18n="footer_support">Support</a>
+                </div>
+                <div class="footer-section">
+                    <h3 data-i18n="footer_social">Social Media</h3>
+                    <a href="#" data-i18n="footer_twitter">Twitter</a>
+                    <a href="#" data-i18n="footer_linkedin">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2025 Xova Software — All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
+    <script>
+        const translations = {
+            en: {
+                title: "Xova Software - Mobile App Development",
+                description: "We develop mobile applications focused on productivity, photography and entertainment. Simple yet powerful tools.",
+                company_name: "Xova Software",
+                hero_subtitle: "We develop mobile applications focused on productivity, photography and entertainment. Simple yet powerful tools.",
+                hero_cta: "Explore Our Apps",
+                stat_apps: "3+",
+                stat_apps_label: "Mobile Apps",
+                stat_downloads: "10K+",
+                stat_downloads_label: "Downloads",
+                stat_users: "5K+",
+                stat_users_label: "Active Users",
+                stat_rating: "4.8★",
+                stat_rating_label: "App Store Rating",
+                apps_title: "Our Applications",
+                pixarro_description: "Colorize and bring your old photos to life with AI! Transform black and white memories into vibrant, colorful images.",
+                notex_description: "Simple, ad-free and fast note-taking application. Clean interface, instant sync, and powerful search capabilities.",
+                voicefix_description: "Enhance your voice recordings, remove noise and improve clarity. Professional audio processing in your pocket.",
+                view_app_store: "View on App Store",
+                footer_company: "Company",
+                footer_about: "Xova Software is dedicated to creating innovative mobile applications that enhance productivity and creativity.",
+                footer_contact: "Contact",
+                footer_support: "Support",
+                footer_social: "Social Media",
+                footer_twitter: "Twitter",
+                footer_linkedin: "LinkedIn",
+                footer_copyright: "© 2025 Xova Software — All rights reserved."
+            },
+            tr: {
+                title: "Xova Software - Mobil Uygulama Geliştirme",
+                description: "Üretkenlik, fotoğrafçılık ve eğlence odaklı mobil uygulamalar geliştiriyoruz. Basit ama güçlü araçlar.",
+                company_name: "Xova Software",
+                hero_subtitle: "Üretkenlik, fotoğrafçılık ve eğlence odaklı mobil uygulamalar geliştiriyoruz. Basit ama güçlü araçlar.",
+                hero_cta: "Uygulamalarımızı Keşfedin",
+                stat_apps: "3+",
+                stat_apps_label: "Mobil Uygulama",
+                stat_downloads: "10K+",
+                stat_downloads_label: "İndirme",
+                stat_users: "5K+",
+                stat_users_label: "Aktif Kullanıcı",
+                stat_rating: "4.8★",
+                stat_rating_label: "App Store Puanı",
+                apps_title: "Uygulamalarımız",
+                pixarro_description: "Eski fotoğraflarınızı yapay zeka ile renklendirin ve canlandırın! Siyah beyaz anılarınızı canlı, renkli görüntülere dönüştürün.",
+                notex_description: "Basit, reklamsız ve hızlı not alma uygulaması. Temiz arayüz, anında senkronizasyon ve güçlü arama özellikleri.",
+                voicefix_description: "Ses kayıtlarınızı geliştirin, gürültüyü kaldırın ve netliği artırın. Cebinizde profesyonel ses işleme.",
+                view_app_store: "App Store'da Görüntüle",
+                footer_company: "Şirket",
+                footer_about: "Xova Software, üretkenliği ve yaratıcılığı artıran yenilikçi mobil uygulamalar oluşturmaya odaklanmıştır.",
+                footer_contact: "İletişim",
+                footer_support: "Destek",
+                footer_social: "Sosyal Medya",
+                footer_twitter: "Twitter",
+                footer_linkedin: "LinkedIn",
+                footer_copyright: "© 2025 Xova Software — Tüm hakları saklıdır."
+            },
+            de: {
+                title: "Xova Software - Mobile App-Entwicklung",
+                description: "Wir entwickeln mobile Anwendungen mit Fokus auf Produktivität, Fotografie und Unterhaltung. Einfache aber mächtige Tools.",
+                company_name: "Xova Software",
+                hero_subtitle: "Wir entwickeln mobile Anwendungen mit Fokus auf Produktivität, Fotografie und Unterhaltung. Einfache aber mächtige Tools.",
+                hero_cta: "Unsere Apps Entdecken",
+                stat_apps: "3+",
+                stat_apps_label: "Mobile Apps",
+                stat_downloads: "10K+",
+                stat_downloads_label: "Downloads",
+                stat_users: "5K+",
+                stat_users_label: "Aktive Nutzer",
+                stat_rating: "4.8★",
+                stat_rating_label: "App Store Bewertung",
+                apps_title: "Unsere Anwendungen",
+                pixarro_description: "Kolorieren und beleben Sie Ihre alten Fotos mit KI! Verwandeln Sie schwarz-weiße Erinnerungen in lebendige, farbenfrohe Bilder.",
+                notex_description: "Einfache, werbefreie und schnelle Notizen-App. Saubere Oberfläche, sofortige Synchronisation und leistungsstarke Suchfunktionen.",
+                voicefix_description: "Verbessern Sie Ihre Sprachaufnahmen, entfernen Sie Rauschen und verbessern Sie die Klarheit. Professionelle Audioverarbeitung in Ihrer Tasche.",
+                view_app_store: "Im App Store Anzeigen",
+                footer_company: "Unternehmen",
+                footer_about: "Xova Software widmet sich der Entwicklung innovativer mobiler Anwendungen, die Produktivität und Kreativität steigern.",
+                footer_contact: "Kontakt",
+                footer_support: "Support",
+                footer_social: "Soziale Medien",
+                footer_twitter: "Twitter",
+                footer_linkedin: "LinkedIn",
+                footer_copyright: "© 2025 Xova Software — Alle Rechte vorbehalten."
+            }
+        };
+
+        function changeLanguage(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName === 'META') {
+                        element.setAttribute('content', translations[lang][key]);
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            document.documentElement.lang = lang;
+            document.title = translations[lang].title;
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        function initializeLanguage() {
+            const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage(savedLang);
+        }
+
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeLanguage();
+            observeElements();
+        });
+
+        document.querySelector('.hero-cta').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelector('#apps').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 
 </html>
