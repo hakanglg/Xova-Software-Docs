@@ -1,585 +1,333 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Pixarro | Xova Software</title>
-    <meta name="description" content="Privacy Policy for Pixarro AI Photo Enhancement App by Xova Software">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Pixarro — Privacy & Terms</title>
+    <meta name="description" content="Privacy Policy & Terms for Pixarro — AI photo enhancement by Xova Software">
     <style>
+        :root {
+            --bg: #0f1115;
+            --card: #0f1720;
+            --muted: #9aa4b2;
+            --accent: #7c5cff;
+            --glass: rgba(255, 255, 255, 0.04);
+            --success: #22c55e;
+            --danger: #ff6b6b;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+        }
+
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            box-sizing: border-box
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow-x: hidden;
-            background: #0a0a0a;
+            margin: 0;
+            background: linear-gradient(180deg, #07070a 0%, #0f1115 100%);
+            color: #e6eef6;
+            line-height: 1.6
         }
 
-        /* Smooth Scrolling */
-        html {
-            scroll-behavior: smooth;
+        .wrap {
+            max-width: 1100px;
+            margin: 48px auto;
+            padding: 24px
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
+        header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px
         }
 
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a;
+        .brand {
+            display: flex;
+            flex-direction: column
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 5px;
+        .logo {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #ff7ab6);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white
         }
 
-        /* Gradient Background */
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        h1 {
+            font-size: 20px;
+            margin: 0
         }
 
-        .dark-gradient {
-            background: linear-gradient(180deg, #0a0a0a 0%, #1a0f2e 50%, #0a0a0a 100%);
+        p.lead {
+            margin: 6px 0 0;
+            color: var(--muted)
         }
 
-        /* Animated Gradient */
-        .animated-gradient {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+        nav.tabs {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+            flex-wrap: wrap
         }
 
-        @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
+        nav a.tab {
+            padding: 10px 14px;
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            color: #dbe6ff;
+            text-decoration: none
+        }
+
+        nav a.tab.active {
+            background: linear-gradient(90deg, var(--accent), #ff7ab6);
+            color: #071126
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px
+        }
+
+        @media(max-width:880px) {
+            .grid {
+                grid-template-columns: 1fr
             }
 
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* Fade In Animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 1s ease-out;
-        }
-
-        /* Glass Effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Particle Background */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(102, 126, 234, 0.5);
-            border-radius: 50%;
-            animation: particle-float 20s infinite linear;
-        }
-
-        @keyframes particle-float {
-            from {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            to {
-                transform: translateY(-10vh) translateX(100px);
-                opacity: 0;
+            .toc {
+                position: static;
+                order: 2
             }
         }
 
-        /* Navigation */
-        nav {
-            transition: all 0.3s ease;
+        .toc {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            height: fit-content
         }
 
-        .nav-scrolled {
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
+        .toc h3 {
+            margin: 0 0 8px 0
         }
 
-        /* Mobile Menu */
-        .mobile-menu {
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px
         }
 
-        .mobile-menu.active {
-            transform: translateX(0);
+        .toc a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 15px
         }
 
-        /* Content Cards */
-        .content-card {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            border: 1px solid rgba(102, 126, 234, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+        .card {
+            background: linear-gradient(180deg, #071020 0%, #0b1420 100%);
+            padding: 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.03)
         }
 
-        .content-card:hover {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
-            border-color: rgba(102, 126, 234, 0.3);
-            transform: translateY(-2px);
+        h2.section {
+            margin-top: 0
         }
 
-        /* Service Links */
-        .service-link {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            border: 1px solid rgba(102, 126, 234, 0.2);
-            backdrop-filter: blur(10px);
-            color: #a78bfa;
-            transition: all 0.3s ease;
+        .kpi {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px
         }
 
-        .service-link:hover {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        .pill {
+            background: var(--glass);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 13px;
+            color: var(--muted)
         }
 
-        /* Breadcrumb */
-        .breadcrumb {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .list {
+            margin: 12px 0 18px 0;
+            padding-left: 18px
         }
 
-        .breadcrumb a {
-            color: #a78bfa;
-            transition: color 0.3s ease;
+        .highlight {
+            background: linear-gradient(90deg, rgba(124, 92, 255, 0.12), rgba(255, 122, 182, 0.06));
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(124, 92, 255, 0.06);
+            color: #dbe6ff
         }
 
-        .breadcrumb a:hover {
-            color: #c4b5fd;
+        footer {
+            margin-top: 32px;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        code.sn {
+            background: #071126;
+            padding: 3px 6px;
+            border-radius: 6px;
+            color: #a6c1ff
+        }
+
+        /* Accessibility focus */
+        a:focus,
+        button:focus {
+            outline: 3px solid rgba(124, 92, 255, 0.18);
+            outline-offset: 3px
         }
     </style>
 </head>
 
-<body class="bg-black text-white">
-    <!-- Particle Background -->
-    <div class="particles fixed inset-0 z-0">
-        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
-        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
-        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
-        <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
-        <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
-        <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
-        <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
-        <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
-        <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="logo" aria-hidden>PX</div>
+            <div class="brand">
+                <h1>Pixarro — Privacy Policy & Terms</h1>
+                <p class="lead">Clear, concise explanations of how Pixarro (by Xova Software) processes photos and face
+                    data.</p>
+            </div>
+        </header>
+
+        <nav class="tabs" role="tablist" aria-label="Pages">
+            <a class="tab active" href="#privacy">Privacy Policy</a>
+            <a class="tab" href="#terms">Terms &amp; Conditions</a>
+            <a class="tab" href="#faq">Short FAQ</a>
+        </nav>
+
+        <div class="grid">
+            <aside class="toc" aria-label="On this page">
+                <h3>Quick links</h3>
+                <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#face">Face Data — Key Facts</a></li>
+                    <li><a href="#third-party">Third-Party Processing (Replicate)</a></li>
+                    <li><a href="#retention">Retention & Deletion</a></li>
+                    <li><a href="#security">Security</a></li>
+                    <li><a href="#terms">Terms &amp; Conditions</a></li>
+                </ul>
+            </aside>
+
+            <main>
+                <section id="privacy" class="card" role="region" aria-labelledby="privacy-heading">
+                    <h2 id="privacy-heading" class="section">Privacy Policy — TL;DR</h2>
+                    <p class="kpi"><span class="pill">Service: Pixarro (Xova Software)</span><span
+                            class="pill">Effective: Aug 9, 2025</span></p>
+                    <p>Pixarro is an AI-powered photo enhancement app. We aim to keep data usage minimal and
+                        transparent. Below are the essential points you and App Review need to see.</p>
+
+                    <div class="highlight" id="face">
+                        <strong>Face Data — Key facts</strong>
+                        <ul class="list">
+                            <li><strong>We do not collect biometric identifiers:</strong> No faceprints, no face IDs, no
+                                identity mapping.</li>
+                            <li><strong>Processing:</strong> User photos may contain faces which are processed solely to
+                                enhance or restore the image.</li>
+                            <li><strong>Storage:</strong> Photos are <em>not</em> stored by Pixarro. Temporary
+                                transmission to a processor (Replicate) occurs only during enhancement.</li>
+                            <li><strong>Sharing:</strong> Images are shared only with our processing provider,
+                                Replicate, and only for the active job.</li>
+                        </ul>
+                    </div>
+
+                    <h3>What face data does the app collect?</h3>
+                    <p>None as a persistent dataset. The app may send an image that contains a face to our processor for
+                        enhancement; we do not extract or retain any biometric data.</p>
+
+                    <h3 id="third-party">Third-party processing (Replicate)</h3>
+                    <p>We use <a href="https://replicate.com" target="_blank" rel="noopener">Replicate
+                            (replicate.com)</a> for model-based image enhancement. Important details:</p>
+                    <ul class="list">
+                        <li>Transmission occurs over HTTPS (TLS).</li>
+                        <li>Replicate performs the enhancement and returns the result to the device via our backend or
+                            directly, depending on your integration.</li>
+                        <li>Neither Pixarro nor Replicate retain the image after the job completes; temporary data is
+                            deleted automatically on job completion.</li>
+                    </ul>
+
+                    <h3 id="retention">Retention &amp; Deletion</h3>
+                    <p>Retention policy (short):</p>
+                    <ul class="list">
+                        <li>Retention on Pixarro servers: <strong>0</strong> — we do not store user photos.</li>
+                        <li>Retention on Replicate: <strong>temporary only</strong> — deleted automatically after
+                            processing completes (transient job data).</li>
+                        <li>Device: Enhanced images are saved only if the user explicitly saves or shares them.</li>
+                    </ul>
+
+                    <h3 id="security">Security &amp; privacy controls</h3>
+                    <p>We take standard precautions:</p>
+                    <ul class="list">
+                        <li>All network traffic uses HTTPS/TLS.</li>
+                        <li>No analytics or third-party service receives face data beyond aggregated, anonymized
+                            telemetry (if enabled).</li>
+                        <li>Users can opt out by not sending photos; uninstalling the app removes local data.</li>
+                    </ul>
+
+                    <h3>Where this is in our policy</h3>
+                    <p>Copy the following quote into App Review responses and into the Privacy Policy page where
+                        required:</p>
+                    <pre class="kpi"
+                        style="white-space:pre-wrap">"Pixarro may temporarily transmit user photos to our third-party processor, Replicate (replicate.com), over an encrypted (HTTPS) connection for the sole purpose of enhancing or restoring images. Neither Pixarro nor Replicate retain images or face data after processing completes; all temporary data is deleted automatically. No biometric identifiers are created, stored, or shared."</pre>
+
+                </section>
+
+                <section id="terms" class="card" role="region" aria-labelledby="terms-heading" style="margin-top:18px">
+                    <h2 id="terms-heading" class="section">Terms &amp; Conditions — Summary</h2>
+                    <p>Short version: By using Pixarro you agree that photos you submit will be processed for
+                        enhancement; Pixarro and its processors will not retain submitted images after processing.
+                        Purchases (credits) are consumable and non-restorable through the platform.</p>
+
+                    <h3>Purchases &amp; Credits</h3>
+                    <p>Pixarro sells consumable credits used to perform enhancements. These are <strong>consumable
+                            in-app purchases</strong> and cannot be restored via <code
+                            class="sn">Restore Purchases</code>. Refunds are handled through the App Store purchase
+                        history and Apple's refund process.</p>
+
+                    <h3>Face data clause</h3>
+                    <p>Pixarro processes face regions only to perform image enhancement. Photos may be transmitted
+                        temporarily to Replicate and are deleted after processing. No facial recognition,
+                        identification, or biometric storage is used.</p>
+
+                    <h3>Contact & deletions</h3>
+                    <p>If you want us to remove any user-provided data from our systems, contact <a
+                            href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a>. Since we do not store
+                        submitted photos, most requests will be acknowledged and closed with confirmation.</p>
+
+                </section>
+
+                <section id="faq" class="card" style="margin-top:18px">
+                    <h2 class="section">Short FAQ</h2>
+                    <p><strong>Q:</strong> Are my photos stored on your servers? <br><strong>A:</strong> No. Photos are
+                        transmitted to Replicate only for enhancement and deleted after processing.</p>
+                    <p><strong>Q:</strong> Do you sell face data? <br><strong>A:</strong> Never.</p>
+                    <p><strong>Q:</strong> Do I need Restore Purchases? <br><strong>A:</strong> No — credits are
+                        consumable; Restore is only for non-consumable items/subscriptions.</p>
+                </section>
+
+                <footer>
+                    <p>Effective date: Aug 9, 2025 • Contact: <a
+                            href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a></p>
+                </footer>
+            </main>
+        </div>
     </div>
-
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <a href="../index.html">
-                        <img src="../assets/xova_logo_transparent.png" alt="Xova Software"
-                            class="h-16 filter brightness-0 invert">
-                    </a>
-                </div>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="../index.html" class="hover:text-purple-400 transition">Home</a>
-                    <a href="../index.html#apps" class="hover:text-purple-400 transition">Apps</a>
-                    <a href="../index.html#contact" class="hover:text-purple-400 transition">Contact</a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mobile-menu fixed right-0 top-0 h-full w-64 bg-black bg-opacity-95 z-40 p-6">
-        <button id="close-menu" class="absolute top-4 right-4 text-white">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
-        <div class="mt-12 space-y-4">
-            <a href="../index.html" class="block py-2 hover:text-purple-400 transition">Home</a>
-            <a href="../index.html#apps" class="block py-2 hover:text-purple-400 transition">Apps</a>
-            <a href="../index.html#contact" class="block py-2 hover:text-purple-400 transition">Contact</a>
-        </div>
-    </div>
-
-    <!-- Breadcrumb -->
-    <div class="breadcrumb pt-24 pb-4 relative z-10">
-        <div class="container mx-auto px-6">
-            <nav class="text-sm">
-                <a href="../index.html" class="hover:underline">Home</a>
-                <span class="mx-2 text-gray-500">›</span>
-                <a href="../index.html#apps" class="hover:underline">Apps</a>
-                <span class="mx-2 text-gray-500">›</span>
-                <span class="text-gray-400">Pixarro Privacy Policy</span>
-            </nav>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="relative dark-gradient py-20">
-        <div class="container mx-auto px-6 text-center z-10 relative">
-            <div class="flex items-center justify-center mb-6">
-                <img src="../assets/pixarro.png" alt="Pixarro" class="w-20 h-20 rounded-3xl mr-4">
-                <div>
-                    <h1 class="text-4xl md:text-6xl font-bold mb-2 fade-in">
-                        <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                            Privacy Policy
-                        </span>
-                    </h1>
-                    <p class="text-xl text-gray-300 fade-in">Pixarro AI Photo Enhancement App</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Content -->
-    <section class="py-20 relative">
-        <div class="container mx-auto px-6 max-w-4xl">
-            <!-- Introduction -->
-            <div class="content-card rounded-3xl p-8 mb-8 fade-in">
-                <p class="text-lg text-gray-300 leading-relaxed">
-                    This privacy policy applies to the <strong class="text-purple-400">Pixarro</strong> app for mobile devices, created by
-                    <strong class="text-purple-400">Hakan GÖLGE</strong> as a Freemium service. This service is intended for use "AS IS".
-                </p>
-            </div>
-
-            <!-- Information Collection and Use -->
-            <div class="content-card rounded-3xl p-8 mb-8 fade-in" style="animation-delay: 0.2s;">
-                <h2 class="text-3xl font-bold mb-6">
-                    <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                        Information Collection and Use
-                    </span>
-                </h2>
-                <p class="text-gray-300 mb-6 leading-relaxed">
-                    The Application collects information when you download and use it. This information may include:
-                </p>
-                
-                <div class="space-y-3 mb-8">
-                    <div class="glass rounded-xl p-4">
-                        <span class="text-purple-400">•</span> Your device's Internet Protocol address (IP address)
-                    </div>
-                    <div class="glass rounded-xl p-4">
-                        <span class="text-purple-400">•</span> The pages of the Application that you visit, the time and date of your visit, the time spent on those pages
-                    </div>
-                    <div class="glass rounded-xl p-4">
-                        <span class="text-purple-400">•</span> The time spent on the Application
-                    </div>
-                    <div class="glass rounded-xl p-4">
-                        <span class="text-purple-400">•</span> The operating system you use on your mobile device
-                    </div>
-                </div>
-
-                <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-xl p-6 mb-6">
-                    <p class="text-green-400 font-semibold mb-2">🔒 Location Privacy</p>
-                    <p class="text-gray-300">The Application does not gather precise information about the location of your mobile device.</p>
-                </div>
-
-                <p class="text-gray-300 mb-4 leading-relaxed">
-                    The Service Provider may use the information you provided to contact you from time to time to provide you with important information, required notices and marketing promotions.
-                </p>
-
-                <p class="text-gray-300 leading-relaxed">
-                    For a better experience, while using the Application, the Service Provider may require you to provide us with certain personally identifiable information. The information that the Service Provider requests will be retained by them and used as described in this privacy policy.
-                </p>
-            </div>
-
-            <!-- Third Party Access -->
-            <div class="content-card rounded-3xl p-8 mb-8 fade-in" style="animation-delay: 0.4s;">
-                <h2 class="text-3xl font-bold mb-6">
-                    <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                        Third Party Access
-                    </span>
-                </h2>
-                <p class="text-gray-300 mb-6 leading-relaxed">
-                    Only aggregated, anonymized data is periodically transmitted to external services to aid the Service Provider in improving the Application and their service.
-                </p>
-
-                <div class="bg-gradient-to-r from-orange-500/10 to-yellow-500/10 border border-orange-500/20 rounded-xl p-6 mb-6">
-                    <h4 class="text-orange-400 font-semibold text-lg mb-4">Third-Party Service Providers</h4>
-                    <p class="text-gray-300 mb-6">The Application utilizes third-party services that have their own Privacy Policies about handling data:</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <a href="https://www.google.com/policies/privacy/" target="_blank" rel="noopener noreferrer"
-                            class="service-link rounded-xl p-4 text-center text-decoration-none block">Google Play Services</a>
-                        <a href="https://support.google.com/admob/answer/6128543?hl=en" target="_blank"
-                            rel="noopener noreferrer" class="service-link rounded-xl p-4 text-center text-decoration-none block">AdMob</a>
-                        <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer"
-                            class="service-link rounded-xl p-4 text-center text-decoration-none block">Google Analytics for Firebase</a>
-                        <a href="https://firebase.google.com/support/privacy/" target="_blank" rel="noopener noreferrer"
-                            class="service-link rounded-xl p-4 text-center text-decoration-none block">Firebase Crashlytics</a>
-                        <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener noreferrer"
-                            class="service-link rounded-xl p-4 text-center text-decoration-none block">RevenueCat</a>
-                        <a href="https://adapty.io/privacy" target="_blank" rel="noopener noreferrer"
-                            class="service-link rounded-xl p-4 text-center text-decoration-none block">Adapty</a>
-                    </div>
-                </div>
-
-                <p class="text-gray-300 mb-4 leading-relaxed">The Service Provider may disclose User Provided and Automatically Collected Information:</p>
-                
-                <div class="space-y-3">
-                    <div class="glass rounded-xl p-4">
-                        <span class="text-purple-400">•</span> As required by law, such as to comply with a subpoena, or similar legal process
-                    </div>
-                    <div class="glass rounded-xl p-4">
-                        <span class="text-purple-400">•</span> When they believe in good faith that disclosure is necessary to protect their rights, protect your safety or the safety of others, investigate fraud, or respond to a government request
-                    </div>
-                    <div class="glass rounded-xl p-4">
-                        <span class="text-purple-400">•</span> With their trusted service providers who work on their behalf, do not have an independent use of the information we disclose to them, and have agreed to adhere to the rules set forth in this privacy statement
-                    </div>
-                </div>
-            </div>
-
-            <!-- Additional Sections -->
-            <div class="space-y-8">
-                <!-- Opt-Out Rights -->
-                <div class="content-card rounded-3xl p-8 fade-in" style="animation-delay: 0.6s;">
-                    <h2 class="text-2xl font-bold mb-4">
-                        <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                            Opt-Out Rights
-                        </span>
-                    </h2>
-                    <p class="text-gray-300 leading-relaxed">
-                        You can stop all collection of information by the Application easily by uninstalling it. You may use the standard uninstall processes as may be available as part of your mobile device or via the mobile application marketplace or network.
-                    </p>
-                </div>
-
-                <!-- Data Retention Policy -->
-                <div class="content-card rounded-3xl p-8 fade-in" style="animation-delay: 0.8s;">
-                    <h2 class="text-2xl font-bold mb-4">
-                        <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                            Data Retention Policy
-                        </span>
-                    </h2>
-                    <p class="text-gray-300 leading-relaxed">
-                        The Service Provider will retain User Provided data for as long as you use the Application and for a reasonable time thereafter. If you'd like them to delete User Provided Data that you have provided via the Application, please contact them at <strong class="text-purple-400">xovasoftware@gmail.com</strong> and they will respond in a reasonable time.
-                    </p>
-                </div>
-
-                <!-- Children -->
-                <div class="content-card rounded-3xl p-8 fade-in" style="animation-delay: 1.0s;">
-                    <h2 class="text-2xl font-bold mb-4">
-                        <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                            Children
-                        </span>
-                    </h2>
-                    <p class="text-gray-300 mb-4 leading-relaxed">
-                        The Service Provider does not use the Application to knowingly solicit data from or market to children under the age of 13.
-                    </p>
-                    <p class="text-gray-300 mb-4 leading-relaxed">
-                        The Application does not address anyone under the age of 13. The Service Provider does not knowingly collect personally identifiable information from children under 13 years of age. In the case the Service Provider discovers that a child under 13 has provided personal information, the Service Provider will immediately delete this from their servers.
-                    </p>
-                    <p class="text-gray-300 leading-relaxed">
-                        If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact the Service Provider at <strong class="text-purple-400">xovasoftware@gmail.com</strong> so that they will be able to take the necessary actions.
-                    </p>
-                </div>
-
-                <!-- Security -->
-                <div class="content-card rounded-3xl p-8 fade-in" style="animation-delay: 1.2s;">
-                    <h2 class="text-2xl font-bold mb-4">
-                        <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                            Security
-                        </span>
-                    </h2>
-                    <p class="text-gray-300 leading-relaxed">
-                        The Service Provider is concerned about safeguarding the confidentiality of your information. The Service Provider provides physical, electronic, and procedural safeguards to protect information the Service Provider processes and maintains.
-                    </p>
-                </div>
-
-                <!-- Changes -->
-                <div class="content-card rounded-3xl p-8 fade-in" style="animation-delay: 1.4s;">
-                    <h2 class="text-2xl font-bold mb-4">
-                        <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                            Changes
-                        </span>
-                    </h2>
-                    <p class="text-gray-300 mb-4 leading-relaxed">
-                        This Privacy Policy may be updated from time to time for any reason. The Service Provider will notify you of any changes to the Privacy Policy by updating this page with the new Privacy Policy. You are advised to consult this Privacy Policy regularly for any changes, as continued use is deemed approval of all changes.
-                    </p>
-                    <p class="text-purple-400 font-semibold">This privacy policy is effective as of August 5, 2025</p>
-                </div>
-
-                <!-- Your Consent -->
-                <div class="content-card rounded-3xl p-8 fade-in" style="animation-delay: 1.6s;">
-                    <h2 class="text-2xl font-bold mb-4">
-                        <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                            Your Consent
-                        </span>
-                    </h2>
-                    <p class="text-gray-300 leading-relaxed">
-                        By using the Application, you are consenting to the processing of your information as set forth in this Privacy Policy now and as amended by us.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="py-20 dark-gradient">
-        <div class="container mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-4xl md:text-5xl font-bold mb-8">
-                    <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Contact Us</span>
-                </h2>
-                <p class="text-xl text-gray-300 mb-8">
-                    If you have any questions regarding privacy while using the Application, or have questions about the practices, please contact the Service Provider:
-                </p>
-                <div class="glass rounded-2xl p-8 inline-block">
-                    <a href="mailto:xovasoftware@gmail.com"
-                        class="text-2xl font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-purple-300 hover:to-pink-300 transition">
-                        xovasoftware@gmail.com
-                    </a>
-                </div>
-                <div class="flex justify-center space-x-6 mt-8">
-                    <a href="https://facebook.com/xovasoftware"
-                        class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-purple-500 hover:bg-opacity-20 transition">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                        </svg>
-                    </a>
-                    <a href="https://twitter.com/xovasoftware"
-                        class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-purple-500 hover:bg-opacity-20 transition">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                        </svg>
-                    </a>
-                    <a href="https://linkedin.com/company/xovasoftware"
-                        class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-purple-500 hover:bg-opacity-20 transition">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // Mobile Menu Functionality
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const closeMenuBtn = document.getElementById('close-menu');
-
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.add('active');
-            });
-        }
-
-        if (closeMenuBtn) {
-            closeMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-            });
-        }
-
-        // Close mobile menu when clicking on a link
-        if (mobileMenu) {
-            const mobileMenuLinks = mobileMenu.querySelectorAll('a[href^="#"], a[href^="../"]');
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.remove('active');
-                });
-            });
-
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                    mobileMenu.classList.remove('active');
-                }
-            });
-        }
-
-        // Navbar Scroll Effect
-        const navbar = document.getElementById('navbar');
-        let lastScrollY = window.scrollY;
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('nav-scrolled');
-            } else {
-                navbar.classList.remove('nav-scrolled');
-            }
-            lastScrollY = window.scrollY;
-        });
-
-        // Initialize particles animation
-        function createParticles() {
-            const particlesContainer = document.querySelector('.particles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-        });
-    </script>
-
 </body>
 
 </html>
