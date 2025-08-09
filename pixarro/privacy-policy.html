@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Pixarro — Privacy & Terms</title>
-    <meta name="description" content="Privacy Policy & Terms for Pixarro — AI photo enhancement by Xova Software">
+    <title>Pixarro — Privacy Policy</title>
+    <meta name="description" content="Privacy Policy for Pixarro — AI photo enhancement by Xova Software">
     <style>
         :root {
             --bg: #0f1115;
@@ -13,8 +13,6 @@
             --muted: #9aa4b2;
             --accent: #7c5cff;
             --glass: rgba(255, 255, 255, 0.04);
-            --success: #22c55e;
-            --danger: #ff6b6b;
             font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
         }
 
@@ -30,7 +28,7 @@
         }
 
         .wrap {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 48px auto;
             padding: 24px
         }
@@ -69,95 +67,16 @@
             color: var(--muted)
         }
 
-        nav.tabs {
-            display: flex;
-            gap: 12px;
-            margin: 20px 0;
-            flex-wrap: wrap
-        }
-
-        nav a.tab {
-            padding: 10px 14px;
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            color: #dbe6ff;
-            text-decoration: none
-        }
-
-        nav a.tab.active {
-            background: linear-gradient(90deg, var(--accent), #ff7ab6);
-            color: #071126
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 24px
-        }
-
-        @media(max-width:880px) {
-            .grid {
-                grid-template-columns: 1fr
-            }
-
-            .toc {
-                position: static;
-                order: 2
-            }
-        }
-
-        .toc {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
-            padding: 18px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            height: fit-content
-        }
-
-        .toc h3 {
-            margin: 0 0 8px 0
-        }
-
-        .toc ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px
-        }
-
-        .toc a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 15px
-        }
-
         .card {
             background: linear-gradient(180deg, #071020 0%, #0b1420 100%);
             padding: 22px;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.03)
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            margin-bottom: 18px
         }
 
         h2.section {
             margin-top: 0
-        }
-
-        .kpi {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 12px
-        }
-
-        .pill {
-            background: var(--glass);
-            padding: 6px 10px;
-            border-radius: 999px;
-            font-size: 13px;
-            color: var(--muted)
         }
 
         .list {
@@ -178,20 +97,6 @@
             color: var(--muted);
             font-size: 14px
         }
-
-        code.sn {
-            background: #071126;
-            padding: 3px 6px;
-            border-radius: 6px;
-            color: #a6c1ff
-        }
-
-        /* Accessibility focus */
-        a:focus,
-        button:focus {
-            outline: 3px solid rgba(124, 92, 255, 0.18);
-            outline-offset: 3px
-        }
     </style>
 </head>
 
@@ -200,133 +105,63 @@
         <header>
             <div class="logo" aria-hidden>PX</div>
             <div class="brand">
-                <h1>Pixarro — Privacy Policy & Terms</h1>
-                <p class="lead">Clear, concise explanations of how Pixarro (by Xova Software) processes photos and face
-                    data.</p>
+                <h1>Pixarro — Privacy Policy</h1>
+                <p class="lead">How Pixarro (by Xova Software) handles your photos, face data, and privacy.</p>
             </div>
         </header>
 
-        <nav class="tabs" role="tablist" aria-label="Pages">
-            <a class="tab active" href="#privacy">Privacy Policy</a>
-            <a class="tab" href="#terms">Terms &amp; Conditions</a>
-            <a class="tab" href="#faq">Short FAQ</a>
-        </nav>
+        <section class="card" role="region" aria-labelledby="overview">
+            <h2 id="overview" class="section">1. Overview</h2>
+            <p>Pixarro is an AI-powered photo enhancement application. We respect your privacy and limit data collection
+                to what is strictly necessary for the service to function.</p>
+        </section>
 
-        <div class="grid">
-            <aside class="toc" aria-label="On this page">
-                <h3>Quick links</h3>
-                <ul>
-                    <li><a href="#privacy">Privacy Policy</a></li>
-                    <li><a href="#face">Face Data — Key Facts</a></li>
-                    <li><a href="#third-party">Third-Party Processing (Replicate)</a></li>
-                    <li><a href="#retention">Retention & Deletion</a></li>
-                    <li><a href="#security">Security</a></li>
-                    <li><a href="#terms">Terms &amp; Conditions</a></li>
+        <section class="card" role="region" aria-labelledby="face-data">
+            <h2 id="face-data" class="section">2. Face Data Usage</h2>
+            <div class="highlight">
+                <ul class="list">
+                    <li>We do not collect biometric identifiers such as faceprints or facial recognition profiles.</li>
+                    <li>Photos you upload may contain faces; these are processed solely to enhance or restore the image.
+                    </li>
+                    <li>Processing is handled via secure HTTPS transmission to our third-party provider, <a
+                            href="https://replicate.com" target="_blank">Replicate</a>.</li>
+                    <li>Neither Pixarro nor Replicate store the images or extracted face data after processing.</li>
+                    <li>All temporary data is deleted from Replicate’s servers immediately after the enhancement task
+                        completes.</li>
                 </ul>
-            </aside>
+            </div>
+        </section>
 
-            <main>
-                <section id="privacy" class="card" role="region" aria-labelledby="privacy-heading">
-                    <h2 id="privacy-heading" class="section">Privacy Policy — TL;DR</h2>
-                    <p class="kpi"><span class="pill">Service: Pixarro (Xova Software)</span><span
-                            class="pill">Effective: Aug 9, 2025</span></p>
-                    <p>Pixarro is an AI-powered photo enhancement app. We aim to keep data usage minimal and
-                        transparent. Below are the essential points you and App Review need to see.</p>
+        <section class="card" role="region" aria-labelledby="third-party">
+            <h2 id="third-party" class="section">3. Third-Party Processing</h2>
+            <p>We use Replicate for model-based image enhancement. Communication is encrypted using HTTPS/TLS. No other
+                third parties receive your photos or face data.</p>
+        </section>
 
-                    <div class="highlight" id="face">
-                        <strong>Face Data — Key facts</strong>
-                        <ul class="list">
-                            <li><strong>We do not collect biometric identifiers:</strong> No faceprints, no face IDs, no
-                                identity mapping.</li>
-                            <li><strong>Processing:</strong> User photos may contain faces which are processed solely to
-                                enhance or restore the image.</li>
-                            <li><strong>Storage:</strong> Photos are <em>not</em> stored by Pixarro. Temporary
-                                transmission to a processor (Replicate) occurs only during enhancement.</li>
-                            <li><strong>Sharing:</strong> Images are shared only with our processing provider,
-                                Replicate, and only for the active job.</li>
-                        </ul>
-                    </div>
+        <section class="card" role="region" aria-labelledby="retention">
+            <h2 id="retention" class="section">4. Data Retention</h2>
+            <ul class="list">
+                <li>Pixarro: 0 retention — no user photos are stored.</li>
+                <li>Replicate: temporary retention during processing, automatic deletion after job completion.</li>
+                <li>On your device: enhanced images are saved only if you choose to save or share them.</li>
+            </ul>
+        </section>
 
-                    <h3>What face data does the app collect?</h3>
-                    <p>None as a persistent dataset. The app may send an image that contains a face to our processor for
-                        enhancement; we do not extract or retain any biometric data.</p>
+        <section class="card" role="region" aria-labelledby="security">
+            <h2 id="security" class="section">5. Security</h2>
+            <p>All photo transmissions are encrypted using HTTPS/TLS. No analytics or marketing services receive
+                identifiable face data. You can stop all processing by not uploading photos.</p>
+        </section>
 
-                    <h3 id="third-party">Third-party processing (Replicate)</h3>
-                    <p>We use <a href="https://replicate.com" target="_blank" rel="noopener">Replicate
-                            (replicate.com)</a> for model-based image enhancement. Important details:</p>
-                    <ul class="list">
-                        <li>Transmission occurs over HTTPS (TLS).</li>
-                        <li>Replicate performs the enhancement and returns the result to the device via our backend or
-                            directly, depending on your integration.</li>
-                        <li>Neither Pixarro nor Replicate retain the image after the job completes; temporary data is
-                            deleted automatically on job completion.</li>
-                    </ul>
+        <section class="card" role="region" aria-labelledby="contact">
+            <h2 id="contact" class="section">6. Contact</h2>
+            <p>For privacy-related inquiries, contact <a
+                    href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a>.</p>
+        </section>
 
-                    <h3 id="retention">Retention &amp; Deletion</h3>
-                    <p>Retention policy (short):</p>
-                    <ul class="list">
-                        <li>Retention on Pixarro servers: <strong>0</strong> — we do not store user photos.</li>
-                        <li>Retention on Replicate: <strong>temporary only</strong> — deleted automatically after
-                            processing completes (transient job data).</li>
-                        <li>Device: Enhanced images are saved only if the user explicitly saves or shares them.</li>
-                    </ul>
-
-                    <h3 id="security">Security &amp; privacy controls</h3>
-                    <p>We take standard precautions:</p>
-                    <ul class="list">
-                        <li>All network traffic uses HTTPS/TLS.</li>
-                        <li>No analytics or third-party service receives face data beyond aggregated, anonymized
-                            telemetry (if enabled).</li>
-                        <li>Users can opt out by not sending photos; uninstalling the app removes local data.</li>
-                    </ul>
-
-                    <h3>Where this is in our policy</h3>
-                    <p>Copy the following quote into App Review responses and into the Privacy Policy page where
-                        required:</p>
-                    <pre class="kpi"
-                        style="white-space:pre-wrap">"Pixarro may temporarily transmit user photos to our third-party processor, Replicate (replicate.com), over an encrypted (HTTPS) connection for the sole purpose of enhancing or restoring images. Neither Pixarro nor Replicate retain images or face data after processing completes; all temporary data is deleted automatically. No biometric identifiers are created, stored, or shared."</pre>
-
-                </section>
-
-                <section id="terms" class="card" role="region" aria-labelledby="terms-heading" style="margin-top:18px">
-                    <h2 id="terms-heading" class="section">Terms &amp; Conditions — Summary</h2>
-                    <p>Short version: By using Pixarro you agree that photos you submit will be processed for
-                        enhancement; Pixarro and its processors will not retain submitted images after processing.
-                        Purchases (credits) are consumable and non-restorable through the platform.</p>
-
-                    <h3>Purchases &amp; Credits</h3>
-                    <p>Pixarro sells consumable credits used to perform enhancements. These are <strong>consumable
-                            in-app purchases</strong> and cannot be restored via <code
-                            class="sn">Restore Purchases</code>. Refunds are handled through the App Store purchase
-                        history and Apple's refund process.</p>
-
-                    <h3>Face data clause</h3>
-                    <p>Pixarro processes face regions only to perform image enhancement. Photos may be transmitted
-                        temporarily to Replicate and are deleted after processing. No facial recognition,
-                        identification, or biometric storage is used.</p>
-
-                    <h3>Contact & deletions</h3>
-                    <p>If you want us to remove any user-provided data from our systems, contact <a
-                            href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a>. Since we do not store
-                        submitted photos, most requests will be acknowledged and closed with confirmation.</p>
-
-                </section>
-
-                <section id="faq" class="card" style="margin-top:18px">
-                    <h2 class="section">Short FAQ</h2>
-                    <p><strong>Q:</strong> Are my photos stored on your servers? <br><strong>A:</strong> No. Photos are
-                        transmitted to Replicate only for enhancement and deleted after processing.</p>
-                    <p><strong>Q:</strong> Do you sell face data? <br><strong>A:</strong> Never.</p>
-                    <p><strong>Q:</strong> Do I need Restore Purchases? <br><strong>A:</strong> No — credits are
-                        consumable; Restore is only for non-consumable items/subscriptions.</p>
-                </section>
-
-                <footer>
-                    <p>Effective date: Aug 9, 2025 • Contact: <a
-                            href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a></p>
-                </footer>
-            </main>
-        </div>
+        <footer>
+            <p>Effective Date: Aug 9, 2025 • Pixarro by Xova Software</p>
+        </footer>
     </div>
 </body>
 
