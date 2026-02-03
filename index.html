@@ -80,7 +80,7 @@
         }
 
         .nav-logo img {
-            height: 52px;
+            height: 72px;
             filter: brightness(0) invert(1);
             transition: opacity 0.3s;
         }
@@ -1100,7 +1100,7 @@
             .nav-links { display: none; }
             .mobile-toggle { display: block; }
             .nav-inner { padding: 0 1.25rem; }
-            .nav-logo img { height: 42px; }
+            .nav-logo img { height: 56px; }
 
             .section { padding: 4rem 0; }
             .section-inner { padding: 0 1.25rem; }
@@ -1274,11 +1274,11 @@
             </a>
 
             <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#apps">Apps</a>
-                <a href="#features">Features</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
+                <a href="#home" data-i18n="nav-home">Home</a>
+                <a href="#apps" data-i18n="nav-apps">Apps</a>
+                <a href="#features" data-i18n="nav-features">Features</a>
+                <a href="#about" data-i18n="nav-about">About</a>
+                <a href="#contact" data-i18n="nav-contact">Contact</a>
                 <select id="lang-select" class="lang-selector" aria-label="Language">
                     <option value="en">EN</option>
                     <option value="tr">TR</option>
@@ -1296,11 +1296,11 @@
 
     <!-- Mobile Navigation -->
     <div class="mobile-nav" id="mobile-nav">
-        <a href="#home">Home</a>
-        <a href="#apps">Apps</a>
-        <a href="#features">Features</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+        <a href="#home" data-i18n="nav-home">Home</a>
+        <a href="#apps" data-i18n="nav-apps">Apps</a>
+        <a href="#features" data-i18n="nav-features">Features</a>
+        <a href="#about" data-i18n="nav-about">About</a>
+        <a href="#contact" data-i18n="nav-contact">Contact</a>
         <select id="mobile-lang-select" class="lang-selector" aria-label="Language" style="margin-top: 1.5rem; font-size: 1rem; padding: 0.5rem 1rem;">
             <option value="en">English</option>
             <option value="tr">Turkish</option>
@@ -1315,7 +1315,7 @@
             <div class="hero-text">
                 <div class="hero-label">
                     <span class="hero-label-dot"></span>
-                    AI-Powered Software
+                    <span id="hero-label">AI-Powered Software</span>
                 </div>
                 <h1 id="hero-title">
                     We Build<br><em>Intelligent</em><br>Mobile Apps
@@ -1325,11 +1325,11 @@
                 </p>
                 <div class="hero-actions">
                     <button class="btn-gold" id="btn-explore">
-                        Explore Our Apps
+                        <span id="btn-explore-text">Explore Our Apps</span>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                     <button class="btn-ghost" id="btn-learn">
-                        Learn More
+                        <span id="btn-learn-text">Learn More</span>
                     </button>
                 </div>
             </div>
@@ -1354,10 +1354,10 @@
     <section id="apps" class="section">
         <div class="section-inner">
             <div class="section-header scroll-reveal">
-                <div class="section-label">Our Portfolio</div>
+                <div class="section-label" id="apps-label">Our Portfolio</div>
                 <div class="divider"></div>
                 <h2 id="apps-title" class="section-title">Applications that <em>redefine</em> mobile</h2>
-                <p class="section-desc">Revolutionary AI-powered solutions crafted with precision and purpose.</p>
+                <p class="section-desc" id="apps-desc">Revolutionary AI-powered solutions crafted with precision and purpose.</p>
             </div>
 
             <div class="apps-grid">
@@ -1368,14 +1368,14 @@
                     </div>
                     <div class="app-info">
                         <h3 id="pixivo-title" class="app-name">Pixivo</h3>
-                        <p class="app-desc">Restore & Colorize Old Photos with AI</p>
+                        <p class="app-desc" id="pixivo-desc">Restore & Colorize Old Photos with AI</p>
                         <div class="app-tags">
-                            <span class="app-tag">AI Enhanced</span>
-                            <span class="app-tag blue">Photo Restoration</span>
-                            <span class="app-tag">Colorization</span>
+                            <span class="app-tag" data-i18n="tag-ai">AI Enhanced</span>
+                            <span class="app-tag blue" data-i18n="tag-photo-restore">Photo Restoration</span>
+                            <span class="app-tag" data-i18n="tag-colorize">Colorization</span>
                         </div>
                         <a href="https://apps.apple.com/app/pixivo/id1234567890" class="app-link">
-                            Download on App Store
+                            <span data-i18n="app-store-link">Download on App Store</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
                     </div>
@@ -1388,14 +1388,14 @@
                     </div>
                     <div class="app-info">
                         <h3 id="tatarai-title" class="app-name">Tatarai</h3>
-                        <p class="app-desc">Instantly Identify Plants Around You</p>
+                        <p class="app-desc" id="tatarai-desc">Instantly Identify Plants Around You</p>
                         <div class="app-tags">
-                            <span class="app-tag green">Plant Recognition</span>
-                            <span class="app-tag green">AI Vision</span>
-                            <span class="app-tag blue">Database</span>
+                            <span class="app-tag green" data-i18n="tag-plant">Plant Recognition</span>
+                            <span class="app-tag green" data-i18n="tag-ai-vision">AI Vision</span>
+                            <span class="app-tag blue" data-i18n="tag-database">Database</span>
                         </div>
                         <a href="https://apps.apple.com/us/app/tatarai-crop-plant-health/id6745120919" class="app-link">
-                            Download on App Store
+                            <span data-i18n="app-store-link">Download on App Store</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
                     </div>
@@ -1408,14 +1408,14 @@
                     </div>
                     <div class="app-info">
                         <h3 id="setwise-title" class="app-name">Setwise</h3>
-                        <p class="app-desc">AI-Powered Workout & Fitness Planner</p>
+                        <p class="app-desc" id="setwise-desc">AI-Powered Workout & Fitness Planner</p>
                         <div class="app-tags">
-                            <span class="app-tag red">Workout Planner</span>
-                            <span class="app-tag red">AI Fitness</span>
-                            <span class="app-tag orange">Progress Tracking</span>
+                            <span class="app-tag red" data-i18n="tag-workout">Workout Planner</span>
+                            <span class="app-tag red" data-i18n="tag-ai-fitness">AI Fitness</span>
+                            <span class="app-tag orange" data-i18n="tag-progress">Progress Tracking</span>
                         </div>
                         <a href="https://apps.apple.com/app/setwise/id0000000000" class="app-link">
-                            Download on App Store
+                            <span data-i18n="app-store-link">Download on App Store</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
                     </div>
@@ -1428,14 +1428,14 @@
                     </div>
                     <div class="app-info">
                         <h3 id="xovapdfmaker-title" class="app-name">Xova PDF Maker</h3>
-                        <p class="app-desc">Create & Convert PDFs Easily</p>
+                        <p class="app-desc" id="xovapdf-desc">Create & Convert PDFs Easily</p>
                         <div class="app-tags">
-                            <span class="app-tag orange">PDF Creator</span>
-                            <span class="app-tag blue">Converter</span>
-                            <span class="app-tag">Document Tools</span>
+                            <span class="app-tag orange" data-i18n="tag-pdf">PDF Creator</span>
+                            <span class="app-tag blue" data-i18n="tag-converter">Converter</span>
+                            <span class="app-tag" data-i18n="tag-docs">Document Tools</span>
                         </div>
                         <a href="https://apps.apple.com/app/xovapdfmaker/id0000000000" class="app-link">
-                            Download on App Store
+                            <span data-i18n="app-store-link">Download on App Store</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
                     </div>
@@ -1470,9 +1470,9 @@
     <section id="features" class="section features-section">
         <div class="section-inner">
             <div class="section-header centered scroll-reveal">
-                <div class="section-label">Why Xova</div>
+                <div class="section-label" id="features-label">Why Xova</div>
                 <div class="divider"></div>
-                <h2 class="section-title">Built on <em>principles</em> that matter</h2>
+                <h2 id="features-title" class="section-title">Built on <em>principles</em> that matter</h2>
             </div>
 
             <div class="features-grid">
@@ -1482,8 +1482,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
                     </div>
-                    <h3 class="feature-name">Lightning Fast</h3>
-                    <p class="feature-text">Optimized performance engineered for instant, seamless results.</p>
+                    <h3 class="feature-name" id="feat1-name">Lightning Fast</h3>
+                    <p class="feature-text" id="feat1-text">Optimized performance engineered for instant, seamless results.</p>
                 </div>
 
                 <div class="feature-item" data-delay="100">
@@ -1492,8 +1492,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                         </svg>
                     </div>
-                    <h3 class="feature-name">AI Powered</h3>
-                    <p class="feature-text">State-of-the-art machine learning models at the core of every experience.</p>
+                    <h3 class="feature-name" id="feat2-name">AI Powered</h3>
+                    <p class="feature-text" id="feat2-text">State-of-the-art machine learning models at the core of every experience.</p>
                 </div>
 
                 <div class="feature-item" data-delay="200">
@@ -1502,8 +1502,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                     </div>
-                    <h3 class="feature-name">Secure & Private</h3>
-                    <p class="feature-text">Your data stays safe, encrypted, and entirely under your control.</p>
+                    <h3 class="feature-name" id="feat3-name">Secure & Private</h3>
+                    <p class="feature-text" id="feat3-text">Your data stays safe, encrypted, and entirely under your control.</p>
                 </div>
             </div>
         </div>
@@ -1515,7 +1515,7 @@
             <div class="about-grid">
                 <div class="scroll-reveal">
                     <div class="section-header" style="margin-bottom: 2rem;">
-                        <div class="section-label">About Us</div>
+                        <div class="section-label" id="about-label">About Us</div>
                         <div class="divider"></div>
                         <h2 id="about-title" class="section-title">Crafting the <em>future</em> of mobile</h2>
                     </div>
@@ -1527,15 +1527,15 @@
                     <div class="stats-grid">
                         <div class="stat-item">
                             <div class="stat-number">2M+</div>
-                            <div class="stat-label">Happy Users</div>
+                            <div class="stat-label" id="stat1-label">Happy Users</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number">50+</div>
-                            <div class="stat-label">Countries</div>
+                            <div class="stat-label" id="stat2-label">Countries</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number">4.8</div>
-                            <div class="stat-label">App Rating</div>
+                            <div class="stat-label" id="stat3-label">App Rating</div>
                         </div>
                     </div>
                 </div>
@@ -1554,7 +1554,7 @@
     <section id="contact" class="section contact-section">
         <div class="section-inner">
             <div class="section-header centered scroll-reveal">
-                <div class="section-label">Get in Touch</div>
+                <div class="section-label" id="contact-label">Get in Touch</div>
                 <div class="divider"></div>
                 <h2 id="contact-title" class="section-title">Let's build <em>something</em> together</h2>
                 <p id="contact-text" class="section-desc">
@@ -1598,9 +1598,9 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-inner">
-            <div class="footer-copy">&copy; 2025 Xova Software. All rights reserved.</div>
+            <div class="footer-copy" id="footer-copy">&copy; 2025 Xova Software. All rights reserved.</div>
             <div class="footer-links">
-                <a href="mailto:info@xovasoftware.co">Support</a>
+                <a href="mailto:info@xovasoftware.co" id="footer-support">Support</a>
             </div>
         </div>
     </footer>
@@ -1716,66 +1716,133 @@
         function setLanguage(lang) {
             var translations = {
                 en: {
-                    'hero-title-text': 'We Build\nIntelligent\nMobile Apps',
-                    'hero-title-italic': 'Intelligent',
+                    'nav-home': 'Home', 'nav-apps': 'Apps', 'nav-features': 'Features', 'nav-about': 'About', 'nav-contact': 'Contact',
+                    'hero-label': 'AI-Powered Software',
+                    'hero-title-text': 'We Build\nIntelligent\nMobile Apps', 'hero-title-italic': 'Intelligent',
                     'hero-subtitle': 'Xova Software specializes in AI-powered mobile experiences that transform how you interact with technology',
-                    'apps-title-text': 'Applications that redefine mobile',
-                    'apps-title-italic': 'redefine',
-                    'pixivo-title': 'Pixivo',
-                    'tatarai-title': 'Tatarai',
-                    'setwise-title': 'Setwise',
-                    'xovapdfmaker-title': 'Xova PDF Maker',
-                    'about-title-text': 'Crafting the future of mobile',
-                    'about-title-italic': 'future',
+                    'btn-explore-text': 'Explore Our Apps', 'btn-learn-text': 'Learn More',
+                    'apps-label': 'Our Portfolio',
+                    'apps-title-text': 'Applications that redefine mobile', 'apps-title-italic': 'redefine',
+                    'apps-desc': 'Revolutionary AI-powered solutions crafted with precision and purpose.',
+                    'pixivo-title': 'Pixivo', 'pixivo-desc': 'Restore & Colorize Old Photos with AI',
+                    'tatarai-title': 'Tatarai', 'tatarai-desc': 'Instantly Identify Plants Around You',
+                    'setwise-title': 'Setwise', 'setwise-desc': 'AI-Powered Workout & Fitness Planner',
+                    'xovapdfmaker-title': 'Xova PDF Maker', 'xovapdf-desc': 'Create & Convert PDFs Easily',
+                    'tag-ai': 'AI Enhanced', 'tag-photo-restore': 'Photo Restoration', 'tag-colorize': 'Colorization',
+                    'tag-plant': 'Plant Recognition', 'tag-ai-vision': 'AI Vision', 'tag-database': 'Database',
+                    'tag-workout': 'Workout Planner', 'tag-ai-fitness': 'AI Fitness', 'tag-progress': 'Progress Tracking',
+                    'tag-pdf': 'PDF Creator', 'tag-converter': 'Converter', 'tag-docs': 'Document Tools',
+                    'app-store-link': 'Download on App Store',
+                    'features-label': 'Why Xova',
+                    'features-title-text': 'Built on principles that matter', 'features-title-italic': 'principles',
+                    'feat1-name': 'Lightning Fast', 'feat1-text': 'Optimized performance engineered for instant, seamless results.',
+                    'feat2-name': 'AI Powered', 'feat2-text': 'State-of-the-art machine learning models at the core of every experience.',
+                    'feat3-name': 'Secure & Private', 'feat3-text': 'Your data stays safe, encrypted, and entirely under your control.',
+                    'about-label': 'About Us',
+                    'about-title-text': 'Crafting the future of mobile', 'about-title-italic': 'future',
                     'about-text': 'Xova Software is a tech company focused on developing mobile applications powered by artificial intelligence. We aim to deliver delightful, useful, and intuitive experiences through mobile technology.',
-                    'contact-title-text': "Let's build something together",
-                    'contact-title-italic': 'something',
-                    'contact-text': 'Feel free to contact us for support, partnerships, or general inquiries.'
+                    'stat1-label': 'Happy Users', 'stat2-label': 'Countries', 'stat3-label': 'App Rating',
+                    'contact-label': 'Get in Touch',
+                    'contact-title-text': "Let's build something together", 'contact-title-italic': 'something',
+                    'contact-text': 'Feel free to contact us for support, partnerships, or general inquiries.',
+                    'footer-copy': '\u00a9 2025 Xova Software. All rights reserved.',
+                    'footer-support': 'Support'
                 },
                 tr: {
-                    'hero-title-text': 'Ak\u0131ll\u0131\nMobil Uygulamalar\nGeli\u015ftiriyoruz',
-                    'hero-title-italic': 'Ak\u0131ll\u0131',
+                    'nav-home': 'Ana Sayfa', 'nav-apps': 'Uygulamalar', 'nav-features': '\u00d6zellikler', 'nav-about': 'Hakk\u0131m\u0131zda', 'nav-contact': '\u0130leti\u015fim',
+                    'hero-label': 'Yapay Zeka Destekli Yaz\u0131l\u0131m',
+                    'hero-title-text': 'Ak\u0131ll\u0131\nMobil Uygulamalar\nGeli\u015ftiriyoruz', 'hero-title-italic': 'Ak\u0131ll\u0131',
                     'hero-subtitle': 'Xova Software, teknoloji ile etkile\u015fiminizi d\u00f6n\u00fc\u015ft\u00fcren yapay zeka destekli mobil deneyimler konusunda uzmanla\u015fm\u0131\u015ft\u0131r',
-                    'apps-title-text': 'Mobili yeniden tan\u0131mlayan uygulamalar',
-                    'apps-title-italic': 'yeniden tan\u0131mlayan',
-                    'pixivo-title': 'Pixivo',
-                    'tatarai-title': 'Tatarai',
-                    'setwise-title': 'Setwise',
-                    'xovapdfmaker-title': 'Xova PDF Maker',
-                    'about-title-text': 'Mobilin gelece\u011fini tasar\u0131l\u0131yoruz',
-                    'about-title-italic': 'gelece\u011fini',
+                    'btn-explore-text': 'Uygulamalar\u0131 Ke\u015ffet', 'btn-learn-text': 'Daha Fazla',
+                    'apps-label': 'Portf\u00f6y\u00fcm\u00fcz',
+                    'apps-title-text': 'Mobili yeniden tan\u0131mlayan uygulamalar', 'apps-title-italic': 'yeniden tan\u0131mlayan',
+                    'apps-desc': 'Hassasiyet ve ama\u00e7la tasarlanm\u0131\u015f devrim nitelikli yapay zeka \u00e7\u00f6z\u00fcmleri.',
+                    'pixivo-title': 'Pixivo', 'pixivo-desc': 'Yapay Zeka ile Eski Foto\u011fraflar\u0131 Onar\u0131n ve Renklendirin',
+                    'tatarai-title': 'Tatarai', 'tatarai-desc': '\u00c7evrendeki Bitkileri An\u0131nda Tan\u0131y\u0131n',
+                    'setwise-title': 'Setwise', 'setwise-desc': 'Yapay Zeka Destekli Antrenman ve Fitness Planlay\u0131c\u0131',
+                    'xovapdfmaker-title': 'Xova PDF Maker', 'xovapdf-desc': 'Kolayca PDF Olu\u015fturun ve D\u00f6n\u00fc\u015ft\u00fcr\u00fcn',
+                    'tag-ai': 'Yapay Zeka', 'tag-photo-restore': 'Foto\u011fraf Onar\u0131m', 'tag-colorize': 'Renklendirme',
+                    'tag-plant': 'Bitki Tan\u0131ma', 'tag-ai-vision': 'Yapay G\u00f6r\u00fc', 'tag-database': 'Veritaban\u0131',
+                    'tag-workout': 'Antrenman Planlay\u0131c\u0131', 'tag-ai-fitness': 'Yapay Zeka Fitness', 'tag-progress': '\u0130lerleme Takibi',
+                    'tag-pdf': 'PDF Olu\u015fturucu', 'tag-converter': 'D\u00f6n\u00fc\u015ft\u00fcr\u00fcc\u00fc', 'tag-docs': 'Belge Ara\u00e7lar\u0131',
+                    'app-store-link': 'App Store\'dan \u0130ndir',
+                    'features-label': 'Neden Xova',
+                    'features-title-text': '\u00d6nemli ilkelerin \u00fczerine in\u015fa edildi', 'features-title-italic': 'ilkelerin',
+                    'feat1-name': 'I\u015f\u0131k H\u0131z\u0131nda', 'feat1-text': 'An\u0131nda ve kusursuz sonu\u00e7lar i\u00e7in optimize edilmi\u015f performans.',
+                    'feat2-name': 'Yapay Zeka G\u00fcc\u00fc', 'feat2-text': 'Her deneyimin merkezinde en son teknoloji makine \u00f6\u011frenimi modelleri.',
+                    'feat3-name': 'G\u00fcvenli ve \u00d6zel', 'feat3-text': 'Verileriniz g\u00fcvende, \u015fifreli ve tamamen sizin kontrol\u00fcn\u00fczde.',
+                    'about-label': 'Hakk\u0131m\u0131zda',
+                    'about-title-text': 'Mobilin gelece\u011fini tasar\u0131l\u0131yoruz', 'about-title-italic': 'gelece\u011fini',
                     'about-text': 'Xova Software, yapay zeka destekli mobil uygulamalar geli\u015ftirmeye odaklanan bir teknoloji \u015firketidir. Mobil teknoloji arac\u0131l\u0131\u011f\u0131yla keyifli, faydal\u0131 ve sezgisel deneyimler sunmay\u0131 hedefliyoruz.',
-                    'contact-title-text': 'Birlikte bir \u015feyler in\u015fa edelim',
-                    'contact-title-italic': 'bir \u015feyler',
-                    'contact-text': 'Destek, ortakl\u0131k veya genel sorular\u0131n\u0131z i\u00e7in bizimle ileti\u015fime ge\u00e7mekten \u00e7ekinmeyin.'
+                    'stat1-label': 'Mutlu Kullan\u0131c\u0131', 'stat2-label': '\u00dclke', 'stat3-label': 'Uygulama Puan\u0131',
+                    'contact-label': '\u0130leti\u015fime Ge\u00e7in',
+                    'contact-title-text': 'Birlikte bir \u015feyler in\u015fa edelim', 'contact-title-italic': 'bir \u015feyler',
+                    'contact-text': 'Destek, ortakl\u0131k veya genel sorular\u0131n\u0131z i\u00e7in bizimle ileti\u015fime ge\u00e7mekten \u00e7ekinmeyin.',
+                    'footer-copy': '\u00a9 2025 Xova Software. T\u00fcm haklar\u0131 sakl\u0131d\u0131r.',
+                    'footer-support': 'Destek'
                 },
                 de: {
-                    'hero-title-text': 'Wir entwickeln\nintelligente\nMobile Apps',
-                    'hero-title-italic': 'intelligente',
+                    'nav-home': 'Startseite', 'nav-apps': 'Apps', 'nav-features': 'Funktionen', 'nav-about': '\u00dcber Uns', 'nav-contact': 'Kontakt',
+                    'hero-label': 'KI-gest\u00fctzte Software',
+                    'hero-title-text': 'Wir entwickeln\nintelligente\nMobile Apps', 'hero-title-italic': 'intelligente',
                     'hero-subtitle': 'Xova Software ist spezialisiert auf KI-gest\u00fctzte mobile Erfahrungen, die Ihre Interaktion mit Technologie transformieren',
-                    'apps-title-text': 'Anwendungen die Mobile neu definieren',
-                    'apps-title-italic': 'Mobile',
-                    'pixivo-title': 'Pixivo',
-                    'tatarai-title': 'Tatarai',
-                    'setwise-title': 'Setwise',
-                    'xovapdfmaker-title': 'Xova PDF Maker',
-                    'about-title-text': 'Die Zukunft des Mobile gestalten',
-                    'about-title-italic': 'Zukunft',
+                    'btn-explore-text': 'Apps Entdecken', 'btn-learn-text': 'Mehr Erfahren',
+                    'apps-label': 'Unser Portfolio',
+                    'apps-title-text': 'Anwendungen die Mobile neu definieren', 'apps-title-italic': 'neu definieren',
+                    'apps-desc': 'Revolution\u00e4re KI-L\u00f6sungen mit Pr\u00e4zision und Zweck entwickelt.',
+                    'pixivo-title': 'Pixivo', 'pixivo-desc': 'Alte Fotos mit KI wiederherstellen & kolorieren',
+                    'tatarai-title': 'Tatarai', 'tatarai-desc': 'Pflanzen in Ihrer Umgebung sofort erkennen',
+                    'setwise-title': 'Setwise', 'setwise-desc': 'KI-Trainings- und Fitnessplaner',
+                    'xovapdfmaker-title': 'Xova PDF Maker', 'xovapdf-desc': 'PDFs einfach erstellen und konvertieren',
+                    'tag-ai': 'KI-Verst\u00e4rkt', 'tag-photo-restore': 'Fotorestaurierung', 'tag-colorize': 'Kolorierung',
+                    'tag-plant': 'Pflanzenerkennung', 'tag-ai-vision': 'KI Vision', 'tag-database': 'Datenbank',
+                    'tag-workout': 'Trainingsplaner', 'tag-ai-fitness': 'KI Fitness', 'tag-progress': 'Fortschrittsverfolgung',
+                    'tag-pdf': 'PDF-Ersteller', 'tag-converter': 'Konverter', 'tag-docs': 'Dokumentenwerkzeuge',
+                    'app-store-link': 'Im App Store laden',
+                    'features-label': 'Warum Xova',
+                    'features-title-text': 'Auf Prinzipien aufgebaut die z\u00e4hlen', 'features-title-italic': 'Prinzipien',
+                    'feat1-name': 'Blitzschnell', 'feat1-text': 'Optimierte Leistung f\u00fcr sofortige, nahtlose Ergebnisse.',
+                    'feat2-name': 'KI-Angetrieben', 'feat2-text': 'Modernste Machine-Learning-Modelle im Kern jeder Erfahrung.',
+                    'feat3-name': 'Sicher & Privat', 'feat3-text': 'Ihre Daten bleiben sicher, verschl\u00fcsselt und vollst\u00e4ndig unter Ihrer Kontrolle.',
+                    'about-label': '\u00dcber Uns',
+                    'about-title-text': 'Die Zukunft des Mobile gestalten', 'about-title-italic': 'Zukunft',
                     'about-text': 'Xova Software ist ein Technologieunternehmen, das sich auf die Entwicklung von mobilen Anwendungen mit k\u00fcnstlicher Intelligenz konzentriert. Wir wollen durch mobile Technologie erfreuliche, n\u00fctzliche und intuitive Erfahrungen bieten.',
-                    'contact-title-text': 'Lassen Sie uns gemeinsam etwas aufbauen',
-                    'contact-title-italic': 'gemeinsam',
-                    'contact-text': 'Kontaktieren Sie uns gerne f\u00fcr Support, Partnerschaften oder allgemeine Anfragen.'
+                    'stat1-label': 'Zufriedene Nutzer', 'stat2-label': 'L\u00e4nder', 'stat3-label': 'App-Bewertung',
+                    'contact-label': 'Kontakt',
+                    'contact-title-text': 'Lassen Sie uns gemeinsam etwas aufbauen', 'contact-title-italic': 'gemeinsam',
+                    'contact-text': 'Kontaktieren Sie uns gerne f\u00fcr Support, Partnerschaften oder allgemeine Anfragen.',
+                    'footer-copy': '\u00a9 2025 Xova Software. Alle Rechte vorbehalten.',
+                    'footer-support': 'Support'
                 }
             };
 
             var langData = translations[lang] || translations.en;
 
-            // Update simple text elements safely using textContent
-            var simpleTextIds = ['hero-subtitle', 'pixivo-title', 'tatarai-title', 'setwise-title', 'xovapdfmaker-title', 'about-text', 'contact-text'];
+            // Update all simple text elements by ID
+            var simpleTextIds = [
+                'hero-label', 'hero-subtitle', 'btn-explore-text', 'btn-learn-text',
+                'apps-label', 'apps-desc',
+                'pixivo-title', 'pixivo-desc', 'tatarai-title', 'tatarai-desc',
+                'setwise-title', 'setwise-desc', 'xovapdfmaker-title', 'xovapdf-desc',
+                'features-label',
+                'feat1-name', 'feat1-text', 'feat2-name', 'feat2-text', 'feat3-name', 'feat3-text',
+                'about-label', 'about-text',
+                'stat1-label', 'stat2-label', 'stat3-label',
+                'contact-label', 'contact-text',
+                'footer-copy', 'footer-support'
+            ];
             simpleTextIds.forEach(function(id) {
                 var el = document.getElementById(id);
                 if (el && langData[id]) {
                     el.textContent = langData[id];
+                }
+            });
+
+            // Update elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(function(el) {
+                var key = el.getAttribute('data-i18n');
+                if (langData[key]) {
+                    el.textContent = langData[key];
                 }
             });
 
@@ -1784,7 +1851,6 @@
             if (heroTitle) {
                 var lines = langData['hero-title-text'].split('\n');
                 var italicWord = langData['hero-title-italic'];
-                // Clear and rebuild
                 while (heroTitle.firstChild) heroTitle.removeChild(heroTitle.firstChild);
                 lines.forEach(function(line, i) {
                     if (line.indexOf(italicWord) !== -1) {
@@ -1819,6 +1885,7 @@
             }
 
             updateTitleWithItalic('apps-title', langData['apps-title-text'], langData['apps-title-italic']);
+            updateTitleWithItalic('features-title', langData['features-title-text'], langData['features-title-italic']);
             updateTitleWithItalic('about-title', langData['about-title-text'], langData['about-title-italic']);
             updateTitleWithItalic('contact-title', langData['contact-title-text'], langData['contact-title-italic']);
 
