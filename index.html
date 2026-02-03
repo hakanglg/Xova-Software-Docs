@@ -5,655 +5,1582 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xova Software - AI-Powered Mobile Innovation</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
     <style>
-        * {
+        :root {
+            --bg-primary: #0b0b0d;
+            --bg-secondary: #111114;
+            --bg-card: #16161a;
+            --bg-card-hover: #1c1c21;
+            --accent: #c8a44e;
+            --accent-light: #e4c96a;
+            --accent-dim: rgba(200, 164, 78, 0.15);
+            --accent-glow: rgba(200, 164, 78, 0.3);
+            --text-primary: #f0ece2;
+            --text-secondary: #9a9590;
+            --text-muted: #5e5a55;
+            --border: rgba(200, 164, 78, 0.12);
+            --border-hover: rgba(200, 164, 78, 0.35);
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+        }
+
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow-x: hidden;
-            background: #0a0a0a;
-        }
-
-        /* Smooth Scrolling */
         html {
             scroll-behavior: smooth;
+            font-size: 16px;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a;
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+        /* Selection */
+        ::selection { background: var(--accent); color: var(--bg-primary); }
+
+        /* ============ NAVIGATION ============ */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.5rem 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 5px;
+        .nav.scrolled {
+            background: rgba(11, 11, 13, 0.92);
+            backdrop-filter: blur(20px) saturate(1.2);
+            -webkit-backdrop-filter: blur(20px) saturate(1.2);
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
         }
 
-        /* Gradient Background */
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .dark-gradient {
-            background: linear-gradient(180deg, #0a0a0a 0%, #1a0f2e 50%, #0a0a0a 100%);
+        .nav-logo img {
+            height: 52px;
+            filter: brightness(0) invert(1);
+            transition: opacity 0.3s;
         }
 
-        /* Animated Gradient */
-        .animated-gradient {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+        .nav-logo img:hover { opacity: 0.8; }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
         }
 
-        @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
         }
 
-        /* Glow Effects */
-        .glow {
-            box-shadow: 0 0 40px rgba(102, 126, 234, 0.5);
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .text-glow {
-            text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .lang-selector {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: border-color 0.3s, color 0.3s;
         }
 
-        /* Floating Animation */
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
+        .lang-selector:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
-        .float-animation {
-            animation: float 6s ease-in-out infinite;
+        .lang-selector option { background: var(--bg-secondary); }
+
+        /* Mobile menu */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
         }
 
-        /* Pulse Animation */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(1.05);
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 1.5px;
+            background: var(--text-primary);
+            margin: 6px 0;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .pulse-animation {
-            animation: pulse 3s ease-in-out infinite;
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .mobile-toggle.active span:nth-child(2) { opacity: 0; }
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
-        /* Fade In Animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(11, 11, 13, 0.97);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .fade-in {
-            animation: fadeIn 1s ease-out;
+        .mobile-nav.active { transform: translateX(0); }
+
+        .mobile-nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 400;
+            transition: color 0.3s;
         }
 
-        /* Card Hover Effects */
-        .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .mobile-nav a:hover { color: var(--accent); }
 
-        .card-hover:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Button Styles */
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: all 0.3s ease;
+        /* ============ HERO ============ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
             position: relative;
             overflow: hidden;
         }
 
-        .btn-primary::before {
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(200, 164, 78, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: hero-glow 8s ease-in-out infinite alternate;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(200, 164, 78, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: hero-glow 10s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes hero-glow {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.3); opacity: 1; }
+        }
+
+        /* Grain overlay */
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 128px 128px;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 4rem;
+            width: 100%;
+        }
+
+        .hero-text {
+            opacity: 0;
+            animation: reveal-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+        }
+
+        .hero-label-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-width: 480px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-gold {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .btn-gold:hover::before { transform: translateX(100%); }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200, 164, 78, 0.25); }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            padding: 0.9rem 2rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.35s;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            opacity: 0;
+            animation: reveal-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        }
+
+        .hero-orbit {
+            position: relative;
+            width: 420px;
+            height: 420px;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            animation: spin-slow 30s linear infinite;
+        }
+
+        .orbit-ring:nth-child(1) { inset: 0; }
+        .orbit-ring:nth-child(2) { inset: 40px; animation-direction: reverse; animation-duration: 25s; }
+        .orbit-ring:nth-child(3) { inset: 80px; animation-duration: 20s; }
+
+        .orbit-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .orbit-center img {
+            width: 100%;
+            filter: brightness(0) invert(1);
+        }
+
+        .orbit-app {
+            position: absolute;
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .orbit-app img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .orbit-app:hover {
+            transform: scale(1.3) !important;
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .orbit-app:nth-child(5) { top: -10px; left: 50%; transform: translateX(-50%); }
+        .orbit-app:nth-child(6) { top: 50%; right: -10px; transform: translateY(-50%); }
+        .orbit-app:nth-child(7) { bottom: -10px; left: 50%; transform: translateX(-50%); }
+        .orbit-app:nth-child(8) { top: 50%; left: -10px; transform: translateY(-50%); }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ============ SECTION SHARED ============ */
+        .section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .section-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .section-header {
+            max-width: 620px;
+            margin-bottom: 5rem;
+        }
+
+        .section-header.centered {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 400;
+            line-height: 1.15;
+            color: var(--text-primary);
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .section-desc {
+            margin-top: 1.2rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            margin: 1.2rem 0;
+        }
+
+        .centered .divider { margin-left: auto; margin-right: auto; }
+
+        /* ============ APPS SECTION ============ */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .app-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .app-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .app-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
-        .btn-primary:hover::before {
-            left: 100%;
+        .app-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.3), 0 0 0 1px var(--border-hover);
         }
 
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
-        }
+        .app-card:hover::before { opacity: 1; }
 
-        /* Glass Effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Particle Background */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+        .app-icon-wrap {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
             overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .particle {
+        .app-card:hover .app-icon-wrap { transform: scale(1.08) rotate(2deg); }
+
+        .app-icon-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-info { flex: 1; }
+
+        .app-name {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .app-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .app-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .app-tag {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            padding: 0.3rem 0.75rem;
+            border-radius: 100px;
+            background: var(--accent-dim);
+            color: var(--accent-light);
+            border: 1px solid rgba(200, 164, 78, 0.1);
+        }
+
+        .app-tag.green { background: rgba(74, 180, 100, 0.1); color: #6dd490; border-color: rgba(74, 180, 100, 0.1); }
+        .app-tag.blue { background: rgba(78, 140, 200, 0.1); color: #7ab4e0; border-color: rgba(78, 140, 200, 0.1); }
+        .app-tag.red { background: rgba(200, 80, 80, 0.1); color: #e07070; border-color: rgba(200, 80, 80, 0.1); }
+        .app-tag.orange { background: rgba(220, 140, 60, 0.1); color: #e0a050; border-color: rgba(220, 140, 60, 0.1); }
+
+        .app-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+            transition: gap 0.3s, color 0.3s;
+        }
+
+        .app-link:hover { gap: 0.8rem; }
+
+        .app-link svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.3s;
+        }
+
+        .app-link:hover svg { transform: translateX(2px); }
+
+        /* ============ FEATURES ============ */
+        .features-section {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+
+        .feature-item {
+            padding: 3rem;
+            text-align: center;
+            border-right: 1px solid var(--border);
+            position: relative;
+            transition: background 0.4s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .feature-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-item:last-child { border-right: none; }
+
+        .feature-item:hover { background: rgba(200, 164, 78, 0.03); }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-item:hover .feature-icon {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-dim);
+        }
+
+        .feature-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--accent);
+        }
+
+        .feature-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ============ ABOUT ============ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-text-block p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .stat-item:hover {
+            border-color: var(--border-hover);
+            background: var(--accent-dim);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .about-visual {
+            display: flex;
+            justify-content: center;
+        }
+
+        .about-emblem {
+            width: 320px;
+            height: 320px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .about-emblem::before {
+            content: '';
             position: absolute;
+            inset: 20px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+        }
+
+        .about-emblem::after {
+            content: '';
+            position: absolute;
+            inset: 40px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+        }
+
+        .about-emblem img {
+            width: 120px;
+            filter: brightness(0) invert(1);
+            opacity: 0.7;
+        }
+
+        /* ============ CONTACT ============ */
+        .contact-section {
+            text-align: center;
+        }
+
+        .contact-email {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--accent);
+            text-decoration: none;
+            position: relative;
+            transition: opacity 0.3s;
+        }
+
+        .contact-email::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .contact-email:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .social-link {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            color: var(--text-secondary);
+            transition: all 0.35s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--accent-dim);
+        }
+
+        .social-link svg { width: 18px; height: 18px; }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        /* ============ ANIMATIONS ============ */
+        @keyframes reveal-up {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Horizontal rule decor */
+        .hr-decor {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .hr-decor hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ============ MARQUEE BANNER ============ */
+        .marquee-banner {
+            overflow: hidden;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            background: var(--bg-secondary);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 3rem;
+            animation: marquee 25s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-track:hover { animation-play-state: paused; }
+
+        .marquee-item {
+            flex-shrink: 0;
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .marquee-item::after {
+            content: '';
             width: 4px;
             height: 4px;
-            background: rgba(102, 126, 234, 0.5);
+            background: var(--accent);
             border-radius: 50%;
-            animation: particle-float 20s infinite linear;
+            flex-shrink: 0;
         }
 
-        @keyframes particle-float {
-            from {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            to {
-                transform: translateY(-10vh) translateX(100px);
-                opacity: 0;
-            }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
         }
 
-        /* Navigation */
-        nav {
-            transition: all 0.3s ease;
+        /* ============ BACK TO TOP ============ */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            color: var(--accent);
+            cursor: pointer;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
         }
 
-        .nav-scrolled {
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
-        /* Mobile Menu */
-        .mobile-menu {
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
+        .back-to-top:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px var(--accent-glow);
         }
 
-        .mobile-menu.active {
-            transform: translateX(0);
+        .back-to-top svg { width: 18px; height: 18px; }
+
+        /* ============ ACTIVE NAV INDICATOR ============ */
+        .nav-links a.active { color: var(--accent); }
+        .nav-links a.active::after { width: 100%; }
+
+        /* ============ ENHANCED CARD GLOW ============ */
+        .app-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: radial-gradient(circle at 50% 0%, var(--accent-dim), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
         }
 
-        /* App Icons */
-        .app-icon {
-            border-radius: 24px;
-            transition: all 0.3s ease;
+        .app-card:hover::after { opacity: 1; }
+
+        /* ============ COUNTER ANIMATION ============ */
+        .stat-number {
+            transition: color 0.3s;
         }
 
-        .app-icon:hover {
-            transform: rotate(5deg) scale(1.1);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        .stat-item:hover .stat-number {
+            text-shadow: 0 0 20px var(--accent-glow);
         }
 
-        /* Feature Cards */
-        .feature-card {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            border: 1px solid rgba(102, 126, 234, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
+        /* ============ TOOLTIP ON ORBIT APPS ============ */
+        .orbit-app { position: absolute; }
 
-        .feature-card:hover {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
-            border-color: rgba(102, 126, 234, 0.5);
-            transform: translateY(-5px);
-        }
-
-        /* Loading Animation */
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .loader {
-            animation: spin 2s linear infinite;
-        }
-
-        /* Typewriter Effect */
-        .typewriter {
-            overflow: hidden;
-            border-right: 2px solid rgba(102, 126, 234, 0.8);
+        .orbit-app::after {
+            content: attr(data-name);
+            position: absolute;
+            bottom: -28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(4px);
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
             white-space: nowrap;
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
         }
 
-        @keyframes typing {
-            from {
-                width: 0
-            }
+        .orbit-app:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
 
-            to {
-                width: 100%
+        /* ============ RESPONSIVE ============ */
+
+        /* Large desktop */
+        @media (min-width: 1600px) {
+            .section-inner { max-width: 1500px; }
+            .nav-inner { max-width: 1500px; }
+            .hero-content { max-width: 1500px; }
+            .hero-orbit { width: 480px; height: 480px; }
+            .orbit-app { width: 64px; height: 64px; border-radius: 16px; }
+            .orbit-center { width: 160px; height: 160px; }
+        }
+
+        /* Tablet landscape */
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text { order: 2; }
+            .hero-visual { order: 1; margin-bottom: 1rem; }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-actions { justify-content: center; flex-wrap: wrap; }
+            .hero-label { margin-bottom: 1.5rem; }
+            .apps-grid { grid-template-columns: 1fr; max-width: 640px; margin: 0 auto; }
+            .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .about-visual { order: -1; }
+            .about-emblem { width: 240px; height: 240px; }
+            .about-emblem img { width: 80px; }
+            .hero-orbit { width: 300px; height: 300px; }
+            .section-header { margin-bottom: 3.5rem; }
+        }
+
+        /* Tablet portrait & mobile */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .nav-inner { padding: 0 1.25rem; }
+            .nav-logo img { height: 42px; }
+
+            .section { padding: 4rem 0; }
+            .section-inner { padding: 0 1.25rem; }
+            .section-header { margin-bottom: 2.5rem; }
+
+            .hero { min-height: calc(100vh - 60px); min-height: calc(100dvh - 60px); }
+            .hero-content { padding: 0 1.25rem; gap: 2rem; }
+            .hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
+            .hero-desc { font-size: 0.95rem; margin-bottom: 2rem; }
+            .hero-label { font-size: 0.65rem; padding: 0.4rem 0.8rem; }
+
+            .hero-orbit { width: 240px; height: 240px; }
+            .orbit-app { width: 42px; height: 42px; border-radius: 10px; }
+            .orbit-center { width: 90px; height: 90px; }
+            .orbit-ring:nth-child(2) { inset: 30px; }
+            .orbit-ring:nth-child(3) { inset: 60px; }
+            .orbit-app::after { display: none; }
+
+            .features-grid { grid-template-columns: 1fr; }
+            .feature-item {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 2rem 1.5rem;
+            }
+            .feature-item:last-child { border-bottom: none; }
+
+            .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+            .stat-item { padding: 1.25rem 0.5rem; }
+            .stat-number { font-size: 1.6rem; }
+            .stat-label { font-size: 0.65rem; }
+
+            .app-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1.25rem;
+                padding: 1.75rem 1.5rem;
+            }
+            .app-icon-wrap { width: 72px; height: 72px; border-radius: 16px; }
+            .app-tags { justify-content: center; }
+            .app-name { font-size: 1.3rem; }
+
+            .about-emblem { width: 180px; height: 180px; }
+            .about-emblem::before { inset: 14px; }
+            .about-emblem::after { inset: 28px; }
+            .about-emblem img { width: 60px; }
+            .about-text-block p { font-size: 1rem; }
+
+            .contact-email { font-size: clamp(1.1rem, 4vw, 1.6rem); }
+
+            .social-link { width: 42px; height: 42px; }
+            .social-link svg { width: 16px; height: 16px; }
+
+            .footer-inner { flex-direction: column; gap: 0.75rem; text-align: center; padding: 0 1.25rem; }
+            .footer-links { gap: 1.5rem; }
+
+            .hr-decor { padding: 0 1.25rem; }
+
+            .marquee-item { font-size: 0.8rem; }
+
+            .back-to-top { bottom: 1.25rem; right: 1.25rem; width: 40px; height: 40px; }
+        }
+
+        /* Small mobile */
+        @media (max-width: 480px) {
+            .nav-inner { padding: 0 1rem; }
+            .section-inner { padding: 0 1rem; }
+            .hero-content { padding: 0 1rem; }
+            .hr-decor { padding: 0 1rem; }
+            .footer-inner { padding: 0 1rem; }
+
+            .hero h1 { font-size: clamp(1.75rem, 7vw, 2.4rem); }
+            .hero-desc { font-size: 0.88rem; }
+            .hero-orbit { width: 200px; height: 200px; }
+            .orbit-app { width: 36px; height: 36px; border-radius: 9px; }
+            .orbit-center { width: 72px; height: 72px; }
+            .orbit-ring:nth-child(2) { inset: 24px; }
+            .orbit-ring:nth-child(3) { inset: 48px; }
+
+            .btn-gold, .btn-ghost {
+                width: 100%;
+                justify-content: center;
+                padding: 0.85rem 1.5rem;
+                font-size: 0.82rem;
+            }
+            .hero-actions { flex-direction: column; width: 100%; }
+
+            .section-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+
+            .app-card { padding: 1.5rem 1.25rem; }
+            .app-icon-wrap { width: 64px; height: 64px; border-radius: 14px; }
+            .app-name { font-size: 1.2rem; }
+            .app-desc { font-size: 0.88rem; }
+            .app-tag { font-size: 0.65rem; padding: 0.25rem 0.6rem; }
+
+            .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+            .stat-number { font-size: 1.35rem; }
+            .stat-label { font-size: 0.6rem; letter-spacing: 0.06em; }
+            .stat-item { padding: 1rem 0.4rem; border-radius: 6px; }
+
+            .feature-item { padding: 1.5rem 1rem; }
+            .feature-icon { width: 44px; height: 44px; border-radius: 10px; }
+            .feature-icon svg { width: 18px; height: 18px; }
+            .feature-name { font-size: 1.1rem; }
+            .feature-text { font-size: 0.82rem; }
+
+            .about-emblem { width: 150px; height: 150px; }
+            .about-emblem::before { inset: 12px; }
+            .about-emblem::after { inset: 24px; }
+            .about-emblem img { width: 48px; }
+
+            .social-links { gap: 0.75rem; }
+        }
+
+        /* Ultra-wide */
+        @media (min-width: 2000px) {
+            html { font-size: 18px; }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .app-card:hover { transform: none; box-shadow: none; }
+            .app-card:active {
+                background: var(--bg-card-hover);
+                border-color: var(--border-hover);
+            }
+            .orbit-app:hover { transform: none !important; }
+            .social-link:hover { transform: none; }
+            .btn-gold:hover { transform: none; }
+            .btn-gold:active { transform: scale(0.98); }
+            .btn-ghost:active { border-color: var(--accent); color: var(--accent); }
+        }
+
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+            .scroll-reveal, .app-card, .feature-item {
+                opacity: 1;
+                transform: none;
+            }
+            .hero-text, .hero-visual {
+                opacity: 1;
+                animation: none;
             }
         }
 
-        @keyframes blink-caret {
-
-            from,
-            to {
-                border-color: transparent
-            }
-
-            50% {
-                border-color: rgba(102, 126, 234, 0.8);
-            }
+        /* Landscape mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero { min-height: auto; padding: 6rem 0 3rem; }
+            .hero-visual { display: none; }
+            .hero-content { grid-template-columns: 1fr; }
+            .hero-text { order: 1; text-align: center; }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-actions { justify-content: center; }
         }
     </style>
 </head>
 
-<body class="bg-black text-white">
-    <!-- Particle Background -->
-    <div class="particles fixed inset-0 z-0">
-        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
-        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
-        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
-        <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
-        <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
-        <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
-        <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
-        <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
-        <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
-    </div>
+<body>
+    <!-- Film grain overlay -->
+    <div class="grain"></div>
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <img src="assets/xova_logo_transparent.png" alt="Xova Software"
-                        class="h-20 filter brightness-0 invert">
-                </div>
+    <nav id="navbar" class="nav">
+        <div class="nav-inner">
+            <a href="#home" class="nav-logo">
+                <img src="assets/xova_logo_transparent.png" alt="Xova Software">
+            </a>
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="hover:text-purple-400 transition">Home</a>
-                    <a href="#apps" class="hover:text-purple-400 transition">Apps</a>
-                    <a href="#features" class="hover:text-purple-400 transition">Features</a>
-                    <a href="#about" class="hover:text-purple-400 transition">About</a>
-                    <a href="#contact" class="hover:text-purple-400 transition">Contact</a>
-                    <select id="lang-select" class="bg-transparent border border-purple-500 rounded px-3 py-1 text-sm"
-                        onchange="setLanguage(this.value)">
-                        <option value="en" class="bg-black">EN</option>
-                        <option value="tr" class="bg-black">TR</option>
-                        <option value="de" class="bg-black">DE</option>
-                    </select>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#apps">Apps</a>
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <select id="lang-select" class="lang-selector" aria-label="Language">
+                    <option value="en">EN</option>
+                    <option value="tr">TR</option>
+                    <option value="de">DE</option>
+                </select>
             </div>
+
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mobile-menu fixed right-0 top-0 h-full w-64 bg-black bg-opacity-95 z-40 p-6">
-        <button id="close-menu" class="absolute top-4 right-4 text-white">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
-        <div class="mt-12 space-y-4">
-            <a href="#home" class="block py-2 hover:text-purple-400 transition">Home</a>
-            <a href="#apps" class="block py-2 hover:text-purple-400 transition">Apps</a>
-            <a href="#features" class="block py-2 hover:text-purple-400 transition">Features</a>
-            <a href="#about" class="block py-2 hover:text-purple-400 transition">About</a>
-            <a href="#contact" class="block py-2 hover:text-purple-400 transition">Contact</a>
-        </div>
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="#home">Home</a>
+        <a href="#apps">Apps</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <select id="mobile-lang-select" class="lang-selector" aria-label="Language" style="margin-top: 1.5rem; font-size: 1rem; padding: 0.5rem 1rem;">
+            <option value="en">English</option>
+            <option value="tr">Turkish</option>
+            <option value="de">German</option>
+        </select>
     </div>
 
     <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center relative dark-gradient">
-        <div class="container mx-auto px-6 text-center z-10">
-            <h1 id="hero-title" class="text-5xl md:text-7xl font-black mb-6 fade-in">
-                <span class="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                    We Build Intelligent
-                </span>
-                <br>
-                <span class="text-white text-glow">Mobile Apps</span>
-            </h1>
-            <p id="hero-subtitle" class="text-xl md:text-2xl text-gray-300 mb-10 fade-in max-w-3xl mx-auto"
-                style="animation-delay: 0.2s;">
-                Xova Software specializes in AI-powered mobile experiences that transform how you interact with
-                technology
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in" style="animation-delay: 0.4s;">
-                <button class="btn-primary px-8 py-4 rounded-full text-white font-semibold text-lg">
-                    Explore Our Apps
-                </button>
-                <button
-                    class="glass px-8 py-4 rounded-full text-white font-semibold text-lg border border-purple-500 hover:bg-purple-500 hover:bg-opacity-20 transition">
-                    Learn More
-                </button>
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-label">
+                    <span class="hero-label-dot"></span>
+                    AI-Powered Software
+                </div>
+                <h1 id="hero-title">
+                    We Build<br><em>Intelligent</em><br>Mobile Apps
+                </h1>
+                <p id="hero-subtitle" class="hero-desc">
+                    Xova Software specializes in AI-powered mobile experiences that transform how you interact with technology
+                </p>
+                <div class="hero-actions">
+                    <button class="btn-gold" id="btn-explore">
+                        Explore Our Apps
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                    <button class="btn-ghost" id="btn-learn">
+                        Learn More
+                    </button>
+                </div>
             </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 pulse-animation">
-            <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
-                </path>
-            </svg>
+            <div class="hero-visual">
+                <div class="hero-orbit">
+                    <div class="orbit-ring"></div>
+                    <div class="orbit-ring"></div>
+                    <div class="orbit-ring"></div>
+                    <div class="orbit-center">
+                        <img src="assets/xova_logo_transparent.png" alt="Xova">
+                    </div>
+                    <div class="orbit-app" data-name="Pixivo"><img src="assets/pixivo.png" alt="Pixivo"></div>
+                    <div class="orbit-app" data-name="Tatarai"><img src="assets/tatarai.png" alt="Tatarai"></div>
+                    <div class="orbit-app" data-name="Setwise"><img src="assets/setwise.png" alt="Setwise"></div>
+                    <div class="orbit-app" data-name="PDF Maker"><img src="assets/xovapdf.png" alt="Xova PDF"></div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Apps Section -->
-    <section id="apps" class="py-20 relative">
-        <div class="container mx-auto px-6">
-            <h2 id="apps-title" class="text-4xl md:text-5xl font-bold text-center mb-4">
-                <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Our
-                    Applications</span>
-            </h2>
-            <p class="text-center text-gray-400 mb-16 text-lg">Revolutionary AI-powered mobile solutions</p>
+    <section id="apps" class="section">
+        <div class="section-inner">
+            <div class="section-header scroll-reveal">
+                <div class="section-label">Our Portfolio</div>
+                <div class="divider"></div>
+                <h2 id="apps-title" class="section-title">Applications that <em>redefine</em> mobile</h2>
+                <p class="section-desc">Revolutionary AI-powered solutions crafted with precision and purpose.</p>
+            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-                <!-- Pixarro App -->
-                <div class="glass rounded-3xl p-8 card-hover">
-                    <div class="flex items-start space-x-6">
-                        <img src="assets/pixivo.png" alt="Pixivo" class="app-icon w-24 h-24 flex-shrink-0">
-                        <div class="flex-1">
-                            <h3 id="pixivo-title" class="text-2xl font-bold mb-3">Pixivo</h3>
-                            <p class="text-gray-400 mb-4">Restore & Colorize Old Photos with AI</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span
-                                    class="px-3 py-1 bg-purple-500 bg-opacity-20 rounded-full text-xs text-purple-300">AI
-                                    Enhanced</span>
-                                <span
-                                    class="px-3 py-1 bg-blue-500 bg-opacity-20 rounded-full text-xs text-blue-300">Photo
-                                    Restoration</span>
-                                <span
-                                    class="px-3 py-1 bg-pink-500 bg-opacity-20 rounded-full text-xs text-pink-300">Colorization</span>
-                            </div>
-                            <a href="https://apps.apple.com/app/pixivo/id1234567890"
-                                class="inline-flex items-center text-purple-400 hover:text-purple-300 transition">
-                                <span>Download on App Store</span>
-                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
+            <div class="apps-grid">
+                <!-- Pixivo -->
+                <div class="app-card" data-delay="0">
+                    <div class="app-icon-wrap">
+                        <img src="assets/pixivo.png" alt="Pixivo">
+                    </div>
+                    <div class="app-info">
+                        <h3 id="pixivo-title" class="app-name">Pixivo</h3>
+                        <p class="app-desc">Restore & Colorize Old Photos with AI</p>
+                        <div class="app-tags">
+                            <span class="app-tag">AI Enhanced</span>
+                            <span class="app-tag blue">Photo Restoration</span>
+                            <span class="app-tag">Colorization</span>
                         </div>
+                        <a href="https://apps.apple.com/app/pixivo/id1234567890" class="app-link">
+                            Download on App Store
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Tatarai App -->
-                <div class="glass rounded-3xl p-8 card-hover">
-                    <div class="flex items-start space-x-6">
-                        <img src="assets/tatarai.png" alt="Tatarai" class="app-icon w-24 h-24 flex-shrink-0">
-                        <div class="flex-1">
-                            <h3 id="tatarai-title" class="text-2xl font-bold mb-3">Tatarai</h3>
-                            <p class="text-gray-400 mb-4">Instantly Identify Plants Around You</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span
-                                    class="px-3 py-1 bg-green-500 bg-opacity-20 rounded-full text-xs text-green-300">Plant
-                                    Recognition</span>
-                                <span
-                                    class="px-3 py-1 bg-yellow-500 bg-opacity-20 rounded-full text-xs text-yellow-300">AI
-                                    Vision</span>
-                                <span
-                                    class="px-3 py-1 bg-blue-500 bg-opacity-20 rounded-full text-xs text-blue-300">Database</span>
-                            </div>
-                            <a href="https://apps.apple.com/us/app/tatarai-crop-plant-health/id6745120919"
-                                class="inline-flex items-center text-purple-400 hover:text-purple-300 transition">
-                                <span>Download on App Store</span>
-                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
+                <!-- Tatarai -->
+                <div class="app-card" data-delay="100">
+                    <div class="app-icon-wrap">
+                        <img src="assets/tatarai.png" alt="Tatarai">
+                    </div>
+                    <div class="app-info">
+                        <h3 id="tatarai-title" class="app-name">Tatarai</h3>
+                        <p class="app-desc">Instantly Identify Plants Around You</p>
+                        <div class="app-tags">
+                            <span class="app-tag green">Plant Recognition</span>
+                            <span class="app-tag green">AI Vision</span>
+                            <span class="app-tag blue">Database</span>
                         </div>
+                        <a href="https://apps.apple.com/us/app/tatarai-crop-plant-health/id6745120919" class="app-link">
+                            Download on App Store
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Setwise App -->
-                <div class="glass p-8 card-hover" style="border-radius:8px; border:2px solid rgba(220,38,38,0.3);">
-                    <div class="flex items-start space-x-6">
-                        <img src="assets/setwise.png" alt="Setwise" class="app-icon w-24 h-24 flex-shrink-0" style="border-radius:8px;">
-                        <div class="flex-1">
-                            <h3 id="setwise-title" class="text-2xl font-bold mb-3">Setwise</h3>
-                            <p class="text-gray-400 mb-4">AI-Powered Workout & Fitness Planner</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span
-                                    class="px-3 py-1 bg-red-600 bg-opacity-20 rounded-full text-xs text-red-400">Workout
-                                    Planner</span>
-                                <span
-                                    class="px-3 py-1 bg-red-500 bg-opacity-20 rounded-full text-xs text-red-300">AI
-                                    Fitness</span>
-                                <span
-                                    class="px-3 py-1 bg-red-800 bg-opacity-20 rounded-full text-xs text-red-400">Progress
-                                    Tracking</span>
-                            </div>
-                            <a href="https://apps.apple.com/app/setwise/id0000000000"
-                                class="inline-flex items-center text-red-500 hover:text-red-400 transition">
-                                <span>Download on App Store</span>
-                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
+                <!-- Setwise -->
+                <div class="app-card" data-delay="200">
+                    <div class="app-icon-wrap">
+                        <img src="assets/setwise.png" alt="Setwise">
+                    </div>
+                    <div class="app-info">
+                        <h3 id="setwise-title" class="app-name">Setwise</h3>
+                        <p class="app-desc">AI-Powered Workout & Fitness Planner</p>
+                        <div class="app-tags">
+                            <span class="app-tag red">Workout Planner</span>
+                            <span class="app-tag red">AI Fitness</span>
+                            <span class="app-tag orange">Progress Tracking</span>
                         </div>
+                        <a href="https://apps.apple.com/app/setwise/id0000000000" class="app-link">
+                            Download on App Store
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Xova PDF MAKER App -->
-                <div class="glass p-8 card-hover" style="border-radius:8px; border:2px solid rgba(220,38,38,0.3);">
-                    <div class="flex items-start space-x-6">
-                        <img src="assets/xovapdf.png" alt="Xova PDF MAKER" class="app-icon w-24 h-24 flex-shrink-0" style="border-radius:8px;">
-                        <div class="flex-1">
-                            <h3 id="xovapdfmaker-title" class="text-2xl font-bold mb-3">Xova PDF MAKER</h3>
-                            <p class="text-gray-400 mb-4">Create & Convert PDFs Easily</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span
-                                    class="px-3 py-1 bg-red-600 bg-opacity-20 rounded-full text-xs text-red-400">PDF Creator</span>
-                                <span
-                                    class="px-3 py-1 bg-red-500 bg-opacity-20 rounded-full text-xs text-red-300">Converter</span>
-                                <span
-                                    class="px-3 py-1 bg-red-800 bg-opacity-20 rounded-full text-xs text-red-400">Document Tools</span>
-                            </div>
-                            <a href="https://apps.apple.com/app/xovapdfmaker/id0000000000"
-                                class="inline-flex items-center text-red-500 hover:text-red-400 transition">
-                                <span>Download on App Store</span>
-                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
+                <!-- Xova PDF MAKER -->
+                <div class="app-card" data-delay="300">
+                    <div class="app-icon-wrap">
+                        <img src="assets/xovapdf.png" alt="Xova PDF MAKER">
+                    </div>
+                    <div class="app-info">
+                        <h3 id="xovapdfmaker-title" class="app-name">Xova PDF Maker</h3>
+                        <p class="app-desc">Create & Convert PDFs Easily</p>
+                        <div class="app-tags">
+                            <span class="app-tag orange">PDF Creator</span>
+                            <span class="app-tag blue">Converter</span>
+                            <span class="app-tag">Document Tools</span>
                         </div>
+                        <a href="https://apps.apple.com/app/xovapdfmaker/id0000000000" class="app-link">
+                            Download on App Store
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Marquee Banner -->
+    <div class="marquee-banner">
+        <div class="marquee-track">
+            <span class="marquee-item">AI-Powered Solutions</span>
+            <span class="marquee-item">Photo Restoration</span>
+            <span class="marquee-item">Plant Recognition</span>
+            <span class="marquee-item">Fitness Planning</span>
+            <span class="marquee-item">PDF Creation</span>
+            <span class="marquee-item">Machine Learning</span>
+            <span class="marquee-item">Mobile Innovation</span>
+            <span class="marquee-item">Smart Technology</span>
+            <span class="marquee-item">AI-Powered Solutions</span>
+            <span class="marquee-item">Photo Restoration</span>
+            <span class="marquee-item">Plant Recognition</span>
+            <span class="marquee-item">Fitness Planning</span>
+            <span class="marquee-item">PDF Creation</span>
+            <span class="marquee-item">Machine Learning</span>
+            <span class="marquee-item">Mobile Innovation</span>
+            <span class="marquee-item">Smart Technology</span>
+        </div>
+    </div>
+
     <!-- Features Section -->
-    <section id="features" class="py-20 dark-gradient">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
-                <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Why Choose
-                    Xova?</span>
-            </h2>
+    <section id="features" class="section features-section">
+        <div class="section-inner">
+            <div class="section-header centered scroll-reveal">
+                <div class="section-label">Why Xova</div>
+                <div class="divider"></div>
+                <h2 class="section-title">Built on <em>principles</em> that matter</h2>
+            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="feature-card rounded-2xl p-6 text-center">
-                    <div class="w-16 h-16 mx-auto mb-4 gradient-bg rounded-full flex items-center justify-center">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            <div class="features-grid">
+                <div class="feature-item" data-delay="0">
+                    <div class="feature-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Lightning Fast</h3>
-                    <p class="text-gray-400">Optimized performance for instant results</p>
+                    <h3 class="feature-name">Lightning Fast</h3>
+                    <p class="feature-text">Optimized performance engineered for instant, seamless results.</p>
                 </div>
 
-                <div class="feature-card rounded-2xl p-6 text-center">
-                    <div class="w-16 h-16 mx-auto mb-4 gradient-bg rounded-full flex items-center justify-center">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                            </path>
+                <div class="feature-item" data-delay="100">
+                    <div class="feature-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">AI Powered</h3>
-                    <p class="text-gray-400">State-of-the-art machine learning models</p>
+                    <h3 class="feature-name">AI Powered</h3>
+                    <p class="feature-text">State-of-the-art machine learning models at the core of every experience.</p>
                 </div>
 
-                <div class="feature-card rounded-2xl p-6 text-center">
-                    <div class="w-16 h-16 mx-auto mb-4 gradient-bg rounded-full flex items-center justify-center">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                            </path>
+                <div class="feature-item" data-delay="200">
+                    <div class="feature-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Secure & Private</h3>
-                    <p class="text-gray-400">Your data stays safe and encrypted</p>
+                    <h3 class="feature-name">Secure & Private</h3>
+                    <p class="feature-text">Your data stays safe, encrypted, and entirely under your control.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 id="about-title" class="text-4xl md:text-5xl font-bold mb-8">
-                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">About
-                        Us</span>
-                </h2>
-                <p id="about-text" class="text-xl text-gray-300 leading-relaxed mb-8">
-                    Xova Software is a tech company focused on developing mobile applications powered by artificial
-                    intelligence. We aim to deliver delightful, useful, and intuitive experiences through mobile
-                    technology.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                    <div class="text-center">
-                        <div class="text-4xl font-bold text-purple-400 mb-2">2M+</div>
-                        <div class="text-gray-400">Happy Users</div>
+    <section id="about" class="section">
+        <div class="section-inner">
+            <div class="about-grid">
+                <div class="scroll-reveal">
+                    <div class="section-header" style="margin-bottom: 2rem;">
+                        <div class="section-label">About Us</div>
+                        <div class="divider"></div>
+                        <h2 id="about-title" class="section-title">Crafting the <em>future</em> of mobile</h2>
                     </div>
-                    <div class="text-center">
-                        <div class="text-4xl font-bold text-blue-400 mb-2">50+</div>
-                        <div class="text-gray-400">Countries</div>
+                    <div class="about-text-block">
+                        <p id="about-text">
+                            Xova Software is a tech company focused on developing mobile applications powered by artificial intelligence. We aim to deliver delightful, useful, and intuitive experiences through mobile technology.
+                        </p>
                     </div>
-                    <div class="text-center">
-                        <div class="text-4xl font-bold text-pink-400 mb-2">4.8★</div>
-                        <div class="text-gray-400">App Store Rating</div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">2M+</div>
+                            <div class="stat-label">Happy Users</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Countries</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">4.8</div>
+                            <div class="stat-label">App Rating</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual scroll-reveal">
+                    <div class="about-emblem">
+                        <img src="assets/xova_logo_transparent.png" alt="Xova">
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="hr-decor"><hr></div>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 dark-gradient">
-        <div class="container mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 id="contact-title" class="text-4xl md:text-5xl font-bold mb-8">
-                    <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Get In
-                        Touch</span>
-                </h2>
-                <p id="contact-text" class="text-xl text-gray-300 mb-8">
+    <section id="contact" class="section contact-section">
+        <div class="section-inner">
+            <div class="section-header centered scroll-reveal">
+                <div class="section-label">Get in Touch</div>
+                <div class="divider"></div>
+                <h2 id="contact-title" class="section-title">Let's build <em>something</em> together</h2>
+                <p id="contact-text" class="section-desc">
                     Feel free to contact us for support, partnerships, or general inquiries.
                 </p>
-                <div class="glass rounded-2xl p-8 inline-block">
-                    <a href="mailto:info@xovasoftware.co"
-                        class="text-2xl font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-purple-300 hover:to-pink-300 transition">
-                        info@xovasoftware.co
-                    </a>
-                </div>
-                <div class="flex justify-center space-x-6 mt-8">
-                    <a href="https://facebook.com/xovasoftware"
-                        class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-purple-500 hover:bg-opacity-20 transition">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </div>
+
+            <div class="scroll-reveal" style="text-align: center;">
+                <a href="mailto:info@xovasoftware.co" class="contact-email">
+                    info@xovasoftware.co
+                </a>
+
+                <div class="social-links">
+                    <a href="https://facebook.com/xovasoftware" class="social-link" aria-label="Facebook">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                         </svg>
                     </a>
-                    <a href="https://twitter.com/xovasoftware"
-                        class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-purple-500 hover:bg-opacity-20 transition">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                    <a href="https://twitter.com/xovasoftware" class="social-link" aria-label="Twitter">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                         </svg>
                     </a>
-                    <a href="https://linkedin.com/company/xovasoftware"
-                        class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-purple-500 hover:bg-opacity-20 transition">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    <a href="https://linkedin.com/company/xovasoftware" class="social-link" aria-label="LinkedIn">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                         </svg>
                     </a>
                 </div>
@@ -661,172 +1588,244 @@
         </div>
     </section>
 
+    <!-- Back to Top -->
+    <a href="#home" class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+        </svg>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-copy">&copy; 2025 Xova Software. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="mailto:info@xovasoftware.co">Support</a>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Mobile Menu Functionality
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const closeMenuBtn = document.getElementById('close-menu');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('active');
-        });
-
-        closeMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-        });
-
-        // Close mobile menu when clicking on a link
-        const mobileMenuLinks = mobileMenu.querySelectorAll('a[href^="#"]');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-            });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenu.classList.remove('active');
+        // Smooth scroll helper
+        function smoothScroll(id) {
+            var el = document.getElementById(id);
+            if (el) {
+                var offset = el.offsetTop - 80;
+                window.scrollTo({ top: offset, behavior: 'smooth' });
             }
-        });
-
-        // Smooth Scrolling for Navigation Links
-        const navLinks = document.querySelectorAll('a[href^="#"]');
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                if (targetSection) {
-                    const offsetTop = targetSection.offsetTop - 80; // Account for fixed navbar
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Hero Buttons Functionality
-        const exploreAppsBtn = document.querySelector('.btn-primary');
-        const learnMoreBtn = document.querySelector('.glass');
-
-        if (exploreAppsBtn) {
-            exploreAppsBtn.addEventListener('click', () => {
-                const appsSection = document.getElementById('apps');
-                if (appsSection) {
-                    const offsetTop = appsSection.offsetTop - 80;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
         }
 
-        if (learnMoreBtn) {
-            learnMoreBtn.addEventListener('click', (e) => {
+        // Hero buttons
+        document.getElementById('btn-explore').addEventListener('click', function() {
+            smoothScroll('apps');
+        });
+        document.getElementById('btn-learn').addEventListener('click', function() {
+            smoothScroll('about');
+        });
+
+        // Nav links smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
-                const aboutSection = document.getElementById('about');
-                if (aboutSection) {
-                    const offsetTop = aboutSection.offsetTop - 80;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
+                var id = link.getAttribute('href').slice(1);
+                smoothScroll(id);
+                // Close mobile nav
+                document.getElementById('mobile-nav').classList.remove('active');
+                document.getElementById('mobile-toggle').classList.remove('active');
             });
-        }
+        });
 
-        // Navbar Scroll Effect
-        const navbar = document.getElementById('navbar');
-        let lastScrollY = window.scrollY;
+        // Navbar scroll effect + back to top + active nav
+        var navbar = document.getElementById('navbar');
+        var backToTop = document.getElementById('back-to-top');
+        var sections = document.querySelectorAll('section[id]');
+        var navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('nav-scrolled');
+        window.addEventListener('scroll', function() {
+            var scrollY = window.scrollY;
+
+            // Navbar background
+            if (scrollY > 60) {
+                navbar.classList.add('scrolled');
             } else {
-                navbar.classList.remove('nav-scrolled');
+                navbar.classList.remove('scrolled');
             }
-            lastScrollY = window.scrollY;
+
+            // Back to top visibility
+            if (scrollY > 600) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+
+            // Active nav link
+            var current = '';
+            sections.forEach(function(section) {
+                var top = section.offsetTop - 120;
+                if (scrollY >= top) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navAnchors.forEach(function(a) {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) {
+                    a.classList.add('active');
+                }
+            });
         });
 
-        // Language Switching Functionality
+        // Mobile menu
+        var mobileToggle = document.getElementById('mobile-toggle');
+        var mobileNav = document.getElementById('mobile-nav');
+
+        mobileToggle.addEventListener('click', function() {
+            mobileToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        // Scroll reveal - Intersection Observer
+        var observerOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var delay = entry.target.dataset.delay || 0;
+                    setTimeout(function() {
+                        entry.target.classList.add('visible');
+                    }, parseInt(delay));
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal, .app-card, .feature-item').forEach(function(el) {
+            observer.observe(el);
+        });
+
+        // Language switching
+        var langSelect = document.getElementById('lang-select');
+        var mobileLangSelect = document.getElementById('mobile-lang-select');
+
+        langSelect.addEventListener('change', function() {
+            setLanguage(this.value);
+        });
+        mobileLangSelect.addEventListener('change', function() {
+            setLanguage(this.value);
+        });
+
         function setLanguage(lang) {
-            const translations = {
+            var translations = {
                 en: {
-                    'hero-title': 'We Build Intelligent<br><span class="text-white text-glow">Mobile Apps</span>',
+                    'hero-title-text': 'We Build\nIntelligent\nMobile Apps',
+                    'hero-title-italic': 'Intelligent',
                     'hero-subtitle': 'Xova Software specializes in AI-powered mobile experiences that transform how you interact with technology',
-                    'apps-title': 'Our Applications',
+                    'apps-title-text': 'Applications that redefine mobile',
+                    'apps-title-italic': 'redefine',
                     'pixivo-title': 'Pixivo',
                     'tatarai-title': 'Tatarai',
                     'setwise-title': 'Setwise',
-                    'about-title': 'About Us',
+                    'xovapdfmaker-title': 'Xova PDF Maker',
+                    'about-title-text': 'Crafting the future of mobile',
+                    'about-title-italic': 'future',
                     'about-text': 'Xova Software is a tech company focused on developing mobile applications powered by artificial intelligence. We aim to deliver delightful, useful, and intuitive experiences through mobile technology.',
-                    'contact-title': 'Get In Touch',
+                    'contact-title-text': "Let's build something together",
+                    'contact-title-italic': 'something',
                     'contact-text': 'Feel free to contact us for support, partnerships, or general inquiries.'
                 },
                 tr: {
-                    'hero-title': 'Akıllı<br><span class="text-white text-glow">Mobil Uygulamalar</span> Geliştiriyoruz',
-                    'hero-subtitle': 'Xova Software, teknoloji ile etkileşiminizi dönüştüren yapay zeka destekli mobil deneyimler konusunda uzmanlaşmıştır',
-                    'apps-title': 'Uygulamalarımız',
+                    'hero-title-text': 'Ak\u0131ll\u0131\nMobil Uygulamalar\nGeli\u015ftiriyoruz',
+                    'hero-title-italic': 'Ak\u0131ll\u0131',
+                    'hero-subtitle': 'Xova Software, teknoloji ile etkile\u015fiminizi d\u00f6n\u00fc\u015ft\u00fcren yapay zeka destekli mobil deneyimler konusunda uzmanla\u015fm\u0131\u015ft\u0131r',
+                    'apps-title-text': 'Mobili yeniden tan\u0131mlayan uygulamalar',
+                    'apps-title-italic': 'yeniden tan\u0131mlayan',
                     'pixivo-title': 'Pixivo',
                     'tatarai-title': 'Tatarai',
-                    'about-title': 'Hakkımızda',
-                    'about-text': 'Xova Software, yapay zeka destekli mobil uygulamalar geliştirmeye odaklanan bir teknoloji şirketidir. Mobil teknoloji aracılığıyla keyifli, faydalı ve sezgisel deneyimler sunmayı hedefliyoruz.',
-                    'contact-title': 'İletişime Geçin',
-                    'contact-text': 'Destek, ortaklık veya genel sorularınız için bizimle iletişime geçmekten çekinmeyin.'
+                    'setwise-title': 'Setwise',
+                    'xovapdfmaker-title': 'Xova PDF Maker',
+                    'about-title-text': 'Mobilin gelece\u011fini tasar\u0131l\u0131yoruz',
+                    'about-title-italic': 'gelece\u011fini',
+                    'about-text': 'Xova Software, yapay zeka destekli mobil uygulamalar geli\u015ftirmeye odaklanan bir teknoloji \u015firketidir. Mobil teknoloji arac\u0131l\u0131\u011f\u0131yla keyifli, faydal\u0131 ve sezgisel deneyimler sunmay\u0131 hedefliyoruz.',
+                    'contact-title-text': 'Birlikte bir \u015feyler in\u015fa edelim',
+                    'contact-title-italic': 'bir \u015feyler',
+                    'contact-text': 'Destek, ortakl\u0131k veya genel sorular\u0131n\u0131z i\u00e7in bizimle ileti\u015fime ge\u00e7mekten \u00e7ekinmeyin.'
                 },
                 de: {
-                    'hero-title': 'Wir entwickeln intelligente<br><span class="text-white text-glow">Mobile Apps</span>',
-                    'hero-subtitle': 'Xova Software ist spezialisiert auf KI-gestützte mobile Erfahrungen, die Ihre Interaktion mit Technologie transformieren',
-                    'apps-title': 'Unsere Anwendungen',
+                    'hero-title-text': 'Wir entwickeln\nintelligente\nMobile Apps',
+                    'hero-title-italic': 'intelligente',
+                    'hero-subtitle': 'Xova Software ist spezialisiert auf KI-gest\u00fctzte mobile Erfahrungen, die Ihre Interaktion mit Technologie transformieren',
+                    'apps-title-text': 'Anwendungen die Mobile neu definieren',
+                    'apps-title-italic': 'Mobile',
                     'pixivo-title': 'Pixivo',
                     'tatarai-title': 'Tatarai',
-                    'about-title': 'Über Uns',
-                    'about-text': 'Xova Software ist ein Technologieunternehmen, das sich auf die Entwicklung von mobilen Anwendungen mit künstlicher Intelligenz konzentriert. Wir wollen durch mobile Technologie erfreuliche, nützliche und intuitive Erfahrungen bieten.',
-                    'contact-title': 'Kontakt aufnehmen',
-                    'contact-text': 'Kontaktieren Sie uns gerne für Support, Partnerschaften oder allgemeine Anfragen.'
+                    'setwise-title': 'Setwise',
+                    'xovapdfmaker-title': 'Xova PDF Maker',
+                    'about-title-text': 'Die Zukunft des Mobile gestalten',
+                    'about-title-italic': 'Zukunft',
+                    'about-text': 'Xova Software ist ein Technologieunternehmen, das sich auf die Entwicklung von mobilen Anwendungen mit k\u00fcnstlicher Intelligenz konzentriert. Wir wollen durch mobile Technologie erfreuliche, n\u00fctzliche und intuitive Erfahrungen bieten.',
+                    'contact-title-text': 'Lassen Sie uns gemeinsam etwas aufbauen',
+                    'contact-title-italic': 'gemeinsam',
+                    'contact-text': 'Kontaktieren Sie uns gerne f\u00fcr Support, Partnerschaften oder allgemeine Anfragen.'
                 }
             };
 
-            const langData = translations[lang] || translations.en;
-            
-            Object.keys(langData).forEach(key => {
-                const element = document.getElementById(key);
-                if (element) {
-                    element.innerHTML = langData[key];
+            var langData = translations[lang] || translations.en;
+
+            // Update simple text elements safely using textContent
+            var simpleTextIds = ['hero-subtitle', 'pixivo-title', 'tatarai-title', 'setwise-title', 'xovapdfmaker-title', 'about-text', 'contact-text'];
+            simpleTextIds.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el && langData[id]) {
+                    el.textContent = langData[id];
                 }
             });
 
-            // Update language selector
-            const langSelect = document.getElementById('lang-select');
-            if (langSelect) {
-                langSelect.value = lang;
+            // Update hero title with italic word
+            var heroTitle = document.getElementById('hero-title');
+            if (heroTitle) {
+                var lines = langData['hero-title-text'].split('\n');
+                var italicWord = langData['hero-title-italic'];
+                // Clear and rebuild
+                while (heroTitle.firstChild) heroTitle.removeChild(heroTitle.firstChild);
+                lines.forEach(function(line, i) {
+                    if (line.indexOf(italicWord) !== -1) {
+                        var parts = line.split(italicWord);
+                        if (parts[0]) heroTitle.appendChild(document.createTextNode(parts[0]));
+                        var em = document.createElement('em');
+                        em.textContent = italicWord;
+                        heroTitle.appendChild(em);
+                        if (parts[1]) heroTitle.appendChild(document.createTextNode(parts[1]));
+                    } else {
+                        heroTitle.appendChild(document.createTextNode(line));
+                    }
+                    if (i < lines.length - 1) heroTitle.appendChild(document.createElement('br'));
+                });
             }
-        }
 
-        // Initialize particles animation
-        function createParticles() {
-            const particlesContainer = document.querySelector('.particles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                particlesContainer.appendChild(particle);
+            // Update section titles with italic words
+            function updateTitleWithItalic(elementId, text, italicWord) {
+                var el = document.getElementById(elementId);
+                if (!el) return;
+                while (el.firstChild) el.removeChild(el.firstChild);
+                var idx = text.indexOf(italicWord);
+                if (idx !== -1) {
+                    el.appendChild(document.createTextNode(text.substring(0, idx)));
+                    var em = document.createElement('em');
+                    em.textContent = italicWord;
+                    el.appendChild(em);
+                    el.appendChild(document.createTextNode(text.substring(idx + italicWord.length)));
+                } else {
+                    el.textContent = text;
+                }
             }
-        }
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-        });
+            updateTitleWithItalic('apps-title', langData['apps-title-text'], langData['apps-title-italic']);
+            updateTitleWithItalic('about-title', langData['about-title-text'], langData['about-title-italic']);
+            updateTitleWithItalic('contact-title', langData['contact-title-text'], langData['contact-title-italic']);
+
+            langSelect.value = lang;
+            mobileLangSelect.value = lang;
+        }
     </script>
-
 </body>
 
 </html>
