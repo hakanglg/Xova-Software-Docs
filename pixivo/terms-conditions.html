@@ -1,181 +1,140 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Pixivo — Terms & Conditions</title>
-    <meta name="description" content="Terms and Conditions for Pixivo — AI photo enhancement by Xova Software">
-    <style>
-        :root {
-            --bg: #0f1115;
-            --card: #0f1720;
-            --muted: #9aa4b2;
-            --accent: #7c5cff;
-            --glass: rgba(255, 255, 255, 0.04);
-            --success: #22c55e;
-            --danger: #ff6b6b;
-            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-        }
-
-        * {
-            box-sizing: border-box
-        }
-
-        body {
-            margin: 0;
-            background: linear-gradient(180deg, #07070a 0%, #0f1115 100%);
-            color: #e6eef6;
-            line-height: 1.6
-        }
-
-        .wrap {
-            max-width: 1000px;
-            margin: 48px auto;
-            padding: 24px
-        }
-
-        header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 28px
-        }
-
-        .brand {
-            display: flex;
-            flex-direction: column
-        }
-
-        .logo {
-            width: 64px;
-            height: 64px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--accent), #ff7ab6);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: white
-        }
-
-        h1 {
-            font-size: 20px;
-            margin: 0
-        }
-
-        p.lead {
-            margin: 6px 0 0;
-            color: var(--muted)
-        }
-
-        .card {
-            background: linear-gradient(180deg, #071020 0%, #0b1420 100%);
-            padding: 22px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            margin-bottom: 18px
-        }
-
-        h2.section {
-            margin-top: 0
-        }
-
-        .list {
-            margin: 12px 0 18px 0;
-            padding-left: 18px
-        }
-
-        .pill {
-            background: var(--glass);
-            padding: 6px 10px;
-            border-radius: 999px;
-            font-size: 13px;
-            color: var(--muted)
-        }
-
-        .highlight {
-            background: linear-gradient(90deg, rgba(124, 92, 255, 0.12), rgba(255, 122, 182, 0.06));
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid rgba(124, 92, 255, 0.06);
-            color: #dbe6ff
-        }
-
-        footer {
-            margin-top: 32px;
-            color: var(--muted);
-            font-size: 14px
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions — Pixivo | Xova Software</title>
+    <meta name="description" content="Terms and Conditions for Pixivo AI photo enhancement by Xova Software">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/subpage.css">
 </head>
 
 <body>
-    <div class="wrap">
-        <header>
-            <div class="logo" aria-hidden>PX</div>
-            <div class="brand">
-                <h1>Pixivo — Terms & Conditions</h1>
-                <p class="lead">Clear, concise terms for using Pixivo (by Xova Software)</p>
+    <div class="grain"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">
+                <img src="../assets/xova_logo_transparent.png" alt="Xova Software">
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#apps">Apps</a>
+                <a href="../index.html#contact">Contact</a>
             </div>
-        </header>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
 
-        <section class="card" role="region" aria-labelledby="general">
-            <h2 id="general" class="section">1. General</h2>
-            <p>By downloading or using Pixivo, you agree to these Terms & Conditions. Please read them carefully before
-                using the application.</p>
-        </section>
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#apps">Apps</a>
+        <a href="../index.html#contact">Contact</a>
+    </div>
 
-        <section class="card" role="region" aria-labelledby="usage">
-            <h2 id="usage" class="section">2. Usage of Service</h2>
-            <p>Pixivo provides AI-powered image enhancement. You may not use the app for any unlawful or harmful
-                purposes.</p>
-        </section>
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-inner">
+            <a href="../index.html">Home</a>
+            <span class="breadcrumb-sep">&rsaquo;</span>
+            <a href="../index.html#apps">Apps</a>
+            <span class="breadcrumb-sep">&rsaquo;</span>
+            <span>Terms & Conditions</span>
+        </div>
+    </div>
 
-        <section class="card" role="region" aria-labelledby="purchases">
-            <h2 id="purchases" class="section">3. Purchases & Credits</h2>
-            <p>Pixivo sells <strong>consumable credits</strong> that can be used to perform image enhancements. These
-                credits:</p>
-            <ul class="list">
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-inner">
+            <div class="page-hero-icon">
+                <img src="../assets/pixivo.png" alt="Pixivo">
+            </div>
+            <div>
+                <div class="page-hero-label">LEGAL</div>
+                <h1>Terms & <em>Conditions</em></h1>
+                <p class="page-hero-desc">Clear, concise terms for using Pixivo by Xova Software.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <div class="content-wrap">
+
+        <div class="legal-card">
+            <h2>1. General</h2>
+            <p>By downloading or using Pixivo, you agree to these Terms & Conditions. Please read them carefully before using the application.</p>
+        </div>
+
+        <div class="legal-card">
+            <h2>2. Usage of Service</h2>
+            <p>Pixivo provides AI-powered image enhancement. You may not use the app for any unlawful or harmful purposes.</p>
+        </div>
+
+        <div class="legal-card">
+            <h2>3. Purchases & Credits</h2>
+            <p>Pixivo sells <strong>consumable credits</strong> that can be used to perform image enhancements. These credits:</p>
+            <ul>
                 <li>Are consumed per enhancement job.</li>
-                <li>Cannot be restored using the “Restore Purchases” option.</li>
+                <li>Cannot be restored using the "Restore Purchases" option.</li>
                 <li>Are subject to Apple's in-app purchase terms and refund process.</li>
             </ul>
-        </section>
+        </div>
 
-        <section class="card" role="region" aria-labelledby="face-data">
-            <h2 id="face-data" class="section">4. Face Data Processing</h2>
+        <div class="legal-card">
+            <h2>4. Face Data Processing</h2>
             <div class="highlight">
                 <p><strong>Key Facts:</strong></p>
-                <ul class="list">
-                    <li>Pixivo may process user photos containing faces solely for the purpose of enhancing or
-                        restoring them.</li>
-                    <li>Photos are transmitted securely via HTTPS to our third-party processor, <a
-                            href="https://replicate.com" target="_blank">Replicate</a>.</li>
+                <ul>
+                    <li>Pixivo may process user photos containing faces solely for the purpose of enhancing or restoring them.</li>
+                    <li>Photos are transmitted securely via HTTPS to our third-party processor, <a href="https://replicate.com" target="_blank">Replicate</a>.</li>
                     <li>Neither Pixivo nor Replicate store the image or any extracted face data after processing.</li>
                     <li>No biometric identifiers (faceprints, recognition data) are created or retained.</li>
-                    <li>All temporary data is deleted from Replicate’s servers immediately after the enhancement task
-                        completes.</li>
+                    <li>All temporary data is deleted from Replicate's servers immediately after the enhancement task completes.</li>
                 </ul>
             </div>
-        </section>
+        </div>
 
-        <section class="card" role="region" aria-labelledby="security">
-            <h2 id="security" class="section">5. Security & Privacy</h2>
-            <p>All communication between the app and servers is encrypted using HTTPS/TLS. For more information, see our
-                <a href="https://xovasoftware.co/privacy-policy.html">Privacy Policy</a>.</p>
-        </section>
+        <div class="legal-card">
+            <h2>5. Security & Privacy</h2>
+            <p>All communication between the app and servers is encrypted using HTTPS/TLS. For more information, see our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+        </div>
 
-        <section class="card" role="region" aria-labelledby="contact">
-            <h2 id="contact" class="section">6. Contact</h2>
-            <p>If you have questions regarding these Terms & Conditions, please contact us at <a
-                    href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a>.</p>
-        </section>
+        <div class="legal-card">
+            <h2>6. Contact</h2>
+            <p>If you have questions regarding these Terms & Conditions, please contact us at <a href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a>.</p>
+        </div>
 
-        <footer>
-            <p>Effective Date: Aug 9, 2025 • Pixivo by Xova Software</p>
-        </footer>
     </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <p>Effective Date: Aug 9, 2025 &middot; Pixivo by Xova Software</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileNav = document.getElementById('mobileNav');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 
 </html>

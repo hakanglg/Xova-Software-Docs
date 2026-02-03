@@ -1,168 +1,138 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Pixivo — Privacy Policy</title>
-    <meta name="description" content="Privacy Policy for Pixivo — AI photo enhancement by Xova Software">
-    <style>
-        :root {
-            --bg: #0f1115;
-            --card: #0f1720;
-            --muted: #9aa4b2;
-            --accent: #7c5cff;
-            --glass: rgba(255, 255, 255, 0.04);
-            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-        }
-
-        * {
-            box-sizing: border-box
-        }
-
-        body {
-            margin: 0;
-            background: linear-gradient(180deg, #07070a 0%, #0f1115 100%);
-            color: #e6eef6;
-            line-height: 1.6
-        }
-
-        .wrap {
-            max-width: 1000px;
-            margin: 48px auto;
-            padding: 24px
-        }
-
-        header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 28px
-        }
-
-        .brand {
-            display: flex;
-            flex-direction: column
-        }
-
-        .logo {
-            width: 64px;
-            height: 64px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--accent), #ff7ab6);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: white
-        }
-
-        h1 {
-            font-size: 20px;
-            margin: 0
-        }
-
-        p.lead {
-            margin: 6px 0 0;
-            color: var(--muted)
-        }
-
-        .card {
-            background: linear-gradient(180deg, #071020 0%, #0b1420 100%);
-            padding: 22px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            margin-bottom: 18px
-        }
-
-        h2.section {
-            margin-top: 0
-        }
-
-        .list {
-            margin: 12px 0 18px 0;
-            padding-left: 18px
-        }
-
-        .highlight {
-            background: linear-gradient(90deg, rgba(124, 92, 255, 0.12), rgba(255, 122, 182, 0.06));
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid rgba(124, 92, 255, 0.06);
-            color: #dbe6ff
-        }
-
-        footer {
-            margin-top: 32px;
-            color: var(--muted);
-            font-size: 14px
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Pixivo | Xova Software</title>
+    <meta name="description" content="Privacy Policy for Pixivo AI photo enhancement by Xova Software">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/subpage.css">
 </head>
 
 <body>
-    <div class="wrap">
-        <header>
-            <div class="logo" aria-hidden>PX</div>
-            <div class="brand">
-                <h1>Pixivo — Privacy Policy</h1>
-                <p class="lead">How Pixivo (by Xova Software) handles your photos, face data, and privacy.</p>
+    <div class="grain"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">
+                <img src="../assets/xova_logo_transparent.png" alt="Xova Software">
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#apps">Apps</a>
+                <a href="../index.html#contact">Contact</a>
             </div>
-        </header>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
 
-        <section class="card" role="region" aria-labelledby="overview">
-            <h2 id="overview" class="section">1. Overview</h2>
-            <p>Pixivo is an AI-powered photo enhancement application. We respect your privacy and limit data collection
-                to what is strictly necessary for the service to function.</p>
-        </section>
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#apps">Apps</a>
+        <a href="../index.html#contact">Contact</a>
+    </div>
 
-        <section class="card" role="region" aria-labelledby="face-data">
-            <h2 id="face-data" class="section">2. Face Data Usage</h2>
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-inner">
+            <a href="../index.html">Home</a>
+            <span class="breadcrumb-sep">&rsaquo;</span>
+            <a href="../index.html#apps">Apps</a>
+            <span class="breadcrumb-sep">&rsaquo;</span>
+            <span>Privacy Policy</span>
+        </div>
+    </div>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-inner">
+            <div class="page-hero-icon">
+                <img src="../assets/pixivo.png" alt="Pixivo">
+            </div>
+            <div>
+                <div class="page-hero-label">LEGAL</div>
+                <h1>Privacy <em>Policy</em></h1>
+                <p class="page-hero-desc">How Pixivo handles your photos, face data, and privacy.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <div class="content-wrap">
+
+        <div class="legal-card">
+            <h2>1. Overview</h2>
+            <p>Pixivo is an AI-powered photo enhancement application. We respect your privacy and limit data collection to what is strictly necessary for the service to function.</p>
+        </div>
+
+        <div class="legal-card">
+            <h2>2. Face Data Usage</h2>
             <div class="highlight">
-                <ul class="list">
+                <ul>
                     <li>We do not collect biometric identifiers such as faceprints or facial recognition profiles.</li>
-                    <li>Photos you upload may contain faces; these are processed solely to enhance or restore the image.
-                    </li>
-                    <li>Processing is handled via secure HTTPS transmission to our third-party provider, <a
-                            href="https://replicate.com" target="_blank">Replicate</a>.</li>
+                    <li>Photos you upload may contain faces; these are processed solely to enhance or restore the image.</li>
+                    <li>Processing is handled via secure HTTPS transmission to our third-party provider, <a href="https://replicate.com" target="_blank">Replicate</a>.</li>
                     <li>Neither Pixivo nor Replicate store the images or extracted face data after processing.</li>
-                    <li>All temporary data is deleted from Replicate’s servers immediately after the enhancement task
-                        completes.</li>
+                    <li>All temporary data is deleted from Replicate's servers immediately after the enhancement task completes.</li>
                 </ul>
             </div>
-        </section>
+        </div>
 
-        <section class="card" role="region" aria-labelledby="third-party">
-            <h2 id="third-party" class="section">3. Third-Party Processing</h2>
-            <p>We use Replicate for model-based image enhancement. Communication is encrypted using HTTPS/TLS. No other
-                third parties receive your photos or face data.</p>
-        </section>
+        <div class="legal-card">
+            <h2>3. Third-Party Processing</h2>
+            <p>We use Replicate for model-based image enhancement. Communication is encrypted using HTTPS/TLS. No other third parties receive your photos or face data.</p>
+        </div>
 
-        <section class="card" role="region" aria-labelledby="retention">
-            <h2 id="retention" class="section">4. Data Retention</h2>
-            <ul class="list">
-                <li>Pixivo: 0 retention — no user photos are stored.</li>
-                <li>Replicate: temporary retention during processing, automatic deletion after job completion.</li>
-                <li>On your device: enhanced images are saved only if you choose to save or share them.</li>
+        <div class="legal-card">
+            <h2>4. Data Retention</h2>
+            <ul>
+                <li><strong>Pixivo:</strong> 0 retention — no user photos are stored.</li>
+                <li><strong>Replicate:</strong> temporary retention during processing, automatic deletion after job completion.</li>
+                <li><strong>On your device:</strong> enhanced images are saved only if you choose to save or share them.</li>
             </ul>
-        </section>
+        </div>
 
-        <section class="card" role="region" aria-labelledby="security">
-            <h2 id="security" class="section">5. Security</h2>
-            <p>All photo transmissions are encrypted using HTTPS/TLS. No analytics or marketing services receive
-                identifiable face data. You can stop all processing by not uploading photos.</p>
-        </section>
+        <div class="legal-card">
+            <h2>5. Security</h2>
+            <p>All photo transmissions are encrypted using HTTPS/TLS. No analytics or marketing services receive identifiable face data. You can stop all processing by not uploading photos.</p>
+        </div>
 
-        <section class="card" role="region" aria-labelledby="contact">
-            <h2 id="contact" class="section">6. Contact</h2>
-            <p>For privacy-related inquiries, contact <a
-                    href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a>.</p>
-        </section>
+        <div class="legal-card">
+            <h2>6. Contact</h2>
+            <p>For privacy-related inquiries, contact <a href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a>.</p>
+        </div>
 
-        <footer>
-            <p>Effective Date: Aug 9, 2025 • Pixivo by Xova Software</p>
-        </footer>
     </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <p>Effective Date: Aug 9, 2025 &middot; Pixivo by Xova Software</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileNav = document.getElementById('mobileNav');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 
 </html>
