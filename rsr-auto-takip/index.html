@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="theme-color" content="#22272D">
 <meta name="robots" content="noindex, nofollow">
 <title>RSR Auto Takip</title>
@@ -528,6 +528,27 @@ button{cursor:pointer}
   .crop-size{margin-left:0;width:100%}
   .modal.crop-modal .acts .btn{flex:1 1 auto}
   .rng{grid-template-columns:1fr}
+  /* Mobil: modallar alttan açılan tam ekran sayfa; başlık üstte, butonlar altta sabit; klavye açılınca görünür alana sığar */
+  .modal-wrap{padding:0;place-items:end stretch;top:var(--vv-top,0);bottom:auto;height:var(--vv-h,100dvh)}
+  .modal,.modal.wide,.modal.narrow,.modal.crop-modal{max-width:none;width:100%;border-radius:16px 16px 0 0;max-height:calc(100% - 12px);padding:0 16px;overscroll-behavior:contain}
+  .modal-h{position:sticky;top:0;z-index:6;background:var(--surface);margin:0 -16px 4px;padding:12px 8px 8px 16px}
+  .modal-h h2{font-size:var(--t-lg)}
+  .modal>.acts,.modal>form>.acts,.modal>div>.acts:last-child{position:sticky;bottom:0;z-index:6;background:var(--surface);margin:16px -16px 0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);flex-wrap:nowrap}
+  .modal>.acts .btn,.modal>form>.acts .btn,.modal>div>.acts:last-child .btn{flex:1 1 0;min-width:0;padding:0 10px}
+  .modal>.acts .btn-quiet,.modal>form>.acts .btn-quiet,.modal>div>.acts:last-child .btn-quiet{flex:0 0 auto}
+  .modal>form>.acts .btn[hidden]{display:none}
+  .modal p.lead{font-size:15px;margin-bottom:14px}
+  .modal .f.big{height:52px;font-size:24px}
+  /* çekmece görünür alana sığar; "kalem ekle" çubuğu altta sabit */
+  .drawer{top:var(--vv-top,0);bottom:auto;height:var(--vv-h,100dvh)}
+  .pick-go .btn-primary{flex:1 1 100%}
+  .pick-go.hazir{position:fixed;left:0;right:0;bottom:0;z-index:55;margin:0;gap:6px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -8px 18px rgba(28,33,38,.12)}
+  .pick-go.hazir .pk-uyari{order:-1;width:100%;margin:0;font-size:14px}
+  .drawer:has(.pick-go.hazir) .db{padding-bottom:130px}
+  .kb-acik .pick-go.hazir{position:static;box-shadow:none;border:0;padding:0;margin-top:14px}
+  .cb input,.f{scroll-margin-top:96px;scroll-margin-bottom:96px}
+  .kb-acik .cb-list{max-height:min(300px,calc(var(--vv-h,100dvh) * .42))}
+  .giris{top:var(--vv-top,0);bottom:auto;height:var(--vv-h,100dvh);align-items:start}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -1519,6 +1540,7 @@ function pickerBox(r){
     var n=secParca.length||(secIslem?1:0);
     btn.disabled=!n;
     btn.textContent=n?(n===1?'1 kalem ekle':n+' kalem ekle'):'Ekle';
+    if(btn.parentNode)btn.parentNode.classList.toggle('hazir',!!n);
     if(typeof uyari!=='undefined'&&uyari)uyariYaz();
   }
   function uyariYaz(){var u=document.getElementById('pkUyari')||uyari;if(!u)return;var w=secParca.length&&!secIslem;u.className='hint pk-uyari'+(w?' warn':'');u.textContent=w?'İşlem seçilmedi — sonra kalemden seçebilirsiniz.':'Tutarı sonra kalemlere yazabilirsiniz.';}
@@ -1535,7 +1557,7 @@ function pickerBox(r){
         h('p',{class:'step-h'},h('span',null,'1'),'Yapılacak işlem'),h('div',{class:'chips'},islemC,h('button',{type:'button',class:'linkbtn tur-duzen',onclick:turYonet},ic('pen'),'Düzenle'))),
       h('div',{class:'pk-parca'},
         h('p',{class:'step-h'},h('span',null,'2'),'Seçilen parçalar ',h('small',{class:'hint'},'(çizimde dokunun, birden çok seçebilirsiniz)')),selBox,
-        h('div',{class:'pick-go'},btn,uyari))));
+        h('div',{class:'pick-go'+(btn.disabled?'':' hazir')},btn,uyari))));
   uyariYaz();
   return picker;
 }
@@ -2105,6 +2127,7 @@ function kullaniciYaz(){
 }
 function cikis(){memOturum=null;try{sessionStorage.removeItem(GKEY);}catch(e){}kullaniciYaz();girisEkrani();}
 function girisEkrani(){
+  if($('kapali'))return;
   if(oturum()){kullaniciYaz();return;}
   var rol='Sahip';
   var ROLLER=[['Sahip','Her şeyi görür, ayarları yönetir'],['Sekreter','Araç, iş ve randevu girer'],['Usta','Durum değiştirir, fotoğraf yükler']];
@@ -2124,9 +2147,48 @@ function girisEkrani(){
         alan('Ad soyad',ad),alan('E-posta veya telefon',ep),alan('Şifre',sf),
         h('button',{type:'submit',class:'btn btn-primary btn-lg'},'Giriş yap'),
         h('div',{class:'demo-not'},ic('alert'),h('span',null,h('b',null,'Tanıtım sürümü: '),'herhangi bir bilgiyle giriş yapabilirsiniz. Gerçek sürümde her çalışan kendi hesabıyla, rolüne göre yetkiyle girer.')))));
-  document.body.appendChild(g);$('app').inert=true;
+  document.body.appendChild(g);$('app').inert=true;markalariYaz();
   setTimeout(function(){ad.focus();},0);
 }
+/* ---------- işletme ayarları (yönetim panelinden; kullanıcı değiştiremez) ---------- */
+var YKEY='rsr-yonetim-v1',isletme=null;
+var RENK_YAZI={'#F2B90F':'#1C2126','#E07A1F':'#1C2126','#22272D':'#F2F4F6'};
+function isletmeOku(){try{var o=JSON.parse(localStorage.getItem(YKEY)||'null');if(o&&Array.isArray(o.firmalar))return o.firmalar.filter(function(f){return f.id===o.aktifId;})[0]||null;}catch(e){}return null;}
+function isletmeKapali(f){if(!f)return false;if(f.durum==='askida')return true;if(f.bitis&&f.bitis<todayIso())return true;return false;}
+function markalariYaz(){
+  document.querySelectorAll('.mark').forEach(function(el){
+    if(!isletme)return;el.textContent='';el.style.overflow='hidden';
+    if(isletme.logo){el.style.background='#fff';el.appendChild(h('img',{src:isletme.logo,alt:'',style:'width:100%;height:100%;object-fit:contain'}));}
+    else{el.style.background=isletme.renk||'';el.style.color=RENK_YAZI[isletme.renk]||(isletme.renk?'#fff':'');el.textContent=isletme.kisa||'RSR';}
+  });
+}
+function isletmeUygula(){
+  isletme=isletmeOku();
+  if(isletme){db.firma=isletme.ad;document.title=isletme.uygulama||document.title;var bs=document.querySelector('.brand-sub');if(bs)bs.textContent=isletme.uygulama||'Araç takip';}
+  firmaCiz();markalariYaz();
+  var k=$('kapali');
+  if(isletmeKapali(isletme)){
+    if(k)return;
+    document.body.appendChild(h('div',{class:'giris',id:'kapali',role:'alertdialog','aria-modal':'true','aria-labelledby':'kT'},
+      h('div',{class:'giris-kart'},
+        h('div',{class:'giris-ust'},h('div',{class:'mark','aria-hidden':'true',style:'display:grid'},'RSR'),h('div',null,h('h1',{id:'kT'},'Hesap kullanıma kapalı'),h('small',null,titleTr(db.firma)))),
+        h('p',{style:'margin:0;color:var(--ink-2)'},isletme.durum==='askida'?'Bu işletmenin hesabı geçici olarak askıya alındı. Kayıtlarınız silinmedi.':'Bu işletmenin kullanım süresi doldu. Kayıtlarınız silinmedi.'),
+        h('p',{style:'margin:0;color:var(--ink-2)'},'Yeniden açmak için Xova Software ile iletişime geçin.'))));
+    $('app').inert=true;markalariYaz();
+  }else if(k){k.remove();if(oturum())$('app').inert=false;else girisEkrani();}
+}
+window.addEventListener('storage',function(e){if(e.key===YKEY)isletmeUygula();});
+isletmeUygula();
+/* ---------- mobil klavye: görünür alanı izle, odaklanan alanı görünür yap ---------- */
+(function(){
+  var R=document.documentElement,vv=window.visualViewport;
+  function olc(){if(!vv)return;R.style.setProperty('--vv-h',Math.round(vv.height)+'px');R.style.setProperty('--vv-top',Math.round(vv.offsetTop)+'px');R.classList.toggle('kb-acik',window.innerHeight-vv.height>120||(window.screen&&screen.height-vv.height>screen.height*.38));}
+  if(vv){vv.addEventListener('resize',olc);vv.addEventListener('scroll',olc);olc();}
+  document.addEventListener('focusin',function(e){
+    var t=e.target;if(window.innerWidth>760||!t.matches||!t.matches('input:not([type=checkbox]):not([type=radio]):not([type=file]),textarea,select'))return;
+    setTimeout(function(){if(document.activeElement!==t)return;olc();t.scrollIntoView({block:t.getAttribute('role')==='combobox'?'start':'nearest',behavior:'smooth'});},320);
+  });
+})();
 girisEkrani();
 window.addEventListener('hashchange',route);
 route();
