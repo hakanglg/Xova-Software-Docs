@@ -424,6 +424,22 @@ button{cursor:pointer}
 .toast .btn:hover{background:var(--top-2)}
 @keyframes up{from{transform:translateY(8px);opacity:0}}
 
+/* ===== Giriş (demo) ===== */
+.giris{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:16px;background:var(--top);overflow:auto}
+.giris-kart{width:100%;max-width:420px;background:var(--surface);border-radius:16px;box-shadow:var(--sh-3);padding:28px}
+.giris-ust{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.giris-ust h1{margin:0;font-size:var(--t-xl);line-height:1.15}
+.giris-ust small{display:block;color:var(--ink-3);font-size:var(--t-sm);font-weight:500}
+.giris form{display:grid;gap:14px}
+.giris .chips .qc{flex:1 1 0;min-width:0;padding:0 10px}
+.giris .btn-primary{width:100%}
+.demo-not{display:flex;gap:8px;align-items:flex-start;background:var(--warn-bg);border:1px solid #E9C46A;border-radius:10px;padding:10px 12px;font-size:var(--t-sm);color:var(--ink-2)}
+.demo-not .ico{width:18px;height:18px;flex:none;color:var(--warn);margin-top:1px}
+.kullanici{display:flex;align-items:center;gap:8px;color:var(--top-ink-2);font-size:var(--t-sm);white-space:nowrap}
+.kullanici b{color:var(--top-ink);font-weight:600}
+@media (max-width:1560px){.kullanici>span:not(.avatar){display:none}}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--top-2);color:var(--top-ink);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+
 /* ===== Duyarlı ===== */
 @media (min-width:761px) and (min-height:700px){.modal{overflow:visible;max-height:none}}
 @media (max-width:1180px){
@@ -448,6 +464,8 @@ button{cursor:pointer}
   .firma-btn span{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
   .mark,.brand-sub{display:none}
   .top-acts{gap:6px}
+  .kullanici{display:none}
+  .giris-kart{padding:20px}
   .search{grid-column:1/-1;grid-row:2}
   .search kbd{display:none}
   .search input{padding-right:14px}
@@ -530,6 +548,7 @@ button{cursor:pointer}
     </div>
     <span id="kayitDurum" class="savestate" aria-live="polite"></span>
     <div class="top-acts">
+      <span id="kullanici" class="kullanici"></span>
       <button id="ayar" class="btn btn-dark btn-icon" type="button" aria-label="Ayarlar" title="Ayarlar" aria-haspopup="menu" aria-expanded="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"></svg></button>
       <button id="csv" class="btn btn-dark" type="button" title="Excel çıktısı"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 3v18"/></svg><span>Excel çıktısı</span></button>
       <button id="yeni" class="btn btn-primary" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Yeni araç</button>
@@ -2031,7 +2050,43 @@ $('scrim').addEventListener('click',kapatCekmece);
 $('yeni').addEventListener('click',yeniArac);
 $('csv').addEventListener('click',disaAktar);
 $('ayar').querySelector('svg').innerHTML=ICON.gear;
-$('ayar').addEventListener('click',function(e){menuAc(e.currentTarget,[{ad:'Firma adını değiştir',ic:'pen',fn:function(){$('firma').querySelector('button').click();}},{ad:'İşlem türleri',ic:'list',fn:turYonet}]);});
+$('ayar').addEventListener('click',function(e){menuAc(e.currentTarget,[{ad:'Firma adını değiştir',ic:'pen',fn:function(){$('firma').querySelector('button').click();}},{ad:'İşlem türleri',ic:'list',fn:turYonet},{ad:'Çıkış yap',ic:'next',fn:cikis}]);});
+/* ---------- giriş (DEMO: güvenlik sağlamaz; gerçek giriş sunucuda olacak) ---------- */
+var GKEY='rsr-giris';
+var memOturum=null;
+function oturum(){try{return JSON.parse(sessionStorage.getItem(GKEY)||'null')||memOturum;}catch(e){return memOturum;}}
+function kullaniciYaz(){
+  var o=oturum(),k=$('kullanici');k.textContent='';if(!o)return;
+  var bas=o.ad.split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toLocaleUpperCase(TR);
+  k.title=o.ad+' · '+o.rol;
+  k.appendChild(h('span',{class:'avatar','aria-hidden':'true'},bas));
+  k.appendChild(h('span',null,h('b',null,o.ad),' · '+o.rol));
+}
+function cikis(){memOturum=null;try{sessionStorage.removeItem(GKEY);}catch(e){}kullaniciYaz();girisEkrani();}
+function girisEkrani(){
+  if(oturum()){kullaniciYaz();return;}
+  var rol='Sahip';
+  var ROLLER=[['Sahip','Her şeyi görür, ayarları yönetir'],['Sekreter','Araç, iş ve randevu girer'],['Usta','Durum değiştirir, fotoğraf yükler']];
+  var aciklama=h('p',{class:'hint',style:'margin:6px 0 0'},ROLLER[0][1]);
+  var rc=ROLLER.map(function(r,i){var b=h('button',{type:'button',class:'qc','aria-pressed':i===0?'true':'false',onclick:function(){rol=r[0];rc.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});aciklama.textContent=r[1];}},r[0]);return b;});
+  var ad=h('input',{class:'f',type:'text',id:'gAd',autocomplete:'off',placeholder:'Örn. Ahmet Usta'});
+  var ep=h('input',{class:'f',type:'text',id:'gEp',autocomplete:'off',inputmode:'email',placeholder:'E-posta veya telefon'});
+  var sf=h('input',{class:'f',type:'password',id:'gSf',autocomplete:'off',placeholder:'••••••'});
+  var g=h('div',{class:'giris',role:'dialog','aria-modal':'true','aria-labelledby':'gT'},
+    h('div',{class:'giris-kart'},
+      h('div',{class:'giris-ust'},h('div',{class:'mark','aria-hidden':'true',style:'display:grid'},'RSR'),h('div',null,h('h1',{id:'gT'},'Giriş yap'),h('small',null,titleTr(db.firma)+' · Araç takip'))),
+      h('form',{novalidate:true,onsubmit:function(e){e.preventDefault();
+          var o={ad:titleTr(ad.value.trim())||(rol==='Usta'?'Usta':rol==='Sekreter'?'Sekreter':'Yönetici'),rol:rol};
+          memOturum=o;try{sessionStorage.setItem(GKEY,JSON.stringify(o));}catch(x){}
+          g.remove();$('app').inert=false;kullaniciYaz();toast('Hoş geldiniz, '+o.ad);}},
+        h('div',{class:'fld'},h('span',{class:'fld-l'},'Rol'),h('div',{class:'chips',role:'group','aria-label':'Rol'},rc),aciklama),
+        alan('Ad soyad',ad),alan('E-posta veya telefon',ep),alan('Şifre',sf),
+        h('button',{type:'submit',class:'btn btn-primary btn-lg'},'Giriş yap'),
+        h('div',{class:'demo-not'},ic('alert'),h('span',null,h('b',null,'Tanıtım sürümü: '),'herhangi bir bilgiyle giriş yapabilirsiniz. Gerçek sürümde her çalışan kendi hesabıyla, rolüne göre yetkiyle girer.')))));
+  document.body.appendChild(g);$('app').inert=true;
+  setTimeout(function(){ad.focus();},0);
+}
+girisEkrani();
 window.addEventListener('hashchange',route);
 route();
 })();
