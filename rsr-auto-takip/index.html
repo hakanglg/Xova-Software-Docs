@@ -60,11 +60,12 @@ button{cursor:pointer}
 
 /* ===== Plaka rozeti ===== */
 .plate{display:inline-flex;align-items:stretch;height:30px;border:1.5px solid var(--ink);border-radius:5px;background:#fff;overflow:hidden;font-weight:700;letter-spacing:.06em;font-variant-numeric:tabular-nums;white-space:nowrap;max-width:100%}
-.plate-tr{display:flex;align-items:flex-end;justify-content:center;width:18px;padding-bottom:3px;background:var(--plate-blue);color:#fff;font-size:9px;letter-spacing:.02em;font-weight:600}
+.plate-tr{display:flex;align-items:flex-end;justify-content:center;min-width:18px;padding:0 2px 3px;background:var(--plate-blue);color:#fff;font-size:9px;letter-spacing:.02em;font-weight:600}
 .plate-no{display:flex;align-items:center;padding:0 9px 0 8px;font-size:18px;line-height:1;color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+.plaka-alan{display:flex;gap:6px;min-width:0}.plaka-alan .ulke-sel{flex:0 0 108px;width:108px;font-weight:600;text-overflow:ellipsis}.plaka-alan input{flex:1;min-width:0}
 .plate.none .plate-no{color:var(--ink-3);font-weight:500;letter-spacing:0}
 .plate.lg{height:44px;border-width:2px;border-radius:7px}
-.plate.lg .plate-tr{width:26px;font-size:12px;padding-bottom:5px}
+.plate.lg .plate-tr{min-width:26px;font-size:12px;padding:0 3px 5px}
 .plate.lg .plate-no{font-size:28px;padding:0 14px 0 12px}
 
 /* ===== Üst çubuk ===== */
@@ -659,7 +660,17 @@ function isOzet(r){
 }
 function plakaEl(r,lg){
   var p=(r.plaka||'').trim();
-  return h('span',{class:'plate'+(lg?' lg':'')+(p?'':' none')},h('span',{class:'plate-tr','aria-hidden':'true'},'TR'),h('span',{class:'plate-no'},p||'Plakasız'));
+  return h('span',{class:'plate'+(lg?' lg':'')+(p?'':' none')},h('span',{class:'plate-tr','aria-hidden':'true'},r.ulke||'TR'),h('span',{class:'plate-no'},p||'Plakasız'));
+}
+/* Ülke kodu (AB/uluslararası plaka kodları); yabancı plaka serbest yazılır */
+var ULKELER=[['TR','Türkiye'],['D','Almanya'],['NL','Hollanda'],['B','Belçika'],['F','Fransa'],['A','Avusturya'],['CH','İsviçre'],['GB','Birleşik Krallık'],['I','İtalya'],['BG','Bulgaristan'],['GR','Yunanistan'],['RO','Romanya'],['GE','Gürcistan'],['AZ','Azerbaycan'],['RUS','Rusya'],['UA','Ukrayna'],['IR','İran'],['S','İsveç'],['DK','Danimarka'],['N','Norveç'],['PL','Polonya'],['CZ','Çekya'],['H','Macaristan'],['SRB','Sırbistan'],['KZ','Kazakistan']];
+function plakaAlan(r,inp,degisti){
+  var sel=h('select',{class:'f ulke-sel','aria-label':'Plaka ülkesi',title:'Plaka ülkesi',onchange:function(){
+    r.ulke=sel.value==='TR'?'':sel.value;inp.placeholder=sel.value==='TR'?'59 ABC 123':'Plakayı olduğu gibi yazın';if(degisti)degisti();}},
+    ULKELER.map(function(u){return h('option',{value:u[0]},u[0]+' · '+u[1]);}));
+  sel.value=r.ulke||'TR';if(sel.value!==(r.ulke||'TR')){sel.appendChild(h('option',{value:r.ulke},r.ulke));sel.value=r.ulke;}
+  if(r.ulke)inp.placeholder='Plakayı olduğu gibi yazın';
+  return h('div',{class:'plaka-alan'},sel,inp);
 }
 function pill(i){return h('span',{class:'pill s'+i},DURUM[i]);}
 
@@ -747,7 +758,12 @@ function toast(msg,kind,action,ms){
 var flash=function(m,bad){toast(m,bad?'err':null);};
 
 /* ---------- firma adı ---------- */
+/* Firma adı işletmeye özel, yönetici (biz) tarafından ayarlanır; kullanıcı değiştiremez */
 function firmaCiz(){
+  var box=$('firma');box.textContent='';
+  box.appendChild(h('div',{class:'firma-btn',style:'cursor:default'},h('span',null,db.firma)));
+}
+function firmaDuzenleEski(){
   var box=$('firma');box.textContent='';
   box.appendChild(h('button',{class:'firma-btn',type:'button',title:'Firma adını değiştir','aria-label':'Firma adı: '+db.firma+'. Değiştirmek için basın',onclick:function(){
     box.textContent='';
@@ -1531,8 +1547,8 @@ function satirBolum(r){
     function hucre(cls,lbl,el){return h('div',{class:cls},h('span',{class:'lbl-m','aria-hidden':'true'},lbl),el);}
     box.appendChild(h('div',{class:'line'},
       hucre('c-tarih','Tarih',girdi(r,s,'tarih',{type:'date',label:n+'. kalem tarihi'})),
-      hucre('c-islem','İşlem',girdi(r,s,'islem',{list:'islemler',label:n+'. kalem işlemi',ph:'Seçin veya yazın',on:function(){s.turId=turEsle(s.islem);pickerYenile(r);}})),
-      hucre('c-acik','Açıklama / parça',girdi(r,s,'aciklama',{list:'parcalar',label:n+'. kalem açıklaması',ph:'Örn. SOL ÖN KAPI',on:function(){pickerYenile(r);}})),
+      hucre('c-islem','İşlem',islemSecici(r,s,n)),
+      hucre('c-acik','Açıklama / parça',parcaSecici(r,s,n)),
       hucre('c-tutar','Tutar (₺)',girdi(r,s,'tutar',{cls:'money',inputmode:'decimal',label:n+'. kalem tutarı',ph:'İsteğe bağlı',on:function(){toplamYaz(r);},last:function(){satirEkle(r);}})),
       h('div',{class:'c-del'},h('button',{type:'button',class:'btn btn-icon del','aria-label':n+'. kalemi sil',title:'Kalemi sil',onclick:function(){
         var eski=r.satirlar.slice();
@@ -1542,6 +1558,31 @@ function satirBolum(r){
   box.appendChild(h('button',{type:'button',class:'btn lines-add',onclick:function(){satirEkle(r);}},ic('plus'),'Boş kalem ekle'));
   box.appendChild(h('div',{class:'total'},h('span',null,'Genel toplam',h('small',null,'bu aracın kalemleri')),h('b',{id:'toplam'},para(toplam(r))||'—')));
   return box;
+}
+/* İş kalemi seçicileri: listeden ara-seç; listede yoksa "elle yaz" ile yeni seçenek eklenir ve sonraki kalemlerde de çıkar */
+function ozelParcalar(){if(!db.ozel)db.ozel={markalar:[],modeller:{}};if(!Array.isArray(db.ozel.parcalar))db.ozel.parcalar=[];return db.ozel.parcalar;}
+function parcaListe(){var l=PARCALAR.map(cumle);ozelParcalar().forEach(function(p){if(l.map(norm).indexOf(norm(p))<0)l.push(cumle(p));});return l;}
+function islemSecici(r,s,n){
+  var c=secici({etiket:'İşlem',ph:'İşlem ara veya seç',elle:'Yeni işlem adını yazıp Enter’a basın',deger:s.islem?cumle(s.islem):'',
+    ogeler:function(){return aktifTurler().map(function(t){return cumle(t.ad);});},
+    bicim:function(t){var id=turEsle(t),tt=turById(id);return tt?cumle(tt.ad):cumle(t);},
+    ozel:function(t){if(!turEsle(t)){db.turler.push({id:'t'+uid(),ad:t.toLocaleUpperCase(TR),k:kisaltmaOner(t)||'D',c:renkOner(),arsiv:false});datalistYaz();toast('“'+cumle(t)+'” işlem türü olarak eklendi');}},
+    sec:function(v){var tt=turById(turEsle(v));s.islem=tt?tt.ad:v.toLocaleUpperCase(TR);s.turId=tt?tt.id:'';save();pickerYenile(r);},
+    bos:function(){s.islem='';s.turId='';save();pickerYenile(r);},
+    sonraki:function(){setTimeout(function(){var e=c.el.closest('.line');var f=e&&e.querySelector('.c-acik input');if(f)f.focus();},0);}});
+  c.inp.setAttribute('aria-label',n+'. kalem işlemi');
+  return c.el;
+}
+function parcaSecici(r,s,n){
+  var c=secici({etiket:'Parça',ph:'Parça ara veya seç',elle:'Açıklamayı yazıp Enter’a basın',deger:s.aciklama?cumle(s.aciklama):'',
+    ogeler:parcaListe,
+    bicim:function(t){var l=parcaListe();for(var i=0;i<l.length;i++)if(norm(l[i])===norm(t))return l[i];return cumle(t);},
+    ozel:function(t){if(parcaListe().map(norm).indexOf(norm(t))<0){ozelParcalar().push(t.toLocaleUpperCase(TR));toast('“'+cumle(t)+'” listeye eklendi');}},
+    sec:function(v){s.aciklama=v.toLocaleUpperCase(TR);save();pickerYenile(r);},
+    bos:function(){s.aciklama='';save();pickerYenile(r);},
+    sonraki:function(){setTimeout(function(){var e=c.el.closest('.line');var f=e&&e.querySelector('.c-tutar input');if(f)f.focus();},0);}});
+  c.inp.setAttribute('aria-label',n+'. kalem açıklaması');
+  return c.el;
 }
 function toplamYaz(r){var t=$('toplam');if(t)t.textContent=para(toplam(r))||'—';}
 function satirEkle(r){
@@ -1566,7 +1607,7 @@ function bilgiPanel(r){
     h('section',{class:'box','data-nav':''},
       h('div',{class:'box-h'},h('h3',null,'Araç ve müşteri'),h('span',{class:'hint'},'Değişiklikler otomatik kaydedilir.')),
       h('div',{class:'grid2'},
-        alan('Plaka',plakaInp),
+        alan('Plaka',plakaAlan(r,plakaInp,function(){save();basYaz();})),
         alan('Kabul tarihi',h('input',{class:'f',type:'date',value:r.gun,onchange:function(e){if(e.target.value){r.gun=e.target.value;save();}}})),
         gecmisKutu(r),
         alan('Ad soyad',inputs.ad),telF,
@@ -1862,7 +1903,7 @@ function yeniArac(){
     if(acik){m.close();kayitAc(acik.id,'isler');toast((acik.plaka||'Araç')+' zaten atölyede; mevcut kayıt açıldı.');return;}
     if(!r.plaka.trim()&&!r.ad.trim()){err.textContent='Plaka veya müşteri adı girin.';plakaInp.focus();return;}
     var onceki=gecmis(r),yeniGelis=onceki.length>0;
-    if(yeniGelis)r.plaka=onceki[0].plaka;/* aynı araç: plaka yazımını önceki gelişten al */
+    if(yeniGelis){r.plaka=onceki[0].plaka;if(!r.ulke&&onceki[0].ulke)r.ulke=onceki[0].ulke;}/* aynı araç: plaka yazımını önceki gelişten al */
     db.kayitlar.push(r);if(!save()){db.kayitlar.pop();return;}
     m.close();toast((r.plaka||r.ad)+(yeniGelis?': yeni geliş başlatıldı. Şimdi işleri seçin.':' kaydedildi. Şimdi işleri seçin.'));
     tab='isler';kayitAc(r.id,'isler');
@@ -1873,7 +1914,7 @@ function yeniArac(){
   var plakaInp=girdi(r,r,'plaka',{cls:'big',up:true,label:'Plaka',ph:'59 ABC 123',nosave:true,on:function(){err.textContent='';otoDoldur(r,inputs,true);swapEl('gecmis',gecmisKutu(r,false));plakaDurum();}});
   var form=h('form',{'data-nav':'',novalidate:true,onsubmit:function(e){e.preventDefault();kaydet();}},
     h('div',{class:'grid2'},
-      alan('Plaka',plakaInp,null,'span2'),gecmisKutu(r,false),
+      alan('Plaka',plakaAlan(r,plakaInp),null,'span2'),gecmisKutu(r,false),
       alan('Ad soyad',inputs.ad),alan('Telefon',inputs.tel),
       inputs.arac.marka,inputs.arac.model,
       alan('Kabul tarihi',h('input',{class:'f',type:'date',value:r.gun,onchange:function(e){if(e.target.value)r.gun=e.target.value;}})),
@@ -1901,7 +1942,7 @@ function tablo(a,b){
   var sum=0;
   var data=out.map(function(o){
     var n=parseTutar(o.s.tutar);sum+=n;
-    aracNormalize(o.r);return [fmt(o.t),o.r.plaka,o.r.ad,o.r.tel,aracAd(o.r),o.r.marka,o.r.model,o.s.islem,o.s.aciklama,n?n:'',o.r.eksper,DURUM[o.r.durum]];});
+    aracNormalize(o.r);return [fmt(o.t),(o.r.ulke&&o.r.plaka?o.r.ulke+' ':'')+o.r.plaka,o.r.ad,o.r.tel,aracAd(o.r),o.r.marka,o.r.model,o.s.islem,o.s.aciklama,n?n:'',o.r.eksper,DURUM[o.r.durum]];});
   return {head:['TARİH','PLAKA','AD SOYAD','TELEFON','ARAÇ','MARKA','MODEL','YAPILAN İŞLEM','AÇIKLAMA','TUTAR','EKSPER/SİGORTA','DURUM'],data:data,sum:sum};
 }
 function csvHucre(v){
@@ -2050,7 +2091,7 @@ $('scrim').addEventListener('click',kapatCekmece);
 $('yeni').addEventListener('click',yeniArac);
 $('csv').addEventListener('click',disaAktar);
 $('ayar').querySelector('svg').innerHTML=ICON.gear;
-$('ayar').addEventListener('click',function(e){menuAc(e.currentTarget,[{ad:'Firma adını değiştir',ic:'pen',fn:function(){$('firma').querySelector('button').click();}},{ad:'İşlem türleri',ic:'list',fn:turYonet},{ad:'Çıkış yap',ic:'next',fn:cikis}]);});
+$('ayar').addEventListener('click',function(e){menuAc(e.currentTarget,[{ad:'İşlem türleri',ic:'list',fn:turYonet},{ad:'Çıkış yap',ic:'next',fn:cikis}]);});
 /* ---------- giriş (DEMO: güvenlik sağlamaz; gerçek giriş sunucuda olacak) ---------- */
 var GKEY='rsr-giris';
 var memOturum=null;
