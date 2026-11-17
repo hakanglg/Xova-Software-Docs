@@ -442,7 +442,12 @@ button{cursor:pointer}
   .thumbs{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (max-width:760px){
-  .top{grid-template-columns:1fr auto;gap:10px;padding:10px 12px 12px}
+  .top{grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:10px 12px 12px}
+  .brand-txt{overflow:hidden}
+  .firma-btn{max-width:100%!important;font-size:16px!important;line-height:1.15}
+  .firma-btn span{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .mark,.brand-sub{display:none}
+  .top-acts{gap:6px}
   .search{grid-column:1/-1;grid-row:2}
   .search kbd{display:none}
   .search input{padding-right:14px}
@@ -456,8 +461,8 @@ button{cursor:pointer}
   .toolbar{padding:12px 12px 4px;gap:10px}
   .tb-sum{display:none}
   .sample{margin-left:0;width:100%;justify-content:space-between}
-  .mob-cols{display:flex;gap:6px;overflow-x:auto;padding:4px 12px 10px;scrollbar-width:none}
-  .mob-cols button{display:inline-flex;align-items:center;gap:8px;flex:none;min-height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--line-2);background:#fff;font-weight:600}
+  .mob-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:4px 12px 10px}
+  .mob-cols button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:0;min-height:44px;padding:0 10px;border-radius:22px;border:1px solid var(--line-2);background:#fff;font-weight:600;white-space:nowrap}
   .mob-cols button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
   .mob-cols button[aria-pressed="true"] .dot{box-shadow:0 0 0 2px #fff}
   .mob-cols small{font-weight:700;opacity:.8}
@@ -484,7 +489,10 @@ button{cursor:pointer}
   .dh-acts .btn-wa{width:44px;padding:0}.dh-acts .btn-wa span{display:none}
   .total small{display:none}
   .tbl td.c-top{grid-column:1;text-align:left;align-self:center}
-  .tbl td.c-menu{grid-column:2;justify-self:end}
+  .tbl td.c-menu{grid-column:2;justify-self:end;width:auto}
+  .tbl td.c-st{width:auto;justify-self:end}
+  .filters{gap:6px}
+  .filters .chip{min-height:40px;padding:0 12px;font-size:15px}
   .dh-sil{width:44px;padding:0}.dh-sil span{display:none}
   .dh-who{order:3;flex-basis:100%}
   .dh-who h2{font-size:var(--t-lg)}
