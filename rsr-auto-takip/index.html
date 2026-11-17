@@ -42,7 +42,7 @@ button{cursor:pointer}
 .ico{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ===== Düğmeler ===== */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);font-weight:600;font-size:16px;white-space:nowrap;text-decoration:none;transition:background-color .12s,border-color .12s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 16px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);font-weight:600;font-size:16px;white-space:nowrap;text-decoration:none;transition:background-color .12s,border-color .12s}
 .btn:hover{background:var(--sunk);border-color:#8E99A4}
 .btn:active{transform:translateY(1px)}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
@@ -54,15 +54,18 @@ button{cursor:pointer}
 .btn-danger:hover{background:#FCEEEC;border-color:var(--danger)}
 .btn-quiet{border-color:transparent;background:transparent}
 .btn-quiet:hover{background:rgba(28,33,38,.06);border-color:transparent}
-.btn-icon{width:44px;padding:0}
-.btn-lg{min-height:52px;font-size:var(--t-md);padding:0 22px}
+.btn-icon{width:48px;padding:0}
+.btn-lg{min-height:48px;font-size:var(--t-md);padding:0 22px}
 .linkbtn{border:0;background:none;padding:0 2px;color:var(--s1);font-weight:600;text-decoration:underline;text-underline-offset:3px;min-height:32px}
 
 /* ===== Plaka rozeti ===== */
 .plate{display:inline-flex;align-items:stretch;height:30px;border:1.5px solid var(--ink);border-radius:5px;background:#fff;overflow:hidden;font-weight:700;letter-spacing:.06em;font-variant-numeric:tabular-nums;white-space:nowrap;max-width:100%}
 .plate-tr{display:flex;align-items:flex-end;justify-content:center;min-width:18px;padding:0 2px 3px;background:var(--plate-blue);color:#fff;font-size:9px;letter-spacing:.02em;font-weight:600}
 .plate-no{display:flex;align-items:center;padding:0 9px 0 8px;font-size:18px;line-height:1;color:var(--ink);overflow:hidden;text-overflow:ellipsis}
-.plaka-alan{display:flex;gap:6px;min-width:0}.plaka-alan .ulke-sel{flex:0 0 108px;width:108px;font-weight:600;text-overflow:ellipsis}.plaka-alan input{flex:1;min-width:0}
+.plaka-alan{display:flex;gap:8px;min-width:0}.plaka-alan input{flex:1;min-width:0}
+.ulke-kutu{position:relative;display:flex;align-items:center;flex:0 0 92px;width:92px;padding:0 34px 0 12px;font-weight:700;font-size:18px;letter-spacing:.04em;cursor:pointer}
+.ulke-kutu:focus-within{border-color:var(--focus);outline:2px solid var(--focus);outline-offset:-1px}
+.ulke-kutu .ulke-sel{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px;border:0}
 .plate.none .plate-no{color:var(--ink-3);font-weight:500;letter-spacing:0}
 .plate.lg{height:44px;border-width:2px;border-radius:7px}
 .plate.lg .plate-tr{min-width:26px;font-size:12px;padding:0 3px 5px}
@@ -163,7 +166,7 @@ button{cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
 .chip small{font-size:var(--t-sm);opacity:.75;font-weight:600}
 .filters .sep{width:1px;height:28px;background:var(--line-2);margin:0 6px}
-.filters input[type=date]{height:44px;border:1px solid var(--field);border-radius:8px;padding:0 10px;background:#fff}
+.filters input[type=date]{height:48px;border:1px solid var(--field);border-radius:8px;padding:0 10px;background:#fff}
 .note{display:flex;align-items:center;gap:12px;color:var(--ink-2);margin:0 0 10px;min-height:32px}
 .tbl{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:var(--r-lg);box-shadow:var(--sh-1);overflow:hidden}
 .tbl th{font-size:var(--t-sm);font-weight:600;color:var(--ink-3);text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--sunk)}
@@ -267,17 +270,20 @@ button{cursor:pointer}
 .pick-go{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
 
 /* İş kalemleri */
-.lines-h,.line{display:grid;grid-template-columns:156px 170px minmax(0,1fr) 128px 44px;gap:8px;align-items:center}
+.lines-h,.line{display:grid;grid-template-columns:156px 170px minmax(0,1fr) 128px 48px;gap:8px;align-items:center}
 .lines-h{font-size:var(--t-sm);color:var(--ink-3);font-weight:600;padding:0 2px 6px}
 .lines-h span:nth-child(4){text-align:right;padding-right:10px}
 .line{padding:6px 0;border-top:1px solid #EDF0F2}
 .line:first-of-type{border-top:0}
 .lbl-m{display:none}
-.f{width:100%;height:44px;padding:0 10px;border:1px solid var(--field);border-radius:8px;background:#fff;font-size:16px}
+.f{width:100%;height:48px;padding:0 12px;border:1px solid var(--field);border-radius:8px;background:#fff;font-size:16px}
 .f:hover{border-color:#8E99A4}
 .f:focus{border-color:var(--focus);outline:2px solid var(--focus);outline-offset:-1px}
 .f.money{text-align:right;font-variant-numeric:tabular-nums}
-.f.big{height:60px;font-size:28px;font-weight:700;letter-spacing:.06em}
+.f.big{font-size:22px;font-weight:700;letter-spacing:.06em}
+.f::placeholder{color:var(--ink-3);opacity:.7;font-weight:400;letter-spacing:0}
+input.f[type=date]{padding-right:8px}
+#gecmis:empty{display:none}
 .del{color:var(--ink-3);border-color:transparent;background:transparent}
 .del:hover{color:var(--danger);background:#FCEEEC;border-color:transparent}
 .lines-add{margin-top:10px}
@@ -291,7 +297,6 @@ button{cursor:pointer}
 .fld label{display:block;font-size:15px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
 .fld label small{font-weight:500;color:var(--ink-3)}
 .fld .f{height:48px;font-size:var(--t-md)}
-.fld .f.big{height:60px;font-size:28px}
 .fld .msg{font-size:var(--t-sm);margin-top:6px;color:var(--warn)}
 .span2{grid-column:1/-1}
 .hist{border-radius:var(--r);padding:14px 16px;background:var(--s1-bg);border:1px solid #BFD1F4}
@@ -451,7 +456,7 @@ button{cursor:pointer}
 @media (max-width:860px){
   .picker{grid-template-columns:1fr;grid-template-areas:'islem' 'car' 'parca'}
   .lines-h{display:none}
-  .line{grid-template-columns:1fr 1fr 44px;row-gap:8px;padding:12px 0}
+  .line{grid-template-columns:1fr 1fr 48px;row-gap:8px;padding:12px 0}
   .line .c-tarih{grid-column:1}.line .c-islem{grid-column:2/4}
   .line .c-acik{grid-column:1/-1}.line .c-tutar{grid-column:1/3}.line .c-del{grid-column:3;align-self:end}
   .lbl-m{display:block;font-size:13px;color:var(--ink-3);font-weight:600;margin-bottom:4px}
@@ -538,7 +543,6 @@ button{cursor:pointer}
   .modal>.acts .btn-quiet,.modal>form>.acts .btn-quiet,.modal>div>.acts:last-child .btn-quiet{flex:0 0 auto}
   .modal>form>.acts .btn[hidden]{display:none}
   .modal p.lead{font-size:15px;margin-bottom:14px}
-  .modal .f.big{height:52px;font-size:24px}
   /* çekmece görünür alana sığar; "kalem ekle" çubuğu altta sabit */
   .drawer{top:var(--vv-top,0);bottom:auto;height:var(--vv-h,100dvh)}
   .pick-go .btn-primary{flex:1 1 100%}
@@ -686,12 +690,13 @@ function plakaEl(r,lg){
 /* Ülke kodu (AB/uluslararası plaka kodları); yabancı plaka serbest yazılır */
 var ULKELER=[['TR','Türkiye'],['D','Almanya'],['NL','Hollanda'],['B','Belçika'],['F','Fransa'],['A','Avusturya'],['CH','İsviçre'],['GB','Birleşik Krallık'],['I','İtalya'],['BG','Bulgaristan'],['GR','Yunanistan'],['RO','Romanya'],['GE','Gürcistan'],['AZ','Azerbaycan'],['RUS','Rusya'],['UA','Ukrayna'],['IR','İran'],['S','İsveç'],['DK','Danimarka'],['N','Norveç'],['PL','Polonya'],['CZ','Çekya'],['H','Macaristan'],['SRB','Sırbistan'],['KZ','Kazakistan']];
 function plakaAlan(r,inp,degisti){
-  var sel=h('select',{class:'f ulke-sel','aria-label':'Plaka ülkesi',title:'Plaka ülkesi',onchange:function(){
-    r.ulke=sel.value==='TR'?'':sel.value;inp.placeholder=sel.value==='TR'?'59 ABC 123':'Plakayı olduğu gibi yazın';if(degisti)degisti();}},
-    ULKELER.map(function(u){return h('option',{value:u[0]},u[0]+' · '+u[1]);}));
+  var kod=h('span',{class:'ulke-kod','aria-hidden':'true'},r.ulke||'TR');
+  var sel=h('select',{class:'ulke-sel','aria-label':'Plaka ülkesi',title:'Plaka ülkesi',onchange:function(){
+    r.ulke=sel.value==='TR'?'':sel.value;kod.textContent=sel.value;inp.placeholder=sel.value==='TR'?'59 ABC 123':'Plakayı olduğu gibi yazın';if(degisti)degisti();}},
+    ULKELER.map(function(u){return h('option',{value:u[0]},u[0]+' — '+u[1]);}));
   sel.value=r.ulke||'TR';if(sel.value!==(r.ulke||'TR')){sel.appendChild(h('option',{value:r.ulke},r.ulke));sel.value=r.ulke;}
   if(r.ulke)inp.placeholder='Plakayı olduğu gibi yazın';
-  return h('div',{class:'plaka-alan'},sel,inp);
+  return h('div',{class:'plaka-alan'},h('div',{class:'f ulke-kutu'},kod,h('span',{class:'cb-car','aria-hidden':'true'},ic('next')),sel),inp);
 }
 function pill(i){return h('span',{class:'pill s'+i},DURUM[i]);}
 
