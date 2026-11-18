@@ -1956,7 +1956,7 @@ function yeniArac(){
 function addIso(iso,n){var p=iso.split('-');return isoOf(new Date(+p[0],+p[1]-1,+p[2]+n));}
 function aralik(mod,d1,d2){
   if(mod==='gun')return [d1,d1];
-  if(mod==='hafta')return [d1,addIso(d1,6)];
+  if(mod==='hafta'){var q=d1.split('-'),gd=(new Date(+q[0],+q[1]-1,+q[2]).getDay()+6)%7,pz=addIso(d1,-gd);return [pz,addIso(pz,4)];}
   if(mod==='ay'){var p=d1.split('-');return [p[0]+'-'+p[1]+'-01',p[0]+'-'+p[1]+'-'+pad(new Date(+p[0],+p[1],0).getDate())];}
   return d1<=d2?[d1,d2]:[d2,d1];
 }
@@ -2163,13 +2163,13 @@ function disaAktar(){
   var mod='hafta';
   var d1=h('input',{type:'date',class:'f',value:todayIso(),id:'exD1'});
   var d2=h('input',{type:'date',class:'f',value:todayIso(),id:'exD2'});
-  var l1=alan('Başlangıç (7 gün)',d1),l2=alan('Bitiş',d2);l2.hidden=true;
+  var l1=alan('Hafta (içindeki herhangi bir gün)',d1),l2=alan('Bitiş',d2);l2.hidden=true;
   var msg=h('div',{class:'exsum','aria-live':'polite'});
   var MOD=[['gun','Günlük'],['hafta','Haftalık'],['ay','Aylık'],['aralik','Tarih aralığı']];
   var chips=MOD.map(function(m){
     var b=h('button',{type:'button',class:'qc','aria-pressed':m[0]===mod?'true':'false',onclick:function(){mod=m[0];
       chips.forEach(function(c){c.setAttribute('aria-pressed',c===b?'true':'false');});
-      l2.hidden=mod!=='aralik';l1.querySelector('label').textContent=mod==='aralik'?'Başlangıç':mod==='hafta'?'Başlangıç (7 gün)':mod==='ay'?'Ay (içindeki herhangi bir gün)':'Tarih';ozet();}},m[1]);return b;});
+      l2.hidden=mod!=='aralik';l1.querySelector('label').textContent=mod==='aralik'?'Başlangıç':mod==='hafta'?'Hafta (içindeki herhangi bir gün)':mod==='ay'?'Ay (içindeki herhangi bir gün)':'Tarih';ozet();}},m[1]);return b;});
   function sec(){if(!d1.value)return null;var r=aralik(mod,d1.value,d2.value||d1.value);return {a:r[0],b:r[1]};}
   function ozet(){var r=sec();if(!r){msg.textContent='Tarih seçin.';return;}var t=tablo(r.a,r.b),g=gunGrup(r.a,r.b),na=g.reduce(function(x,y){return x+y.araclar.length;},0);
     msg.textContent=donemMetin(r.a,r.b)+': '+na+' araç, '+t.data.length+' iş kalemi'+(t.sum?', genel toplam '+para(t.sum):'');}
