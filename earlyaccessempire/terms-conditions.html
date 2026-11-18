@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions — Early Access Empire | Xova Software</title>
+    <meta name="description" content="Terms and Conditions for Early Access Empire app by Hakan Gölge">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/subpage.css">
+</head>
+
+<body>
+    <div class="grain"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">
+                <img src="../assets/xova_logo_transparent.png" alt="Xova Software">
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#apps">Apps</a>
+                <a href="../index.html#contact">Contact</a>
+            </div>
+            <button class="mobile-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#apps">Apps</a>
+        <a href="../index.html#contact">Contact</a>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-inner">
+            <a href="../index.html">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href="../index.html#apps">Apps</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>Terms &amp; Conditions</span>
+        </div>
+    </div>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-inner">
+            <div class="page-hero-icon">
+                <img src="../assets/earlyaccessempire.png" alt="Early Access Empire">
+            </div>
+            <div>
+                <div class="page-hero-label">LEGAL</div>
+                <h1>Terms & <em>Conditions</em></h1>
+                <p class="page-hero-desc">Clear, concise terms for playing Early Access Empire (by Hakan Gölge).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <div class="content-wrap">
+        <div class="legal-card">
+            <h2>1. Overview</h2>
+            <p>These terms apply to the Early Access Empire game ("Application") published by Hakan Gölge ("Service Provider"). By downloading or using the Application, you agree to them. Unauthorized copying, modification or reverse engineering of any part of the Application, its art or its trademarks is prohibited. All related intellectual property remains the property of the Service Provider.</p>
+        </div>
+        <div class="legal-card">
+            <h2>2. The Game</h2>
+            <p>Early Access Empire is a single-player game. All consoles, companies, studios, people, games and events in it are fictional, and any resemblance to real ones is coincidental. The Application contains no ads and no in-app purchases. The Service Provider may modify the Application or its features at any time.</p>
+        </div>
+        <div class="legal-card">
+            <h2>3. Third-Party Services</h2>
+            <div class="highlight">
+                <p>The Application uses third-party services with their own terms:</p>
+            <ul>
+                <li><a href="https://firebase.google.com/terms/analytics" target="_blank">Google Analytics for Firebase</a> (only if you opt in)</li>
+                <li><a href="https://firebase.google.com/terms/crashlytics" target="_blank">Firebase Crashlytics</a> (only if you opt in)</li>
+                <li><a href="https://policies.google.com/terms" target="_blank">Google Terms of Service</a></li>
+            </ul>
+            </div>
+        </div>
+        <div class="legal-card">
+            <h2>4. Your Device</h2>
+            <p>Keeping your device charged and secure is your responsibility. Game progress is stored on your device; uninstalling the app or resetting your company removes it, and the Service Provider cannot restore it.</p>
+        </div>
+        <div class="legal-card">
+            <h2>5. Limitation of Liability</h2>
+            <p>The Application is provided "as is" for entertainment. To the extent permitted by law, the Service Provider accepts no liability for losses arising from using the Application or from lost game progress.</p>
+        </div>
+        <div class="legal-card">
+            <h2>6. Updates &amp; Service Termination</h2>
+            <p>The Application may require updates, and you agree to install them when provided. The Service Provider may stop supporting the Application at any time. If that happens, your rights under these terms end and you should stop using the app and delete it.</p>
+        </div>
+        <div class="legal-card">
+            <h2>7. Changes to These Terms</h2>
+            <p>These terms may be updated periodically. Updates will be posted on this page.</p>
+        </div>
+        <div class="legal-card">
+            <h2>8. Contact Us</h2>
+            <p>If you have questions about these Terms &amp; Conditions, email <a href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a>.</p>
+        </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <p>Effective Date: September 15, 2026 &middot; Early Access Empire by Hakan Gölge</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const mobileNav = document.querySelector('.mobile-nav');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

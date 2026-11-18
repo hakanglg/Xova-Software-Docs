@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Early Access Empire | Xova Software</title>
+    <meta name="description" content="Privacy Policy for the Early Access Empire game by Hakan Gölge">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/subpage.css">
+</head>
+
+<body>
+    <div class="grain"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">
+                <img src="../assets/xova_logo_transparent.png" alt="Xova Software">
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#apps">Apps</a>
+                <a href="../index.html#contact">Contact</a>
+            </div>
+            <button class="mobile-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#apps">Apps</a>
+        <a href="../index.html#contact">Contact</a>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-inner">
+            <a href="../index.html">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href="../index.html#apps">Apps</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>Privacy Policy</span>
+        </div>
+    </div>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-inner">
+            <div class="page-hero-icon">
+                <img src="../assets/earlyaccessempire.png" alt="Early Access Empire">
+            </div>
+            <div>
+                <div class="page-hero-label">LEGAL</div>
+                <h1>Privacy <em>Policy</em></h1>
+                <p class="page-hero-desc">How Early Access Empire (by Hakan Gölge) handles your data and privacy.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <div class="content-wrap">
+        <div class="legal-card">
+            <h2>1. Overview</h2>
+            <p>This privacy policy applies to the Early Access Empire game (the "Application") published by Hakan Gölge ("Service Provider"). The game is single-player and can be played without an account. Game progress and settings are stored on your device.</p>
+        </div>
+        <div class="legal-card">
+            <h2>2. Optional Usage and Crash Reports</h2>
+            <p>When you first open the game, you can choose whether to allow usage data and crash reports. These features are <strong>off</strong> until you give permission. You can change your choice at any time in Settings &gt; Privacy. Turning the option off stops new analytics and crash reports from being collected.</p>
+            <p>If you opt in, the game uses Google Firebase Analytics and Firebase Crashlytics. We receive information about how you use the game, such as app opens, game releases and feature interactions, together with technical information such as app version, device model, operating system, approximate country, performance data and crash details. Firebase may assign an app instance or installation identifier to this data. We use it to understand game performance, fix faults and improve features. We do not send your studio name, your game names or other text you enter in the game as analytics events.</p>
+            <p>We do not use this data for advertising or cross-app tracking. The game does not request access to the advertising identifier, does not show ads and does not ask for tracking permission. Google processes the data as our service provider under its Firebase terms and privacy practices.</p>
+        </div>
+        <div class="legal-card">
+            <h2>3. Third Party Services</h2>
+            <div class="highlight">
+                <p>The game uses these third-party services:</p>
+            <ul>
+                <li>Google Firebase Analytics and Crashlytics (only if you opt in)</li>
+                <li>Firebase Remote Config (checks update settings and game configuration)</li>
+            </ul>
+            </div>
+        </div>
+        <div class="legal-card">
+            <h2>4. Updates and Notifications</h2>
+            <p>The game may contact Firebase Remote Config to check update settings and game configuration. If you enable notifications, the game may send local reminders on your device. You can turn notifications off in the game or in your device settings.</p>
+        </div>
+        <div class="legal-card">
+            <h2>5. Your Choices</h2>
+            <p>You can refuse or withdraw optional usage and crash reporting in Settings &gt; Privacy. You can remove locally stored game progress by using the in-game reset option or by uninstalling the app. For questions about data associated with the Firebase installation identifier, contact us at the address below.</p>
+        </div>
+        <div class="legal-card">
+            <h2>6. Data Retention</h2>
+            <p>Game progress stays on your device until you reset or uninstall. Analytics and crash data, if you opted in, is retained according to our Firebase settings. Contact <a href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a> for data questions or deletion requests.</p>
+        </div>
+        <div class="legal-card">
+            <h2>7. Children</h2>
+            <p>The game does not knowingly collect personal information from children and has no accounts, chat or online features. If you believe a child has provided personal information, contact us and we will delete it.</p>
+        </div>
+        <div class="legal-card">
+            <h2>8. Changes</h2>
+            <p>This policy may be updated when the game or its data practices change. The updated policy will appear at this same URL with a new date.</p>
+        </div>
+        <div class="legal-card">
+            <h2>9. Contact Us</h2>
+            <p>If you have questions about privacy or data usage, contact <a href="mailto:xovasoftware@gmail.com">xovasoftware@gmail.com</a>.</p>
+        </div>
+
+    
+</div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <p>Last updated: November 18, 2026 &middot; Early Access Empire by Hakan Gölge</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const mobileNav = document.querySelector('.mobile-nav');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
