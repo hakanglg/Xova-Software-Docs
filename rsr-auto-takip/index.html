@@ -1964,7 +1964,7 @@ function donemMetin(a,b){return a===b?fmt(a):fmt(a)+'–'+fmt(b);}
 function tablo(a,b){
   var out=[];
   db.kayitlar.forEach(function(r){r.satirlar.forEach(function(s){
-    var t=s.tarih||r.gun;if(t>=a&&t<=b)out.push({t:t,r:r,s:s});});});
+    var t=s.tarih||r.gun;if(r.gun>=a&&r.gun<=b&&(s.islem.trim()||s.aciklama.trim()||String(s.tutar).trim()))out.push({t:t,r:r,s:s});});});
   out.sort(function(x,y){return x.t<y.t?-1:x.t>y.t?1:(norm(x.r.plaka)<norm(y.r.plaka)?-1:norm(x.r.plaka)>norm(y.r.plaka)?1:0);});
   var sum=0;
   var data=out.map(function(o){
@@ -1989,7 +1989,7 @@ function crc32(u){var c=0xFFFFFFFF;for(var i=0;i<u.length;i++)c=CRC[(c^u[i])&255
 function zip(files){
   var enc=new TextEncoder(),parts=[],cen=[],off=0;
   files.forEach(function(f){
-    var nm=enc.encode(f.name),d=enc.encode(f.data),crc=crc32(d);
+    var nm=enc.encode(f.name),d=f.data instanceof Uint8Array?f.data:enc.encode(f.data),crc=crc32(d);
     var l=new DataView(new ArrayBuffer(30));
     l.setUint32(0,0x04034b50,true);l.setUint16(4,20,true);l.setUint16(6,0x0800,true);l.setUint16(8,0,true);
     l.setUint16(10,0,true);l.setUint16(12,0x21,true);l.setUint32(14,crc,true);l.setUint32(18,d.length,true);l.setUint32(22,d.length,true);
@@ -2008,35 +2008,147 @@ function zip(files){
   return new Blob(parts.concat(cen,[new Uint8Array(e.buffer)]),{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
 }
 function xe(v){return String(v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function xlsxUret(title,t){
-  var L='ABCDEFGHIJKL',W=[12,14,24,18,22,14,16,18,36,12,22,14];
-  function cs(ref,v,st){return '<c r="'+ref+'" t="inlineStr"'+(st?' s="'+st+'"':'')+'><is><t xml:space="preserve">'+xe(v)+'</t></is></c>';}
+/* Gün gün sayfa; her sayfada araç araç blok (araç başlığı + iş kalemleri + araç toplamı) */
+function gunGrup(a,b){
+  /* Araçlar kabul (geliş) tarihine göre günlere ayrılır; o aracın tüm iş kalemleri kartında yer alır */
+  var gunler={};
+  db.kayitlar.forEach(function(r){
+    var t=r.gun;if(!t||t<a||t>b)return;
+    var s=r.satirlar.filter(function(x){return x.islem.trim()||x.aciklama.trim()||String(x.tutar).trim();});
+    (gunler[t]||(gunler[t]={t:t,araclar:[]})).araclar.push({r:r,s:s});
+  });
+  return Object.keys(gunler).sort().map(function(k){var l=gunler[k].araclar;
+    l.sort(function(x,y){return norm(x.r.plaka)<norm(y.r.plaka)?-1:norm(x.r.plaka)>norm(y.r.plaka)?1:0;});
+    return {t:k,araclar:l};});
+}
+/* Fotoğrafı Excel için küçült (en fazla 640 px, JPEG); boyutları da döndür */
+function fotoKucult(src){
+  return new Promise(function(res){
+    var img=new Image();
+    img.onload=function(){try{
+      var s=Math.min(1,640/Math.max(img.naturalWidth,img.naturalHeight)),w=Math.max(1,Math.round(img.naturalWidth*s)),hh=Math.max(1,Math.round(img.naturalHeight*s));
+      var c=document.createElement('canvas');c.width=w;c.height=hh;var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,hh);x.drawImage(img,0,0,w,hh);
+      var b=atob(c.toDataURL('image/jpeg',0.78).split(',')[1]),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);
+      res({data:u,w:w,h:hh});}catch(e){res(null);}};
+    img.onerror=function(){res(null);};img.src=src;
+  });
+}
+function aracFotolari(r){
+  var f=r.fotolar||[],sec=[],once=f.filter(function(x){return x.et==='once';})[0],sonra=f.filter(function(x){return x.et==='sonra';})[0];
+  if(once)sec.push({f:once,ad:'ÖNCE'});if(sonra)sec.push({f:sonra,ad:'SONRA'});
+  f.forEach(function(x){if(sec.length<2&&!sec.some(function(y){return y.f===x;}))sec.push({f:x,ad:x.et==='surec'?'İŞLEM SIRASI':'FOTOĞRAF'});});
+  return sec.slice(0,2);
+}
+/* Excel: her gün ayrı sayfa; her araç bir kart (koyu başlık, bilgi satırı, iş tablosu, araç toplamı, önce/sonra fotoğrafı) */
+function xlsxUret(a,b){
+  var gunler=gunGrup(a,b),isler=[],km=new Map();
+  gunler.forEach(function(g){g.araclar.forEach(function(o){aracFotolari(o.r).forEach(function(p){if(!km.has(p.f)){km.set(p.f,null);isler.push(p.f);}});});});
+  return Promise.all(isler.map(function(f){return fotoKucult(f.src).then(function(k){km.set(f,k);});})).then(function(){return xlsxYaz(a,b,gunler,km);});
+}
+function xlsxYaz(a,b,gunler,km){
+  var L='ABCDEFGH',W=[13,24,42,17,2,34,2,34];
+  /* stiller */
+  var S={yok:0,kalin:1,bas:2,tutar:3,topTutar:4,baslik:5,plaka:6,ad:7,tel:8,bilgi:9,metin:10,tarih:11,topEt:12,alt:13,fEt:14,bilgiK:15,sayi:16,topSayi:17};
+  function cs(ref,v,st){return '<c r="'+ref+'" t="inlineStr" s="'+(st||0)+'"><is><t xml:space="preserve">'+xe(v)+'</t></is></c>';}
   function cn(ref,v,st){return '<c r="'+ref+'" s="'+st+'"><v>'+v+'</v></c>';}
-  var rows='<row r="1">'+cs('A1',title,5)+'</row><row r="2">'+t.head.map(function(x,i){return cs(L[i]+'2',x,2);}).join('')+'</row>';
-  var n=3;
-  t.data.forEach(function(r){
-    rows+='<row r="'+n+'">'+r.map(function(x,i){
-      var ref=L[i]+n;
-      if(x===''||x==null)return '';
-      return typeof x==='number'?cn(ref,x,3):cs(ref,x);}).join('')+'</row>';n++;});
-  rows+='<row r="'+n+'">'+cs('A'+n,'GENEL TOPLAM',1)+cn(L[t.head.indexOf('TUTAR')]+n,t.sum,4)+'</row>';
+  function satir(n,hc,ht){var h='';for(var i=0;i<L.length;i++){var x=hc[i],ref=L[i]+n;
+      if(x&&x.v!=null&&x.v!=='')h+=typeof x.v==='number'?cn(ref,x.v,x.s):cs(ref,x.v,x.s);
+      else h+='<c r="'+ref+'" s="'+(x&&x.s||0)+'"/>';}
+    rh[n]=ht||15;return '<row r="'+n+'"'+(ht?' ht="'+ht+'" customHeight="1"':'')+'>'+h+'</row>';}
+  function tl(n){return n.toLocaleString(TR,{minimumFractionDigits:2,maximumFractionDigits:2})+' ₺';}
+  var EMU=9525,rh={},sayfalar=[],ozet=[],tekil={},resimNo=0,medya=[];
+  gunler.forEach(function(g){
+    var rows='',mrg=[],res=[],n=1,gunTop=0,kalem=0;rh={};
+    g.araclar.forEach(function(o){gunTop+=o.s.reduce(function(t,s){return t+parseTutar(s.tutar);},0);kalem+=o.s.length;});
+    rows+=satir(n,[{v:db.firma.toLocaleUpperCase(TR)+' — '+fmt(g.t),s:S.baslik}],26);mrg.push('A'+n+':D'+n);n++;
+    rows+=satir(n,[{v:g.araclar.length+' araç  ·  '+kalem+' iş kalemi  ·  Gün toplamı: '+tl(gunTop),s:S.alt}]);mrg.push('A'+n+':D'+n);n++;
+    rows+='<row r="'+n+'"/>';n++;
+    g.araclar.forEach(function(o){
+      var r=o.r;aracNormalize(r);tekil[r.id]=1;
+      var pl=(r.ulke&&r.plaka?r.ulke+' ':'')+(r.plaka||'PLAKASIZ'),bas=n,aracTop=0,fotos=aracFotolari(r).map(function(p){p.k=km.get(p.f);return p;}).filter(function(p){return p.k;});
+      var bilgi=[r.eksper?'Eksper: '+r.eksper:'',DURUM[r.durum]].filter(Boolean).join('  ·  ');
+      /* 1: koyu başlık */
+      var r1=[{v:pl,s:S.plaka},{s:S.plaka},{v:titleTr(r.ad)||'—',s:S.ad},{v:r.tel||'',s:S.tel},null];
+      fotos.forEach(function(p,i){r1[5+i*2]={v:p.ad,s:S.fEt};});
+      rows+=satir(n,r1,28);mrg.push('A'+n+':B'+n);n++;
+      /* 2: bilgi */
+      rows+=satir(n,[{v:aracAd(r)||'Araç bilgisi yok',s:S.bilgiK},{s:S.bilgiK},{v:bilgi,s:S.bilgi},{v:'Kabul: '+fmt(r.gun),s:S.bilgi}],20);mrg.push('A'+n+':B'+n);
+      fotos.forEach(function(p,i){res.push({p:p,col:5+i*2,row:n-1});});n++;
+      /* 3: tablo başlığı */
+      rows+=satir(n,[{v:'TARİH',s:S.bas},{v:'YAPILAN İŞLEM',s:S.bas},{v:'AÇIKLAMA / PARÇA',s:S.bas},{v:'TUTAR',s:S.bas}],20);n++;
+      if(!o.s.length)rows+=satir(n++,[{v:fmt(r.gun),s:S.tarih},{v:'İş girilmemiş',s:S.metin},{v:'',s:S.metin},{v:'',s:S.tutar}],20);
+      o.s.forEach(function(s){var t=parseTutar(s.tutar);aracTop+=t;
+        rows+=satir(n++,[{v:fmt(s.tarih||r.gun),s:S.tarih},{v:cumle(s.islem)||'—',s:S.metin},{v:cumle(s.aciklama)||'',s:S.metin},{v:t||'',s:S.tutar}],20);});
+      rows+=satir(n,[{v:'ARAÇ TOPLAMI',s:S.topEt},{s:S.topEt},{s:S.topEt},{v:aracTop||'',s:S.topTutar}],22);mrg.push('A'+n+':C'+n);n++;
+      /* fotoğraf yüksekliği kadar yer bırak */
+      var en=0;fotos.forEach(function(p){var w=230,hh=Math.round(w*p.k.h/p.k.w);if(hh>176){hh=176;w=Math.round(hh*p.k.w/p.k.h);}p.cx=w;p.cy=hh;en=Math.max(en,hh);});
+      var gerek=bas+1+Math.ceil(en/20);while(n<gerek){rows+=satir(n,[],15);n++;}
+      rows+=satir(n,[],15);n++;rows+=satir(n,[],15);n++;
+    });
+    var dr='',drel='';
+    res.forEach(function(x){resimNo++;var id='rId'+resimNo,ad='image'+resimNo+'.jpeg';medya.push({name:'xl/media/'+ad,data:x.p.k.data});
+      drel+='<Relationship Id="'+id+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/'+ad+'"/>';
+      /* twoCellAnchor: Excel dışındaki görüntüleyiciler (iPhone, Mac önizleme, Numbers) da fotoğrafı gösterir */
+      var ox=0,oy=0,ci,ri;for(ci=0;ci<x.col;ci++)ox+=Math.round(W[ci]*8+5);for(ri=1;ri<=x.row;ri++)oy+=Math.round((rh[ri]||15)/0.75);
+      var kalan=x.p.cy,sr=x.row;while(true){var hp=Math.round((rh[sr+1]||15)/0.75);if(kalan<=hp)break;kalan-=hp;sr++;}
+      dr+='<xdr:twoCellAnchor editAs="oneCell"><xdr:from><xdr:col>'+x.col+'</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>'+x.row+'</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from>'+
+        '<xdr:to><xdr:col>'+x.col+'</xdr:col><xdr:colOff>'+x.p.cx*EMU+'</xdr:colOff><xdr:row>'+sr+'</xdr:row><xdr:rowOff>'+kalan*EMU+'</xdr:rowOff></xdr:to>'+
+        '<xdr:pic><xdr:nvPicPr><xdr:cNvPr id="'+(resimNo+1)+'" name="Foto '+resimNo+'"/><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr>'+
+        '<xdr:blipFill><a:blip r:embed="'+id+'"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill>'+
+        '<xdr:spPr><a:xfrm><a:off x="'+ox*EMU+'" y="'+oy*EMU+'"/><a:ext cx="'+x.p.cx*EMU+'" cy="'+x.p.cy*EMU+'"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/></xdr:twoCellAnchor>';});
+    sayfalar.push({ad:fmt(g.t),rows:rows,mrg:mrg,w:W,dr:dr,drel:drel});
+    ozet.push([g.t,g.araclar.length,kalem,gunTop]);
+  });
+  if(gunler.length>1){
+    var o='',n=1,ta=0,tk=0,tt=0,m=['A1:D1','A2:D2'];
+    o+=satir(n++,[{v:db.firma.toLocaleUpperCase(TR)+' — ÖZET',s:S.baslik}],26);
+    o+=satir(n++,[{v:donemMetin(a,b)+'  ·  her gün ayrı sayfada',s:S.alt}]);n++;
+    o+=satir(n++,[{v:'TARİH',s:S.bas},{v:'ARAÇ',s:S.bas},{v:'İŞ KALEMİ',s:S.bas},{v:'TOPLAM',s:S.bas}],20);
+    ozet.forEach(function(x){o+=satir(n++,[{v:fmt(x[0]),s:S.tarih},{v:x[1],s:S.sayi},{v:x[2],s:S.sayi},{v:x[3]||'',s:S.tutar}],20);tk+=x[2];tt+=x[3];});
+    o+=satir(n,[{v:'GENEL TOPLAM',s:S.topEt},{v:Object.keys(tekil).length,s:S.topSayi},{v:tk,s:S.topSayi},{v:tt,s:S.topTutar}],22);
+    sayfalar.unshift({ad:'Özet',rows:o,mrg:m,w:[16,12,14,18]});
+  }
   var NS='xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"',R='http://schemas.openxmlformats.org/officeDocument/2006/relationships';
   var H='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n';
-  var sheet=H+'<worksheet '+NS+'><sheetViews><sheetView workbookViewId="0"><pane ySplit="2" topLeftCell="A3" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols>'+
-    W.map(function(w,i){return '<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>';}).join('')+'</cols><sheetData>'+rows+'</sheetData><mergeCells count="1"><mergeCell ref="A1:L1"/></mergeCells></worksheet>';
-  var xf=function(nf,f,fl,ex){return '<xf numFmtId="'+nf+'" fontId="'+f+'" fillId="'+fl+'" borderId="0" xfId="0"'+ex+'/>';};
-  var styles=H+'<styleSheet '+NS+'><fonts count="3"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="14"/><name val="Calibri"/></font></fonts>'+
-    '<fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFD9D9D9"/><bgColor indexed="64"/></patternFill></fill></fills>'+
-    '<borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'+
-    '<cellXfs count="6">'+xf(0,0,0,'')+xf(0,1,0,' applyFont="1"')+xf(0,1,2,' applyFont="1" applyFill="1"')+xf(4,0,0,' applyNumberFormat="1"')+xf(4,1,0,' applyNumberFormat="1" applyFont="1"')+xf(0,2,0,' applyFont="1"')+'</cellXfs>'+
+  function sayfaXml(p){
+    return H+'<worksheet '+NS+' xmlns:r="'+R+'"><sheetViews><sheetView workbookViewId="0" showGridLines="0"/></sheetViews><sheetFormatPr defaultRowHeight="15"/><cols>'+
+      p.w.map(function(x,i){return '<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+x+'" customWidth="1"/>';}).join('')+'</cols><sheetData>'+p.rows+'</sheetData>'+
+      (p.mrg.length?'<mergeCells count="'+p.mrg.length+'">'+p.mrg.map(function(x){return '<mergeCell ref="'+x+'"/>';}).join('')+'</mergeCells>':'')+
+      '<pageMargins left="0.4" right="0.4" top="0.5" bottom="0.5" header="0.3" footer="0.3"/><pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/>'+
+      (p.dr?'<drawing r:id="rIdDr"/>':'')+'</worksheet>';}
+  /* stil tablosu */
+  var F=function(b,sz,c){return '<font>'+(b?'<b/>':'')+'<sz val="'+sz+'"/>'+(c?'<color rgb="'+c+'"/>':'')+'<name val="Calibri"/></font>';};
+  var fonts=[F(0,11),F(1,11),F(1,16),F(0,10,'FF5C6570'),F(1,15,'FFFFFFFF'),F(1,12,'FFFFFFFF'),F(0,11,'FFFFFFFF'),F(1,9,'FF5C6570')];
+  var FL=function(c){return '<fill><patternFill patternType="solid"><fgColor rgb="'+c+'"/><bgColor indexed="64"/></patternFill></fill>';};
+  var fills=['<fill><patternFill patternType="none"/></fill>','<fill><patternFill patternType="gray125"/></fill>',FL('FFDDE1E6'),FL('FF22272D'),FL('FFF1F3F5'),FL('FFFFF2C7')];
+  var IN='<left style="thin"><color rgb="FFC3C9D0"/></left><right style="thin"><color rgb="FFC3C9D0"/></right><top style="thin"><color rgb="FFC3C9D0"/></top><bottom style="thin"><color rgb="FFC3C9D0"/></bottom><diagonal/>';
+  var borders=['<border><left/><right/><top/><bottom/><diagonal/></border>','<border>'+IN+'</border>'];
+  var X=function(nf,f,fl,bd,al){return '<xf numFmtId="'+nf+'" fontId="'+f+'" fillId="'+fl+'" borderId="'+bd+'" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1"'+(al?' applyAlignment="1"><alignment '+al+'/></xf>':'/>');};
+  var VC='vertical="center"';
+  var xfs=[X(0,0,0,0),X(0,1,0,0),X(0,1,2,1,VC),X(4,0,0,1,VC),X(4,1,5,1,VC),X(0,2,0,0,VC),X(0,4,3,0,VC+' indent="1"'),X(0,5,3,0,VC),X(0,6,3,0,VC),X(0,0,4,0,VC),
+    X(0,0,0,1,VC+' wrapText="1"'),X(0,0,0,1,VC),X(0,1,5,1,VC+' horizontal="right"'),X(0,3,0,0,VC),X(0,7,0,0,'vertical="bottom"'),X(0,1,4,0,VC+' indent="1"'),X(3,0,0,1,VC),X(3,1,5,1,VC)];
+  var styles=H+'<styleSheet '+NS+'><fonts count="'+fonts.length+'">'+fonts.join('')+'</fonts><fills count="'+fills.length+'">'+fills.join('')+'</fills><borders count="'+borders.length+'">'+borders.join('')+'</borders>'+
+    '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="'+xfs.length+'">'+xfs.join('')+'</cellXfs>'+
     '<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  var ct='',sh='',rel='',files=[];
+  sayfalar.forEach(function(p,i){var k=i+1;
+    ct+='<Override PartName="/xl/worksheets/sheet'+k+'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>';
+    sh+='<sheet name="'+xe(p.ad)+'" sheetId="'+k+'" r:id="rId'+k+'"/>';
+    rel+='<Relationship Id="rId'+k+'" Type="'+R+'/worksheet" Target="worksheets/sheet'+k+'.xml"/>';
+    files.push({name:'xl/worksheets/sheet'+k+'.xml',data:sayfaXml(p)});
+    if(p.dr){
+      ct+='<Override PartName="/xl/drawings/drawing'+k+'.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+      files.push({name:'xl/worksheets/_rels/sheet'+k+'.xml.rels',data:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdDr" Type="'+R+'/drawing" Target="../drawings/drawing'+k+'.xml"/></Relationships>'});
+      files.push({name:'xl/drawings/drawing'+k+'.xml',data:H+'<xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="'+R+'">'+p.dr+'</xdr:wsDr>'});
+      files.push({name:'xl/drawings/_rels/drawing'+k+'.xml.rels',data:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+p.drel+'</Relationships>'});
+    }});
+  rel+='<Relationship Id="rId'+(sayfalar.length+1)+'" Type="'+R+'/styles" Target="styles.xml"/>';
   return zip([
-    {name:'[Content_Types].xml',data:H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'},
+    {name:'[Content_Types].xml',data:H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="jpeg" ContentType="image/jpeg"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'+ct+'<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'},
     {name:'_rels/.rels',data:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/officeDocument" Target="xl/workbook.xml"/></Relationships>'},
-    {name:'xl/workbook.xml',data:H+'<workbook '+NS+' xmlns:r="'+R+'"><sheets><sheet name="Takip" sheetId="1" r:id="rId1"/></sheets></workbook>'},
-    {name:'xl/_rels/workbook.xml.rels',data:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="'+R+'/styles" Target="styles.xml"/></Relationships>'},
-    {name:'xl/styles.xml',data:styles},
-    {name:'xl/worksheets/sheet1.xml',data:sheet}]);
+    {name:'xl/workbook.xml',data:H+'<workbook '+NS+' xmlns:r="'+R+'"><sheets>'+sh+'</sheets></workbook>'},
+    {name:'xl/_rels/workbook.xml.rels',data:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+rel+'</Relationships>'},
+    {name:'xl/styles.xml',data:styles}].concat(files,medya));
 }
 function slug(s){
   var m={'İ':'I','ı':'i','Ç':'C','ç':'c','Ğ':'G','ğ':'g','Ö':'O','ö':'o','Ş':'S','ş':'s','Ü':'U','ü':'u'};
@@ -2059,18 +2171,18 @@ function disaAktar(){
       chips.forEach(function(c){c.setAttribute('aria-pressed',c===b?'true':'false');});
       l2.hidden=mod!=='aralik';l1.querySelector('label').textContent=mod==='aralik'?'Başlangıç':mod==='hafta'?'Başlangıç (7 gün)':mod==='ay'?'Ay (içindeki herhangi bir gün)':'Tarih';ozet();}},m[1]);return b;});
   function sec(){if(!d1.value)return null;var r=aralik(mod,d1.value,d2.value||d1.value);return {a:r[0],b:r[1]};}
-  function ozet(){var r=sec();if(!r){msg.textContent='Tarih seçin.';return;}var t=tablo(r.a,r.b);
-    msg.textContent=donemMetin(r.a,r.b)+': '+t.data.length+' iş kalemi'+(t.sum?', genel toplam '+para(t.sum):'');}
+  function ozet(){var r=sec();if(!r){msg.textContent='Tarih seçin.';return;}var t=tablo(r.a,r.b),g=gunGrup(r.a,r.b),na=g.reduce(function(x,y){return x+y.araclar.length;},0);
+    msg.textContent=donemMetin(r.a,r.b)+': '+na+' araç, '+t.data.length+' iş kalemi'+(t.sum?', genel toplam '+para(t.sum):'');}
   d1.addEventListener('change',ozet);d2.addEventListener('change',ozet);
   function yap(tur){
     var r=sec();if(!r){msg.textContent='Tarih seçin.';return;}
-    var t=tablo(r.a,r.b);if(!t.data.length){msg.textContent='Bu dönemde iş kalemi yok. Başka bir tarih seçin.';return;}
+    var t=tablo(r.a,r.b);if(tur==='xlsx'?!gunGrup(r.a,r.b).length:!t.data.length){msg.textContent='Bu dönemde gelen araç yok. Başka bir tarih seçin.';return;}
     var ad=slug(db.firma)+'_'+fmt(r.a)+(r.a===r.b?'':'-'+fmt(r.b));
-    if(tur==='xlsx')indir(xlsxUret(db.firma+' — '+donemMetin(r.a,r.b),t),ad+'.xlsx');
+    if(tur==='xlsx'){msg.textContent='Excel hazırlanıyor…';xlsxUret(r.a,r.b).then(function(bl){msg.textContent='';indir(bl,ad+'.xlsx');});}
     else indir(new Blob([csvUret(r.a,r.b)],{type:'text/csv;charset=utf-8'}),ad+'.csv');
     toast((tur==='xlsx'?'Excel dosyası':'CSV dosyası')+' indirildi: '+ad+'.'+tur);
   }
-  modal('Excel çıktısı','İş kalemleri tarihine göre seçilir; dosya Excel’de açılır.',h('div',null,
+  modal('Excel çıktısı','Araçlar geliş (kabul) tarihine göre gün gün sayfalara ayrılır; dosya Excel’de açılır.',h('div',null,
     h('div',{class:'chips',role:'group','aria-label':'Dönem'},chips),h('div',{class:'rng'},l1,l2),msg,
     h('div',{class:'acts'},
       h('button',{type:'button',class:'btn btn-quiet',onclick:function(){yap('csv');}},'CSV (yedek)'),
