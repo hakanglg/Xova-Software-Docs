@@ -675,7 +675,7 @@ var DURUM=['Bekliyor','İşlemde','Hazır','Teslim edildi'];
 var SONRAKI=['İşleme al','Hazır','Teslim et'];
 var SONRAKI_UZUN=['İşleme al','Hazır olarak işaretle','Teslim edildi olarak işaretle'];
 var db={firma:'RESTORFX TEKİRDAĞ',kayitlar:[],ornek:false,v:3,ozel:{markalar:[],modeller:{}}};
-var view='pano',mobCol=1,durumF='acik',gunF='',q='',cur=null,tab='isler',wa={},saveTimer=null,selIdx=-1,lastFocus=null;
+var view='pano',mobCol=1,durumF='acik',gunF='',gunB='',q='',cur=null,tab='isler',wa={},saveTimer=null,selIdx=-1,lastFocus=null;
 var $=function(id){return document.getElementById(id);};
 
 /* ---------- yardımcılar ---------- */
@@ -1893,7 +1893,7 @@ function panoCiz(){
       ondragleave:function(e){if(!col.contains(e.relatedTarget))col.classList.remove('drop');},
       ondrop:function(e){e.preventDefault();col.classList.remove('drop');var r=byId(e.dataTransfer.getData('text/plain'));if(r)setDurum(r,i);}},
       h('div',{class:'col-h'},h('span',{class:'dot'}),h('h2',null,n),h('span',{class:'cnt'},String(all.length))),body,
-      i===3&&all.length>list.length?h('button',{type:'button',class:'btn btn-quiet col-more',onclick:function(){view='liste';durumF=3;gunF='';anaCiz();}},'Tüm teslim edilenler ('+all.length+')'):null);
+      i===3&&all.length>list.length?h('button',{type:'button',class:'btn btn-quiet col-more',onclick:function(){view='liste';durumF=3;gunF='';gunB='';anaCiz();}},'Tüm teslim edilenler ('+all.length+')'):null);
     p.appendChild(col);
   });
 }
@@ -1905,6 +1905,27 @@ function gunAdi(iso,kisa){var p=String(iso||'').split('-');if(p.length!==3)retur
   if(iso===todayIso())return kisa?'Bugün':'Bugün · '+ad;
   if(iso===addIso(todayIso(),-1))return kisa?'Dün':'Dün · '+ad;
   return kisa?ad:ad+' · '+GUNADI[d.getDay()];}
+function gunIcinde(r){return !gunF||(r.gun>=gunF&&r.gun<=(gunB||gunF));}
+function aralikKisa(a,b){if(!b||a===b)return gunAdi(a,true);var k=function(iso){var p=iso.split('-');return (+p[2])+' '+AYADI[+p[1]-1].slice(0,3);};return k(a)+' – '+k(b);}
+function tarihSec(){
+  var t=todayIso();
+  var d1=h('input',{type:'date',class:'f',value:gunF||t,id:'lsD1'}),d2=h('input',{type:'date',class:'f',value:gunB||gunF||t,id:'lsD2'});
+  var msg=h('div',{class:'exsum','aria-live':'polite'});
+  function oku(){var a=d1.value,b=d2.value||a;if(!a)return null;if(b<a){var x=a;a=b;b=x;}return [a,b];}
+  function say(){var r=oku();if(!r){msg.textContent='Başlangıç günü seçin.';return;}
+    msg.textContent=donemMetin(r[0],r[1])+': '+db.kayitlar.filter(function(k){return k.gun>=r[0]&&k.gun<=r[1];}).length+' araç geldi.';}
+  var ON=[['Bugün',[t,t]],['Dün',[addIso(t,-1),addIso(t,-1)]],['Bu hafta',aralik('hafta',t)],['Geçen hafta',aralik('hafta',addIso(t,-7))],['Bu ay',aralik('ay',t)],['Geçen ay',aralik('ay',addIso(aralik('ay',t)[0],-1))]];
+  var chips=ON.map(function(o){return h('button',{type:'button',class:'qc',onclick:function(){d1.value=o[1][0];d2.value=o[1][1];guncel();}},o[0]);});
+  function guncel(){say();chips.forEach(function(c,i){c.setAttribute('aria-pressed',ON[i][1][0]===d1.value&&ON[i][1][1]===d2.value?'true':'false');});}
+  [d1,d2].forEach(function(x){x.addEventListener('change',guncel);x.addEventListener('click',function(){if(x.showPicker){try{x.showPicker();}catch(_){}}});});
+  var m=modal('Tarih aralığı','Araçlar geliş (kabul) gününe göre süzülür. Hazır aralık seçin ya da başlangıç ve bitiş gününü girin.',h('div',null,
+    h('div',{class:'chips',role:'group','aria-label':'Hazır aralıklar'},chips),
+    h('div',{class:'rng'},alan('Başlangıç',d1),alan('Bitiş',d2)),msg,
+    h('div',{class:'acts'},
+      h('button',{type:'button',class:'btn btn-quiet',onclick:function(){gunF='';gunB='';m.close();listeCiz();}},'Tüm günler'),
+      h('button',{type:'button',class:'btn btn-primary btn-lg',onclick:function(){var r=oku();if(!r){msg.textContent='Başlangıç günü seçin.';return;}gunF=r[0];gunB=r[1];m.close();listeCiz();}},ic('check'),'Uygula'))),'narrow');
+  guncel();
+}
 function listeSatir(r){
   var is=doluSatir(r),oz=is.slice(0,2).map(function(s){return isMetin(s);}).join(', '),t=toplam(r);
   var sel=h('select',{class:'stsel s'+r.durum,'aria-label':(r.plaka||'Araç')+' durumu',onclick:function(e){e.stopPropagation();},onchange:function(){setDurum(r,+sel.value);}},
@@ -1920,7 +1941,7 @@ function listeSatir(r){
 function listeCiz(){
   var L=$('liste');L.textContent='';
   var aramada=!!q.trim();
-  var gunluk=db.kayitlar.filter(function(r){return !gunF||r.gun===gunF;});
+  var gunluk=db.kayitlar.filter(gunIcinde);
   function uyar(r,val){return val==='all'||(val==='acik'?r.durum!==3:r.durum===val);}
   if(!aramada){
     var seg=h('div',{class:'lf-seg',role:'group','aria-label':'Durum'});
@@ -1928,16 +1949,15 @@ function listeCiz(){
       seg.appendChild(h('button',{type:'button',class:'lf-b'+(typeof c[1]==='number'?' s'+c[1]:''),'aria-pressed':durumF===c[1]?'true':'false',onclick:function(){durumF=c[1];listeCiz();}},
         typeof c[1]==='number'?h('span',{class:'dot'}):null,c[0],h('small',null,String(gunluk.filter(function(r){return uyar(r,c[1]);}).length))));
     });
-    var bugun=gunF===todayIso();
+    var bugun=gunF===todayIso()&&gunB===gunF,secili=!!gunF&&!bugun;
     L.appendChild(h('div',{class:'lf',role:'group','aria-label':'Süzgeçler'},seg,
-      h('button',{type:'button',class:'lf-c','aria-pressed':bugun?'true':'false',onclick:function(){gunF=bugun?'':todayIso();listeCiz();}},'Bugün gelenler'),
-      h('label',{class:'lf-c'+(gunF&&!bugun?' on':'')},ic('cal'),gunF&&!bugun?gunAdi(gunF,true):'Gün seç',
-        h('input',{type:'date',id:'gun',value:gunF,'aria-label':'Kabul günü seç',onclick:function(e){/* görünmez tarih alanı: tıklayınca takvimi aç (Chrome yalnız ikona tıklanınca açıyor) */if(e.currentTarget.showPicker){try{e.currentTarget.showPicker();}catch(_){}}},onchange:function(e){if(!e.target.value)return;gunF=e.target.value;listeCiz();}})),
-      gunF?h('button',{type:'button',class:'lf-c lf-x','aria-label':'Gün süzgecini kaldır',title:'Tüm günler',onclick:function(){gunF='';listeCiz();}},ic('x')):null));
+      h('button',{type:'button',class:'lf-c','aria-pressed':bugun?'true':'false',onclick:function(){if(bugun){gunF='';gunB='';}else{gunF=gunB=todayIso();}listeCiz();}},'Bugün gelenler'),
+      h('button',{type:'button',class:'lf-c'+(secili?' on':''),'aria-haspopup':'dialog',onclick:tarihSec},ic('cal'),secili?aralikKisa(gunF,gunB):'Tarih aralığı'),
+      gunF?h('button',{type:'button',class:'lf-c lf-x','aria-label':'Tarih süzgecini kaldır',title:'Tüm günler',onclick:function(){gunF='';gunB='';listeCiz();}},ic('x')):null));
   }
   var list=sirali(db.kayitlar.filter(function(r){
     if(aramada)return eslesir(r,q);
-    return (!gunF||r.gun===gunF)&&(durumF==='all'||(durumF==='acik'?r.durum!==3:r.durum===durumF));
+    return gunIcinde(r)&&(durumF==='all'||(durumF==='acik'?r.durum!==3:r.durum===durumF));
   }));
   if(aramada)L.appendChild(h('div',{class:'note',id:'note'},'“'+q.trim()+'” için '+list.length+' kayıt (tüm günler ve durumlar).',h('button',{type:'button',class:'btn btn-quiet',onclick:function(){q='';$('ara').value='';listeCiz();}},ic('x'),'Aramayı temizle')));
   if(!list.length){
