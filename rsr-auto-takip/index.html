@@ -1932,7 +1932,7 @@ function listeCiz(){
     L.appendChild(h('div',{class:'lf',role:'group','aria-label':'Süzgeçler'},seg,
       h('button',{type:'button',class:'lf-c','aria-pressed':bugun?'true':'false',onclick:function(){gunF=bugun?'':todayIso();listeCiz();}},'Bugün gelenler'),
       h('label',{class:'lf-c'+(gunF&&!bugun?' on':'')},ic('cal'),gunF&&!bugun?gunAdi(gunF,true):'Gün seç',
-        h('input',{type:'date',id:'gun',value:gunF,'aria-label':'Kabul günü seç',onchange:function(e){gunF=e.target.value;listeCiz();}})),
+        h('input',{type:'date',id:'gun',value:gunF,'aria-label':'Kabul günü seç',onclick:function(e){/* görünmez tarih alanı: tıklayınca takvimi aç (Chrome yalnız ikona tıklanınca açıyor) */if(e.currentTarget.showPicker){try{e.currentTarget.showPicker();}catch(_){}}},onchange:function(e){if(!e.target.value)return;gunF=e.target.value;listeCiz();}})),
       gunF?h('button',{type:'button',class:'lf-c lf-x','aria-label':'Gün süzgecini kaldır',title:'Tüm günler',onclick:function(){gunF='';listeCiz();}},ic('x')):null));
   }
   var list=sirali(db.kayitlar.filter(function(r){
