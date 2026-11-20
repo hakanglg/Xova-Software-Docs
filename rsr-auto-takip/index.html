@@ -454,6 +454,7 @@ input.f[type=date]{padding-right:8px}
 .modal .acts{margin-top:20px;justify-content:flex-end}
 .form-err{color:var(--danger);font-weight:600;margin-top:12px}
 .rng{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 10px}
+.tsec{display:flex;margin:4px 0 12px}.tsec button{flex:1;justify-content:center}
 .exsum{padding:12px 14px;background:var(--sunk);border-radius:8px;color:var(--ink-2)}
 
 /* Lightbox */
@@ -1908,22 +1909,31 @@ function gunAdi(iso,kisa){var p=String(iso||'').split('-');if(p.length!==3)retur
 function gunIcinde(r){return !gunF||(r.gun>=gunF&&r.gun<=(gunB||gunF));}
 function aralikKisa(a,b){if(!b||a===b)return gunAdi(a,true);var k=function(iso){var p=iso.split('-');return (+p[2])+' '+AYADI[+p[1]-1].slice(0,3);};return k(a)+' – '+k(b);}
 function tarihSec(){
-  var t=todayIso();
+  var t=todayIso(),mod=(gunF&&gunB&&gunB!==gunF)?'aralik':'gun';
   var d1=h('input',{type:'date',class:'f',value:gunF||t,id:'lsD1'}),d2=h('input',{type:'date',class:'f',value:gunB||gunF||t,id:'lsD2'});
+  var f1=alan('Gün',d1),f2=alan('Bitiş',d2),l1=f1.querySelector('label');
   var msg=h('div',{class:'exsum','aria-live':'polite'});
-  function oku(){var a=d1.value,b=d2.value||a;if(!a)return null;if(b<a){var x=a;a=b;b=x;}return [a,b];}
-  function say(){var r=oku();if(!r){msg.textContent='Başlangıç günü seçin.';return;}
+  function oku(){var a=d1.value,b=mod==='gun'?a:(d2.value||a);if(!a)return null;if(b<a){var x=a;a=b;b=x;}return [a,b];}
+  function say(){var r=oku();if(!r){msg.textContent=mod==='gun'?'Gün seçin.':'Başlangıç günü seçin.';return;}
     msg.textContent=donemMetin(r[0],r[1])+': '+db.kayitlar.filter(function(k){return k.gun>=r[0]&&k.gun<=r[1];}).length+' araç geldi.';}
+  var bG=h('button',{type:'button',onclick:function(){modSec('gun');}},'Tek gün'),bA=h('button',{type:'button',onclick:function(){modSec('aralik');}},'Aralık');
+  function modSec(m){mod=m;if(m==='aralik'&&d2.value<d1.value)d2.value=d1.value;guncel();}
   var ON=[['Bugün',[t,t]],['Dün',[addIso(t,-1),addIso(t,-1)]],['Bu hafta',aralik('hafta',t)],['Geçen hafta',aralik('hafta',addIso(t,-7))],['Bu ay',aralik('ay',t)],['Geçen ay',aralik('ay',addIso(aralik('ay',t)[0],-1))]];
-  var chips=ON.map(function(o){return h('button',{type:'button',class:'qc',onclick:function(){d1.value=o[1][0];d2.value=o[1][1];guncel();}},o[0]);});
-  function guncel(){say();chips.forEach(function(c,i){c.setAttribute('aria-pressed',ON[i][1][0]===d1.value&&ON[i][1][1]===d2.value?'true':'false');});}
+  var chips=ON.map(function(o){return h('button',{type:'button',class:'qc',onclick:function(){d1.value=o[1][0];d2.value=o[1][1];mod=o[1][0]===o[1][1]?'gun':'aralik';guncel();}},o[0]);});
+  function guncel(){
+    bG.setAttribute('aria-pressed',mod==='gun'?'true':'false');bA.setAttribute('aria-pressed',mod==='aralik'?'true':'false');
+    f2.style.display=mod==='gun'?'none':'';l1.firstChild.nodeValue=mod==='gun'?'Gün':'Başlangıç';
+    var r=oku()||['',''];
+    chips.forEach(function(c,i){c.setAttribute('aria-pressed',ON[i][1][0]===r[0]&&ON[i][1][1]===r[1]?'true':'false');});
+    say();}
   [d1,d2].forEach(function(x){x.addEventListener('change',guncel);x.addEventListener('click',function(){if(x.showPicker){try{x.showPicker();}catch(_){}}});});
-  var m=modal('Tarih aralığı','Araçlar geliş (kabul) gününe göre süzülür. Hazır aralık seçin ya da başlangıç ve bitiş gününü girin.',h('div',null,
-    h('div',{class:'chips',role:'group','aria-label':'Hazır aralıklar'},chips),
-    h('div',{class:'rng'},alan('Başlangıç',d1),alan('Bitiş',d2)),msg,
+  var m=modal('Tarih seç','Araçlar geliş (kabul) gününe göre süzülür. Tek bir gün ya da bir aralık seçin.',h('div',null,
+    h('div',{class:'seg tsec',role:'group','aria-label':'Seçim türü'},bG,bA),
+    h('div',{class:'chips',role:'group','aria-label':'Hazır seçimler'},chips),
+    h('div',{class:'rng'},f1,f2),msg,
     h('div',{class:'acts'},
       h('button',{type:'button',class:'btn btn-quiet',onclick:function(){gunF='';gunB='';m.close();listeCiz();}},'Tüm günler'),
-      h('button',{type:'button',class:'btn btn-primary btn-lg',onclick:function(){var r=oku();if(!r){msg.textContent='Başlangıç günü seçin.';return;}gunF=r[0];gunB=r[1];m.close();listeCiz();}},ic('check'),'Uygula'))),'narrow');
+      h('button',{type:'button',class:'btn btn-primary btn-lg',onclick:function(){var r=oku();if(!r){say();return;}gunF=r[0];gunB=r[1];m.close();listeCiz();}},ic('check'),'Uygula'))),'narrow');
   guncel();
 }
 function listeSatir(r){
@@ -1952,7 +1962,7 @@ function listeCiz(){
     var bugun=gunF===todayIso()&&gunB===gunF,secili=!!gunF&&!bugun;
     L.appendChild(h('div',{class:'lf',role:'group','aria-label':'Süzgeçler'},seg,
       h('button',{type:'button',class:'lf-c','aria-pressed':bugun?'true':'false',onclick:function(){if(bugun){gunF='';gunB='';}else{gunF=gunB=todayIso();}listeCiz();}},'Bugün gelenler'),
-      h('button',{type:'button',class:'lf-c'+(secili?' on':''),'aria-haspopup':'dialog',onclick:tarihSec},ic('cal'),secili?aralikKisa(gunF,gunB):'Tarih aralığı'),
+      h('button',{type:'button',class:'lf-c'+(secili?' on':''),'aria-haspopup':'dialog',onclick:tarihSec},ic('cal'),secili?aralikKisa(gunF,gunB):'Tarih seç'),
       gunF?h('button',{type:'button',class:'lf-c lf-x','aria-label':'Tarih süzgecini kaldır',title:'Tüm günler',onclick:function(){gunF='';gunB='';listeCiz();}},ic('x')):null));
   }
   var list=sirali(db.kayitlar.filter(function(r){
