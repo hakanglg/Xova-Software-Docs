@@ -504,19 +504,51 @@ input.f[type=date]{padding-right:8px}
 /* ===== Duyarlı ===== */
 @media (min-width:761px) and (min-height:700px){.modal-wrap{overflow-y:auto;overscroll-behavior:contain;padding:0 16px}.modal{overflow:visible;max-height:none;margin:auto}}
 /* WhatsApp mesaj paneli ve taslaklar */
-.wa-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,380px);gap:24px;align-items:start}
-.wa-step{margin:0 0 8px}
-.wa-opts{display:flex;flex-wrap:wrap;gap:8px 18px}
-.wa-sw{display:inline-flex;align-items:center;gap:10px;min-height:40px;font-weight:600;cursor:pointer}
-.wa-sw input{width:22px;height:22px;accent-color:var(--wa)}
-.wa-ta{min-height:180px;resize:vertical;font-size:16px;line-height:1.5}
-.wa-acts{flex-wrap:wrap;justify-content:flex-start!important;gap:8px}
-.wa-foto{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;border-top:1px solid var(--line);padding-top:10px}
-.wa-oniz{position:sticky;top:12px;background:var(--sunk);border-radius:14px;padding:12px}
-.wa-oniz[hidden]{display:none}
-.wa-oniz-h{display:flex;flex-direction:column;margin-bottom:8px}.wa-oniz-h small{color:var(--ink-3)}
-.wa-img{display:block;width:100%;height:auto;border-radius:10px;box-shadow:var(--sh-1);background:#fff}
+.wa-panel{max-width:1080px}
+.wa-h{justify-content:space-between;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.wa-tsl{display:flex;align-items:center;gap:8px;margin-left:auto}
+.wa-tsl .hint{font-weight:600}
+.wa-sec{width:auto;min-width:220px;height:44px;font-weight:600}
+.wa-tsl .btn-icon{width:44px;min-height:44px;height:44px}
+.wa-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,380px);gap:28px;align-items:start}
+.wa-yaz{display:grid;gap:14px;min-width:0}
+.wa-ta{min-height:220px;resize:vertical;font-size:16px;line-height:1.55;padding:14px 16px;border-radius:10px}
+.wa-opts{display:flex;flex-wrap:wrap;gap:6px 24px}
+.wa-sw{display:inline-flex;align-items:center;gap:10px;min-height:40px;font-weight:600;color:var(--ink-2);cursor:pointer;user-select:none}
+.wa-sw input{appearance:none;-webkit-appearance:none;position:relative;flex:none;width:40px;height:24px;margin:0;border-radius:12px;background:var(--line-2);cursor:pointer;transition:background .15s}
+.wa-sw input::before{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+.wa-sw input:checked{background:var(--wa)}
+.wa-sw input:checked::before{transform:translateX(16px)}
+.wa-sw input:checked+span{color:var(--ink)}
+.wa-alt{display:flex;align-items:center;justify-content:space-between;gap:12px 16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px}
+.wa-alici{display:flex;align-items:baseline;gap:8px;min-width:0;flex-wrap:wrap}
+.wa-no{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.wa-acts{display:flex;gap:8px;margin-left:auto}
+.wa-gonder{padding:0 26px}
+.wa-daha{width:48px}
+.wa-ipucu{margin:-4px 0 0;text-align:right}
+.wa-ipucu:empty{display:none}
+/* önizleme: WhatsApp sohbeti gibi */
+.wa-oniz{position:sticky;top:12px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#EFEAE2}
+.wa-tel-h{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F0F2F5;border-bottom:1px solid #E2E5E8}
+.wa-tel-h b{display:block;font-size:15px;line-height:1.2}.wa-tel-h small{color:var(--ink-3);font-size:13px}
+.wa-av{width:36px;height:36px;border-radius:50%;background:#DFE5E7;color:#54656F;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+.wa-sohbet{padding:16px 14px 18px;max-height:calc(100vh - 220px);min-height:240px;overflow:auto;display:flex;flex-direction:column;align-items:flex-end;
+  background-color:#EFEAE2;background-image:radial-gradient(rgba(0,0,0,.035) 1px,transparent 1px);background-size:14px 14px}
+.wa-balon{position:relative;max-width:92%;background:#D9FDD3;border-radius:8px 0 8px 8px;padding:6px 8px 20px;box-shadow:0 1px .5px rgba(11,20,26,.13);font-size:14.5px;line-height:1.42;color:#111B21}
+.wa-balon::after{content:"";position:absolute;top:0;right:-8px;border-top:0 solid transparent;border-left:8px solid #D9FDD3;border-bottom:10px solid transparent}
+.wa-balon.foto{padding-top:3px;width:92%}
+.wa-medya{border-radius:6px;overflow:hidden;margin:0 -5px 6px;background:#fff;min-height:120px;display:grid}
+.wa-medya[hidden]{display:none}
+.wa-img{display:block;width:100%;height:auto;cursor:zoom-in}
 .wa-img:not([src]){display:none}
+.wa-yuk{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--ink-3);font-size:13px;padding:40px 0}
+.wa-yuk[hidden]{display:none}
+.wa-spin{width:16px;height:16px;border-radius:50%;border:2px solid #C9D1D7;border-top-color:var(--wa);animation:waDon .8s linear infinite}
+@keyframes waDon{to{transform:rotate(360deg)}}
+.wa-metin{white-space:pre-wrap;overflow-wrap:anywhere;padding:0 2px}
+.wa-saat{position:absolute;right:8px;bottom:4px;font-size:11px;color:#667781}
+.wa-buyuk{display:block;width:100%;height:auto;border-radius:8px}
 .ts-list{margin-bottom:14px}
 .ts-row{display:flex;align-items:center;gap:4px;padding:6px 8px;border-top:1px solid var(--line)}
 .ts-row:first-child{border-top:0}
@@ -527,7 +559,8 @@ input.f[type=date]{padding-right:8px}
 .ts-deg .qc{gap:4px}.ts-deg .qc .ico{width:15px;height:15px}
 .ts-oniz-k small{display:block;color:var(--ink-3);font-weight:600;margin-bottom:4px}
 .ts-oniz{white-space:pre-wrap;background:#E7F6EC;border:1px solid #C8E8D2;border-radius:10px;padding:12px 14px;font-size:15px;line-height:1.5;max-height:260px;overflow:auto}
-@media (max-width:860px){.wa-grid{grid-template-columns:1fr}.wa-oniz{position:static}}
+@media (max-width:900px){.wa-grid{grid-template-columns:1fr}.wa-oniz{position:static}.wa-sohbet{max-height:none}}
+@media (max-width:560px){.wa-tsl{width:100%;margin-left:0}.wa-sec{flex:1;min-width:0}.wa-acts{width:100%}.wa-gonder{flex:1}.wa-ipucu{text-align:left}}
 /* pencere alanları kaydırılınca sabit başlık ve düğme çubuğunun arkasında kalmasın */
 .modal input,.modal select,.modal textarea{scroll-margin:96px 0 108px}
 /* masaüstü: pencerenin ana düğmeleri uzun içerikte de altta sabit kalır */
@@ -991,16 +1024,17 @@ function fotoPaylas(r,text){
 /* Taslak değişkenleri: metne {ad} gibi yazılır; gönderirken aracın bilgisiyle dolar */
 var TASLAK_DEG=[['ad','Müşteri adı'],['plaka','Plaka'],['arac','Araç'],['isler','Yapılan işler'],['notlar','Notlar'],['toplam','Toplam tutar'],['tarih','Kabul tarihi'],['firma','Firma adı']];
 var TASLAK_VARSAYILAN=[
-  ['is-bitti','İş bitti','Merhaba {ad},\n\n*{plaka}* plakalı {arac} aracınızın işlemleri tamamlanmıştır ✅\n\n*Yapılan işlemler*\n{isler}\n\n*Toplam:* {toplam}\n\nAracınızı teslim alabilirsiniz. Bizi tercih ettiğiniz için teşekkür ederiz.\n\n*{firma}*'],
+  ['is-bitti','İş bitti','Merhaba {ad},\n\n*{plaka}* plakalı {arac} aracınızın işlemleri tamamlanmıştır.\n\n*Yapılan işlemler*\n{isler}\n\n*Toplam:* {toplam}\n\nAracınızı teslim alabilirsiniz. Bizi tercih ettiğiniz için teşekkür ederiz.\n\n*{firma}*'],
   ['kabul','Araç kabul edildi','Merhaba {ad},\n\n*{plaka}* plakalı {arac} aracınız {tarih} tarihinde atölyemize kabul edilmiştir.\n\n*Yapılacak işlemler*\n{isler}\n\nİşlemler tamamlandığında size haber vereceğiz.\n\n*{firma}*'],
   ['hazir','Aracınız hazır','Merhaba {ad}, *{plaka}* plakalı aracınız hazırdır. Teslim almak için uğrayabilirsiniz.\n\n*{firma}*'],
   ['randevu','Randevu hatırlatma','Merhaba {ad}, *{plaka}* plakalı aracınız için randevunuzu hatırlatmak isteriz. Uygun değilseniz lütfen bize haber veriniz.\n\n*{firma}*'],
   ['teklif','Teklif','Merhaba {ad},\n\n*{plaka}* plakalı {arac} aracınız için hazırladığımız teklif:\n\n{isler}\n\n*Toplam:* {toplam}\n\nDetaylar için bize ulaşabilirsiniz.\n\n*{firma}*']
 ];
+var ESKI_IS_BITTI2='Merhaba {ad},\n\n*{plaka}* plakalı {arac} aracınızın işlemleri tamamlanmıştır ✅\n\n*Yapılan işlemler*\n{isler}\n\n*Toplam:* {toplam}\n\nAracınızı teslim alabilirsiniz. Bizi tercih ettiğiniz için teşekkür ederiz.\n\n*{firma}*';
 var ESKI_IS_BITTI='Merhaba {ad},\n\n*{plaka}* plakalı {arac} aracınızın işlemleri tamamlanmıştır ✅\n\n*Yapılan işlemler*\n{isler}\n\n{notlar}\n\n*Toplam:* {toplam}\n\nAracınızı teslim alabilirsiniz. Bizi tercih ettiğiniz için teşekkür ederiz.\n\n*{firma}*';
 function sablonHazirla(){if(!Array.isArray(db.sablonlar))db.sablonlar=TASLAK_VARSAYILAN.map(function(x){return {id:x[0],ad:x[1],metin:x[2]};});
   /* önceki sürümün hiç değiştirilmemiş "İş bitti" taslağı: notlar ayrı bölüm yerine işlerin altında */
-  var ib=taslakById('is-bitti');if(ib&&ib.metin===ESKI_IS_BITTI)ib.metin=TASLAK_VARSAYILAN[0][2];}
+  var ib=taslakById('is-bitti');if(ib&&(ib.metin===ESKI_IS_BITTI||ib.metin===ESKI_IS_BITTI2))ib.metin=TASLAK_VARSAYILAN[0][2];}
 function taslakById(id){return (db.sablonlar||[]).filter(function(t){return t.id===id;})[0]||null;}
 /* işler türe göre gruplanır: aynı işlem tek satır, parçaları yan yana */
 function isGruplari(r){
@@ -1023,8 +1057,8 @@ function sablonDoldur(r,metin,o){
   o=o||{};
   var g=isGruplari(r),tl=toplam(r),nt=tumNotlar(r);
   var D={ad:titleTr(r.ad)||'Müşterimiz',plaka:plakaYaz(r),arac:aracAd(r)||'',tarih:fmt(r.gun),firma:String(db.firma||'').trim().toLocaleUpperCase(TR),
-    isler:g.map(function(x){var p=parcaYaz(x.parcalar);return '• *'+grupAdi(x)+'*'+(p?': '+p:'')+(o.tutar&&x.tutar?' — '+para(x.tutar):'')+grupNotlari(x).map(function(n){return '\n    📝 _'+n+'_';}).join('');}).join('\n'),
-    notlar:nt.length?'*Notlar*\n'+nt.map(function(x){return '📝 '+x;}).join('\n'):'',
+    isler:g.map(function(x){var p=parcaYaz(x.parcalar);return '• *'+grupAdi(x)+'*'+(p?': '+p:'')+(o.tutar&&x.tutar?' — '+para(x.tutar):'')+grupNotlari(x).map(function(n){return '\n    _Not: '+n+'_';}).join('');}).join('\n'),
+    notlar:nt.length?'*Notlar*\n'+nt.map(function(x){return '– '+x;}).join('\n'):'',
     toplam:o.tutar&&tl?para(tl):''};
   /* işler, notlar, toplam boş kalırsa bulunduğu satır hiç yazılmaz (ör. "*Toplam:* {toplam}") */
   var BLOK={isler:1,notlar:1,toplam:1};
@@ -1035,25 +1069,30 @@ function sablonDoldur(r,metin,o){
 }
 
 /* ---------- WhatsApp: iş özeti görseli (Excel ekran fotoğrafı yerine) ---------- */
+/* Rapor düzeni: beyaz zemin, ince çizgiler, tek vurgu rengi; renkler yalnız iş türlerini gösterir */
 var OZ_FONT='Barlow, "Segoe UI", Arial, sans-serif';
+var OZ={ink:'#14181D',ink2:'#3F4852',ink3:'#6B7480',ink4:'#9AA2AC',line:'#E3E7EB',soft:'#F5F7F9'};
 function gorselYukle(src){return new Promise(function(res){var i=new Image();i.onload=function(){res(i);};i.onerror=function(){res(null);};i.src=src;});}
 function ozSatirlar(x,t,w){var k=String(t).split(/\s+/),l=[],c='';k.forEach(function(s){var d=c?c+' '+s:s;if(c&&x.measureText(d).width>w){l.push(c);c=s;}else c=d;});if(c)l.push(c);return l;}
 function ozKutu(x,X,Y,W,H,R){x.beginPath();x.moveTo(X+R,Y);x.arcTo(X+W,Y,X+W,Y+H,R);x.arcTo(X+W,Y+H,X,Y+H,R);x.arcTo(X,Y+H,X,Y,R);x.arcTo(X,Y,X+W,Y,R);x.closePath();}
-function ozKart(x,X,Y,W,H){x.save();x.shadowColor='rgba(20,26,32,.10)';x.shadowBlur=18;x.shadowOffsetY=4;x.fillStyle='#fff';ozKutu(x,X,Y,W,H,22);x.fill();x.restore();}
+/* küçük, aralıklı büyük harf başlık */
+function ozEtiket(x,t,X,Y,al,renk){x.save();x.font='600 19px '+OZ_FONT;x.fillStyle=renk||OZ.ink4;if('letterSpacing' in x)x.letterSpacing='2.5px';x.textAlign=al||'left';
+  x.fillText(String(t).toLocaleUpperCase(TR),X+(al==='right'&&'letterSpacing' in x?2.5:0),Y);x.restore();}
+function ozCizgi(x,X1,X2,Y,lw,renk){x.fillStyle=renk||OZ.line;x.fillRect(X1,Y,X2-X1,lw||1);}
 /* açılımlı şema: iş ekranındaki çizimin aynısı, renkler iş türlerinden */
 function semaCiz(x,r,ox,oy,sc){
-  var mv=parcaTurleri(r),ST={body:['#EFEFEF','#D6D6D6',2.5],glass:['#D0D0D0','#C4C4C4',1.5],handle:['#D6D6D6',null,0]};
+  var mv=parcaTurleri(r),ST={body:['#F1F3F5','#D5DADF',2.5],glass:['#D9DEE3','#C9CFD5',1.5],handle:['#D5DADF',null,0]};
   x.save();x.translate(ox,oy);x.scale(sc,sc);x.lineJoin='round';
   function yol(d,f,s,lw){var p=new Path2D(d);if(f){x.fillStyle=f;x.fill(p);}if(s){x.strokeStyle=s;x.lineWidth=lw;x.stroke(p);}}
   function sus(e){var k=ST[e[1]];yol(e[0],k[0],k[1],k[2]);if(e[2])yol(ayna(e[0]),k[0],k[1],k[2]);}
   SEMA_GOVDE.forEach(sus);
-  PARCALAR.forEach(function(p){var L=mv[p]||[],f='#EFEFEF';
+  PARCALAR.forEach(function(p){var L=mv[p]||[],f='#F1F3F5';
     if(L.length===1)f=L[0].c;
     else if(L.length>1){var b=pathKutu(GEO2[p]),g=dilimYonu(p)?x.createLinearGradient(0,b[1],0,b[3]):x.createLinearGradient(b[0],0,b[2],0);dilimDurak(L).forEach(function(d){g.addColorStop(d[0],d[1]);});f=g;}
-    yol(GEO2[p],f,L.length?'#7A8490':'#D6D6D6',2.5);});
+    yol(GEO2[p],f,L.length?'#6B7480':'#D5DADF',L.length?3:2.5);});
   SEMA_SUS.forEach(sus);
-  x.fillStyle='#8A939C';x.font='600 24px '+OZ_FONT;x.textAlign='center';x.textBaseline='alphabetic';
-  [['Sol',100,118],['Sağ',560,118],['Ön',330,24],['Arka',330,824]].forEach(function(l){x.fillText(l[0],l[1],l[2]);});
+  x.fillStyle=OZ.ink4;x.font='600 30px '+OZ_FONT;x.textAlign='center';x.textBaseline='alphabetic';
+  [['SOL',100,118],['SAĞ',560,118],['ÖN',330,26],['ARKA',330,826]].forEach(function(l){x.fillText(l[0],l[1],l[2]);});
   x.restore();
   return Object.keys(mv).length;
 }
@@ -1061,68 +1100,84 @@ function ozetGorsel(r,o){
   o=o||{};
   var fot=aracFotolari(r),hazir=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve();
   return hazir.then(function(){return Promise.all(fot.map(function(p){return gorselYukle(p.f.src);}));}).then(function(imgs){
-    var W=1080,P=48,IW=W-2*P,c=document.createElement('canvas');c.width=W;c.height=5200;
+    var W=1080,P=72,IW=W-2*P,R=W-P,c=document.createElement('canvas');c.width=W;c.height=6000;
     var x=c.getContext('2d');x.textBaseline='alphabetic';x.textAlign='left';
-    x.fillStyle='#EEF0F3';x.fillRect(0,0,W,c.height);
-    /* başlık bandı */
-    x.fillStyle='#22272D';x.fillRect(0,0,W,176);
-    x.fillStyle='#F2C230';ozKutu(x,P,44,64,64,14);x.fill();
-    x.fillStyle='#22272D';x.font='700 26px '+OZ_FONT;x.textAlign='center';x.fillText('RSR',P+32,85);x.textAlign='left';
-    x.fillStyle='#fff';x.font='700 40px '+OZ_FONT;x.fillText(db.firma.toLocaleUpperCase(TR),P+84,80);
-    x.fillStyle='#AEB6BF';x.font='500 26px '+OZ_FONT;x.fillText('Araç iş özeti · '+fmt(todayIso()),P+84,118);
-    var dRenk=['#8A939C','#2F6FDB','#2E9E5B','#5C6570'][r.durum]||'#8A939C',dm=DURUM[r.durum];
-    x.font='700 26px '+OZ_FONT;var dw=x.measureText(dm).width+52;
-    x.fillStyle=dRenk;ozKutu(x,W-P-dw,56,dw,48,24);x.fill();x.fillStyle='#fff';x.fillText(dm,W-P-dw+26,89);
-    var y=176+32;
-    /* araç kartı: plaka, araç, müşteri */
-    ozKart(x,P,y,IW,170);
-    var pl=r.plaka.trim()||'PLAKASIZ';x.font='700 50px '+OZ_FONT;var pw=x.measureText(pl).width+40+46;
-    x.fillStyle='#fff';ozKutu(x,P+28,y+30,pw,72,10);x.fill();x.lineWidth=3;x.strokeStyle='#1C2126';x.stroke();
-    x.save();ozKutu(x,P+28,y+30,pw,72,10);x.clip();x.fillStyle='#1F4AA8';x.fillRect(P+28,y+30,44,72);x.restore();
-    x.fillStyle='#fff';x.font='700 18px '+OZ_FONT;x.textAlign='center';x.fillText((r.ulke||'TR').slice(0,3),P+50,y+90);x.textAlign='left';
-    x.fillStyle='#1C2126';x.font='700 50px '+OZ_FONT;x.fillText(pl,P+28+44+20,y+86);
-    var bx=P+28+pw+28,bw=W-P-28-bx;
-    x.fillStyle='#1C2126';x.font='700 36px '+OZ_FONT;x.fillText(ozSatirlar(x,aracAd(r)||'Araç bilgisi yok',bw)[0],bx,y+62);
-    x.fillStyle='#5C6570';x.font='500 28px '+OZ_FONT;x.fillText(ozSatirlar(x,titleTr(r.ad)||'',bw)[0]||'',bx,y+102);
-    x.fillStyle='#8A939C';x.font='500 24px '+OZ_FONT;x.fillText('Kabul: '+fmt(r.gun)+(r.eksper.trim()?'  ·  Eksper: '+r.eksper.trim():''),P+28,y+144);
-    y+=170+24;
-    /* işler kartı: şema + türe göre liste */
+    x.fillStyle='#fff';x.fillRect(0,0,W,c.height);
+    x.fillStyle=OZ.ink;x.fillRect(0,0,W,10);
+    /* başlık: firma solda, belge adı ve tarih sağda */
+    var y=96,firma=String(db.firma||'').trim().toLocaleUpperCase(TR);
+    x.fillStyle=OZ.ink;x.font='700 42px '+OZ_FONT;x.fillText(ozSatirlar(x,firma,IW-320)[0]||'',P,y+8);
+    x.fillStyle=OZ.ink3;x.font='500 25px '+OZ_FONT;x.fillText('Araç iş özeti',P,y+48);
+    ozEtiket(x,'Tarih',R,y-14,'right');
+    x.fillStyle=OZ.ink;x.font='600 30px '+OZ_FONT;x.textAlign='right';x.fillText(fmt(todayIso()),R,y+26);x.textAlign='left';
+    y+=88;ozCizgi(x,P,R,y,2,OZ.ink);
+    /* araç: plaka + model + müşteri */
+    y+=44;
+    var pl=r.plaka.trim()||'PLAKASIZ',ph=68,sw=40;x.font='700 44px '+OZ_FONT;var pw=Math.ceil(x.measureText(pl).width)+sw+40;
+    x.fillStyle='#fff';ozKutu(x,P,y,pw,ph,8);x.fill();
+    x.save();ozKutu(x,P,y,pw,ph,8);x.clip();x.fillStyle='#1F49A8';x.fillRect(P,y,sw,ph);x.restore();
+    ozKutu(x,P,y,pw,ph,8);x.lineWidth=2.5;x.strokeStyle=OZ.ink;x.stroke();
+    x.fillStyle='#fff';x.font='700 17px '+OZ_FONT;x.textAlign='center';x.fillText((r.ulke||'TR').slice(0,3),P+sw/2,y+ph-12);x.textAlign='left';
+    x.fillStyle=OZ.ink;x.font='700 44px '+OZ_FONT;x.fillText(pl,P+sw+20,y+49);
+    var bx=P+pw+32,bw=R-bx;
+    x.fillStyle=OZ.ink;x.font='600 32px '+OZ_FONT;x.fillText(ozSatirlar(x,aracAd(r)||'Araç bilgisi girilmemiş',bw)[0],bx,y+30);
+    x.fillStyle=OZ.ink3;x.font='500 26px '+OZ_FONT;x.fillText(ozSatirlar(x,titleTr(r.ad)||'',bw)[0]||'',bx,y+64);
+    y+=ph+36;
+    /* bilgi şeridi */
+    var dRenk=['#6B7480','#1D5FD1','#17804A','#3F4852'][r.durum]||'#6B7480';
+    var bil=[['Kabul tarihi',fmt(r.gun)],['Durum',DURUM[r.durum]||'—',dRenk]];
+    if(String(r.eksper||'').trim())bil.push(['Eksper / sigorta',String(r.eksper).trim()]);
+    ozCizgi(x,P,R,y);
+    var cw=IW/bil.length;
+    bil.forEach(function(b,i){var bx2=P+i*cw+(i?28:0);ozEtiket(x,b[0],bx2,y+42);
+      x.font='600 28px '+OZ_FONT;var vx=bx2;
+      if(b[2]){x.fillStyle=b[2];x.beginPath();x.arc(bx2+7,y+77,7,0,7);x.fill();vx+=24;}
+      x.fillStyle=b[2]||OZ.ink;x.fillText(ozSatirlar(x,b[1],cw-40-(vx-bx2))[0]||'',vx,y+86);
+      if(i){x.fillStyle=OZ.line;x.fillRect(P+i*cw,y+22,1,74);}});
+    y+=118;ozCizgi(x,P,R,y);
+    /* işlemler: solda liste, sağda şema */
+    y+=60;
     var g=isGruplari(r),tl=toplam(r),semaVar=Object.keys(parcaTurleri(r)).length>0;
-    var sc=0.56,sw=Math.round(660*sc),sh=Math.round(830*sc),lx=semaVar?P+28+sw+36:P+32,lw=W-P-28-lx;
-    var liste=g.map(function(k){x.font='500 27px '+OZ_FONT;var l=k.parcalar.length?ozSatirlar(x,parcaYaz(k.parcalar),lw-64):[];
-      x.font='italic 500 25px '+OZ_FONT;var nl=grupNotlari(k).map(function(n){return ozSatirlar(x,n,lw-64-30);});
-      return {k:k,l:l,nl:nl,h:44+l.length*36+nl.reduce(function(a,b){return a+b.length*33+8;},nl.length?10:0)+18};});
-    var lh=liste.reduce(function(a,b){return a+b.h;},0)+(o.tutar&&tl?78:0);
-    var kh=Math.max(semaVar?sh+40:0,72+Math.max(lh,60))+24;
-    ozKart(x,P,y,IW,kh);
-    if(semaVar)semaCiz(x,r,P+20,y+28,sc);
-    x.fillStyle='#8A939C';x.font='700 22px '+OZ_FONT;x.fillText('YAPILAN İŞLEMLER',lx,y+52);
-    var ly=y+76;
-    if(!liste.length){x.fillStyle='#5C6570';x.font='500 28px '+OZ_FONT;x.fillText('İş kalemi girilmemiş.',lx,ly+30);}
-    liste.forEach(function(it){var t=it.k.t;
-      x.fillStyle=t.c;ozKutu(x,lx,ly+6,44,44,10);x.fill();
-      x.fillStyle=yaziRengi(t.c);x.font='700 '+(String(t.k).length>2?16:20)+'px '+OZ_FONT;x.textAlign='center';x.fillText(t.k||'',lx+22,ly+35);x.textAlign='left';
-      x.fillStyle='#1C2126';x.font='700 31px '+OZ_FONT;x.fillText(grupAdi(it.k),lx+64,ly+38);
-      if(o.tutar&&it.k.tutar){x.textAlign='right';x.fillStyle='#1C2126';x.font='600 27px '+OZ_FONT;x.fillText(para(it.k.tutar),W-P-28,ly+38);x.textAlign='left';}
-      x.fillStyle='#4B545E';x.font='500 27px '+OZ_FONT;it.l.forEach(function(s,i){x.fillText(s,lx+64,ly+78+i*36);});
-      /* bu işin notları: parçaların hemen altında */
-      var ny=ly+78+it.l.length*36+(it.nl.length?6:0);x.font='italic 500 25px '+OZ_FONT;
-      it.nl.forEach(function(ls){x.fillStyle='#E0B21B';x.beginPath();x.arc(lx+74,ny-8,5,0,7);x.fill();x.fillStyle='#7A5C00';ls.forEach(function(s,i){x.fillText(s,lx+94,ny+i*33);});ny+=ls.length*33+8;});
-      ly+=it.h;});
-    if(o.tutar&&tl){x.fillStyle='#F4F5F7';ozKutu(x,lx,ly+8,W-P-28-lx,60,12);x.fill();
-      x.fillStyle='#1C2126';x.font='700 28px '+OZ_FONT;x.fillText('Toplam',lx+20,ly+48);x.textAlign='right';x.fillText(para(tl),W-P-48,ly+48);x.textAlign='left';}
-    y+=kh+24;
-    /* fotoğraflar: önce / sonra */
+    var SW=330,SP=18,sc=(SW-2*SP)/660,SH=Math.round(830*sc)+2*SP,lx=P,lw=semaVar?IW-SW-52:IW,tx=lx+30,tw=lx+lw-tx;
+    ozEtiket(x,'Yapılan işlemler',lx,y);if(o.tutar&&tl)ozEtiket(x,'Tutar',lx+lw,y,'right');
+    var sy=y-34;
+    y+=20;ozCizgi(x,lx,lx+lw,y,2,OZ.ink);
+    var liste=g.map(function(k){
+      x.font='600 31px '+OZ_FONT;var amt=o.tutar&&k.tutar?para(k.tutar):'',aw=amt?x.measureText(amt).width+24:0;
+      var bas=ozSatirlar(x,grupAdi(k),tw-aw);
+      x.font='400 26px '+OZ_FONT;var l=k.parcalar.length?ozSatirlar(x,parcaYaz(k.parcalar),tw-aw):[];
+      x.font='italic 400 25px '+OZ_FONT;var nl=grupNotlari(k).map(function(n){return ozSatirlar(x,n,tw-22);});
+      var nh=nl.reduce(function(a,b){return a+b.length*34;},0)+(nl.length?(nl.length-1)*10+18:0);
+      return {k:k,amt:amt,bas:bas,l:l,nl:nl,nh:nh,h:26+bas.length*38+l.length*36+(l.length?4:0)+nh+24};});
+    if(!liste.length){x.fillStyle=OZ.ink3;x.font='500 27px '+OZ_FONT;x.fillText('İş kalemi girilmemiş.',lx,y+54);y+=84;}
+    liste.forEach(function(it,ix){var t=it.k.t,ry=y;
+      x.fillStyle=t.c||OZ.ink4;ozKutu(x,lx,ry+30,14,14,3);x.fill();
+      x.fillStyle=OZ.ink;x.font='600 31px '+OZ_FONT;it.bas.forEach(function(s,i){x.fillText(s,tx,ry+50+i*38);});
+      if(it.amt){x.textAlign='right';x.font='600 29px '+OZ_FONT;x.fillText(it.amt,lx+lw,ry+50);x.textAlign='left';}
+      var py=ry+50+it.bas.length*38;
+      x.fillStyle=OZ.ink2;x.font='400 26px '+OZ_FONT;it.l.forEach(function(s,i){x.fillText(s,tx,py-2+i*36);});
+      var ny=py+it.l.length*36+(it.l.length?4:0)+(it.nl.length?6:0);
+      if(it.nl.length){x.fillStyle='#CDD3D9';x.fillRect(tx,ny-26,3,it.nh-12);}
+      x.font='italic 400 25px '+OZ_FONT;x.fillStyle=OZ.ink3;
+      it.nl.forEach(function(ls){ls.forEach(function(s,i){x.fillText(s,tx+22,ny+i*34);});ny+=ls.length*34+10;});
+      y+=it.h;if(ix<liste.length-1)ozCizgi(x,tx,lx+lw,y);});
+    if(o.tutar&&tl){ozCizgi(x,lx,lx+lw,y,2,OZ.ink);
+      ozEtiket(x,'Toplam',lx,y+56,'left',OZ.ink);x.fillStyle=OZ.ink;x.font='700 40px '+OZ_FONT;x.textAlign='right';x.fillText(para(tl),lx+lw,y+60);x.textAlign='left';y+=92;}
+    else{ozCizgi(x,lx,lx+lw,y);y+=8;}
+    if(semaVar){var sx=R-SW;x.fillStyle=OZ.soft;ozKutu(x,sx,sy,SW,SH,14);x.fill();semaCiz(x,r,sx+SP,sy+SP,sc);y=Math.max(y,sy+SH);}
+    /* fotoğraflar */
     var fl=fot.map(function(p,i){return {p:p,im:imgs[i]};}).filter(function(z){return z.im;});
-    if(fl.length){var gap=20,fw=fl.length>1?(IW-gap)/2:IW,fh=Math.round(fw*(fl.length>1?0.78:0.62));
+    if(fl.length){y+=72;ozEtiket(x,'Fotoğraflar',P,y);y+=24;
+      var gap=24,fw=fl.length>1?(IW-gap)/2:IW,fh=Math.round(fw*(fl.length>1?0.75:0.56));
       fl.forEach(function(z,i){var fx=P+i*(fw+gap),im=z.im,s=Math.max(fw/im.naturalWidth,fh/im.naturalHeight),dw=im.naturalWidth*s,dh=im.naturalHeight*s;
-        x.save();ozKutu(x,fx,y,fw,fh,20);x.clip();x.drawImage(im,fx+(fw-dw)/2,y+(fh-dh)/2,dw,dh);x.restore();
-        x.font='700 22px '+OZ_FONT;var tw=x.measureText(z.p.ad).width+32;x.fillStyle='rgba(28,33,38,.82)';ozKutu(x,fx+16,y+16,tw,40,20);x.fill();x.fillStyle='#fff';x.fillText(z.p.ad,fx+32,y+44);});
-      y+=fh+28;}
+        x.save();ozKutu(x,fx,y,fw,fh,10);x.clip();x.fillStyle=OZ.soft;x.fillRect(fx,y,fw,fh);x.drawImage(im,fx+(fw-dw)/2,y+(fh-dh)/2,dw,dh);x.restore();
+        ozEtiket(x,z.p.ad,fx,y+fh+40,'left',OZ.ink3);});
+      y+=fh+40;}
     /* alt bilgi */
-    x.textAlign='center';x.fillStyle='#5C6570';x.font='500 26px '+OZ_FONT;x.fillText('Bizi tercih ettiğiniz için teşekkür ederiz.',W/2,y+30);
-    x.fillStyle='#1C2126';x.font='700 28px '+OZ_FONT;x.fillText(db.firma.toLocaleUpperCase(TR),W/2,y+72);x.textAlign='left';
-    y+=108;
+    y+=64;ozCizgi(x,P,R,y);
+    x.fillStyle=OZ.ink3;x.font='500 24px '+OZ_FONT;x.fillText('Bizi tercih ettiğiniz için teşekkür ederiz.',P,y+52);
+    x.fillStyle=OZ.ink;x.font='700 24px '+OZ_FONT;x.textAlign='right';x.fillText(ozSatirlar(x,firma,IW/2-20)[0]||'',R,y+52);x.textAlign='left';
+    y+=96;
     var out=document.createElement('canvas');out.width=W;out.height=Math.ceil(y);out.getContext('2d').drawImage(c,0,0);
     return out;
   });
@@ -1136,44 +1191,56 @@ function waState(r){
   if(s.text==null){var t=taslakById(s.tplId);s.text=s.uretilen=t?sablonDoldur(r,t.metin,s):'';}
   return s;
 }
+/* WhatsApp biçimi önizlemesi: *kalın* _italik_ ~üstü çizili~ */
+function waBicim(t){
+  var e=String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return e.replace(/(^|[\s(])\*([^*\n]+)\*(?=$|[\s.,!?:;)])/g,'$1<b>$2</b>')
+    .replace(/(^|[\s(])_([^_\n]+)_(?=$|[\s.,!?:;)])/g,'$1<i>$2</i>')
+    .replace(/(^|[\s(])~([^~\n]+)~(?=$|[\s.,!?:;)])/g,'$1<s>$2</s>');
+}
 function mesajPanel(r){
   /* görsel dahilse: cihazın paylaşım menüsü (telefon ve bilgisayarda WhatsApp uygulaması görsel+metni birlikte alır);
      paylaşım yoksa görsel panoya kopyalanır, mesaj WhatsApp Web'de açılır */
   var st=waState(r),no=waNo(r.tel),paylasir=!!(navigator.canShare&&navigator.share);
-  var ta=h('textarea',{class:'ta wa-ta',id:'waText','aria-label':'Mesaj metni',oninput:function(){st.text=ta.value;boy();}});ta.value=st.text;
-  function boy(){ta.style.height='auto';ta.style.height=Math.max(180,ta.scrollHeight+2)+'px';}
+  /* taslak seçimi */
+  var sec=h('select',{class:'f wa-sec','aria-label':'Taslak'});
+  function secCiz(){sec.textContent='';db.sablonlar.forEach(function(t){var op=h('option',{value:t.id},t.ad);if(t.id===st.tplId)op.selected=true;sec.appendChild(op);});}
+  secCiz();
+  sec.addEventListener('change',function(){
+    var eski=st.text,elle=st.text!==st.uretilen&&st.text.trim(),eskiId=st.tplId;st.tplId=sec.value;uret();
+    if(elle)toast('Taslak değişti; elle yazdığınız metin değiştirildi.','',{label:'Geri al',fn:function(){st.tplId=eskiId;st.text=eski;ta.value=eski;boy();secCiz();oniz();}});});
+  /* mesaj metni */
+  var ta=h('textarea',{class:'ta wa-ta',id:'waText','aria-label':'Mesaj metni',oninput:function(){st.text=ta.value;boy();oniz();}});ta.value=st.text;
+  function boy(){ta.style.height='auto';ta.style.height=Math.min(400,Math.max(220,ta.scrollHeight+2))+'px';}
   requestAnimationFrame(boy);
-  function uret(){var t=taslakById(st.tplId);st.text=st.uretilen=t?sablonDoldur(r,t.metin,st):'';ta.value=st.text;boy();}
-  var chips=h('div',{class:'chips',role:'radiogroup','aria-label':'Taslak'});
-  function chipCiz(){
-    chips.textContent='';
-    db.sablonlar.forEach(function(t){var on=t.id===st.tplId;
-      chips.appendChild(h('button',{type:'button',class:'qc',role:'radio','aria-checked':on?'true':'false','aria-pressed':on?'true':'false',onclick:function(){
-        var eski=st.text,elle=st.text!==st.uretilen&&st.text.trim(),eskiId=st.tplId;st.tplId=t.id;uret();chipCiz();
-        if(elle)toast('Taslak değişti; elle yazdığınız metin değiştirildi.','',{label:'Geri al',fn:function(){st.tplId=eskiId;st.text=eski;ta.value=eski;boy();chipCiz();}});}},t.ad));});
-    chips.appendChild(h('button',{type:'button',class:'linkbtn tur-duzen',onclick:function(){taslakYonet(r);}},ic('pen'),'Taslakları düzenle'));
-  }
-  chipCiz();
-  /* seçenekler */
-  function anahtar(etiket,acik,fn){var cb=h('input',{type:'checkbox'});cb.checked=!!acik;cb.addEventListener('change',function(){fn(cb.checked);});return h('label',{class:'wa-sw'},cb,h('span',null,etiket));}
-  var gorselKutu=h('div',{class:'wa-oniz'});
+  function uret(){var t=taslakById(st.tplId);st.text=st.uretilen=t?sablonDoldur(r,t.metin,st):'';ta.value=st.text;boy();oniz();}
+  /* seçenekler: anahtar düğmeleri */
+  function anahtar(etiket,acik,fn){var cb=h('input',{type:'checkbox',role:'switch'});cb.checked=!!acik;cb.addEventListener('change',function(){fn(cb.checked);});return h('label',{class:'wa-sw'},cb,h('span',null,etiket));}
   var opts=h('div',{class:'wa-opts'},
     anahtar('Tutarları göster',st.tutar,function(v){st.tutar=v;if(st.text===st.uretilen||!st.text.trim())uret();else toast('Metni elle değiştirdiniz; tutar yalnız görsele eklendi. Metne de eklemek için taslağı yeniden seçin.');gorselYenile();}),
-    anahtar('Görseli dahil et',st.gorsel,function(v){st.gorsel=v;gorselKutu.hidden=!v;butonlar();}));
-  /* özet görseli: önizleme + paylaşım */
-  var tuval=null,dosya=null,png=null,img=h('img',{class:'wa-img',alt:'İş özeti görseli önizlemesi'}),durum=h('p',{class:'hint'},'Görsel hazırlanıyor…');
-  gorselKutu.appendChild(h('div',{class:'wa-oniz-h'},h('b',null,'İş özeti görseli'),h('small',null,'Müşteriye mesajla birlikte gider')));
-  gorselKutu.appendChild(durum);gorselKutu.appendChild(img);gorselKutu.hidden=!st.gorsel;
-  var sira=0;
-  function gorselYenile(){var n=++sira;durum.textContent='Görsel hazırlanıyor…';
-    dosya=png=null;
-    ozetGorsel(r,{tutar:st.tutar}).then(function(c){if(n!==sira)return;tuval=c;img.src=c.toDataURL('image/jpeg',0.85);durum.textContent='';
+    anahtar('İş özeti görseli',st.gorsel,function(v){st.gorsel=v;oniz();butonlar();}));
+  /* önizleme: müşterinin WhatsApp'ta göreceği balon */
+  var img=h('img',{class:'wa-img',alt:'İş özeti görseli',title:'Büyütmek için tıklayın',onclick:function(){if(img.src)buyut();}});
+  var yuk=h('div',{class:'wa-yuk'},h('span',{class:'wa-spin','aria-hidden':'true'}),'Görsel hazırlanıyor…');
+  var medya=h('div',{class:'wa-medya'},yuk,img),metin=h('div',{class:'wa-metin'});
+  var saat=new Date().toLocaleTimeString(TR,{hour:'2-digit',minute:'2-digit'});
+  var balon=h('div',{class:'wa-balon'},medya,metin,h('span',{class:'wa-saat'},saat,' ✓✓'));
+  function oniz(){medya.hidden=!st.gorsel;balon.classList.toggle('foto',!!st.gorsel);metin.innerHTML=waBicim(ta.value.trim()||' ');metin.hidden=!ta.value.trim();}
+  var adi=titleTr(r.ad)||'Müşteri',bas=adi.split(/\s+/).map(function(s){return s.charAt(0);}).join('').slice(0,2).toLocaleUpperCase(TR);
+  var onizKutu=h('aside',{class:'wa-oniz','aria-label':'Mesaj önizlemesi'},
+    h('div',{class:'wa-tel-h'},h('span',{class:'wa-av','aria-hidden':'true'},bas),h('div',null,h('b',null,adi),h('small',null,no?'+'+no:'Numara yok'))),
+    h('div',{class:'wa-sohbet'},balon));
+  function buyut(){var b=h('img',{src:img.src,alt:'İş özeti görseli',class:'wa-buyuk'});modal('İş özeti görseli','',b,'wide');}
+  /* özet görseli */
+  var dosya=null,png=null,sira=0;
+  function gorselYenile(){var n=++sira;yuk.hidden=false;img.removeAttribute('src');dosya=png=null;
+    ozetGorsel(r,{tutar:st.tutar}).then(function(c){if(n!==sira)return;img.src=c.toDataURL('image/jpeg',0.85);yuk.hidden=true;
         /* paylaşım ve kopyalama tıklamada beklemesin (iPhone paylaşımı anında çağrılmalı) */
         blobAl(c,'image/jpeg').then(function(b){if(n===sira)dosya=new File([b],ozetDosyaAdi(r),{type:'image/jpeg'});});
         blobAl(c,'image/png').then(function(b){if(n===sira)png=b;});})
-      .catch(function(e){durum.textContent='Görsel hazırlanamadı: '+e.message;});}
+      .catch(function(e){yuk.textContent='Görsel hazırlanamadı: '+e.message;});}
   gorselYenile();
-  function indir(sessiz){if(!dosya){toast('Görsel henüz hazırlanıyor, birazdan tekrar deneyin.','err');return;}fotoIndir([dosya]);if(!sessiz)toast('İş özeti görseli indirildi');}
+  function indir(sessiz){if(!dosya){toast('Görsel henüz hazırlanıyor, birazdan tekrar deneyin.','err');return;}fotoIndir([dosya]);if(sessiz!==true)toast('İş özeti görseli indirildi');}
   function kopyala(sessiz){
     if(!png)return Promise.reject(new Error('Görsel henüz hazırlanıyor, birazdan tekrar deneyin.'));
     if(!window.ClipboardItem||!navigator.clipboard||!navigator.clipboard.write)return Promise.reject(new Error('Bu tarayıcı görsel kopyalamayı desteklemiyor; görseli indirin.'));
@@ -1187,46 +1254,45 @@ function mesajPanel(r){
       if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(ta.value).catch(function(){});
       navigator.share({files:[dosya],text:ta.value})
         .then(function(){toast('Gönderildi. Metin görselin yanında görünmüyorsa sohbete yapıştırın (metin kopyalandı).');})
-        .catch(function(e){if(e&&e.name==='AbortError')return;toast('Paylaşım açılamadı; görsel kopyalanıp WhatsApp açılıyor.','err');masaustu();});
+        .catch(function(e){if(e&&e.name==='AbortError')return;toast('Paylaşım açılamadı; görsel kopyalanıp WhatsApp açılıyor.','err');webGonder();});
       return;}
-    if(st.gorsel){masaustu();return;}
+    if(st.gorsel){webGonder();return;}
     waAc();
   }
-  function masaustu(){
-    {
-      /* bilgisayar: görsel panoya, metin WhatsApp'ta; sohbete Ctrl+V */
-      kopyala(true).then(function(){if(waAc())toast('Görsel kopyalandı, mesaj WhatsApp\'ta açıldı: sohbette Ctrl+V ile görseli yapıştırıp gönderin.');})
-        .catch(function(){if(waAc()){indir(true);toast('Görsel indirildi; WhatsApp\'ta sohbete sürükleyip ekleyin.');}});
-    }
+  /* bilgisayar: görsel panoya, metin WhatsApp'ta; sohbete Ctrl+V */
+  function webGonder(){
+    kopyala(true).then(function(){if(waAc())toast('Görsel kopyalandı, mesaj WhatsApp\'ta açıldı: sohbette Ctrl+V ile görseli yapıştırıp gönderin.');})
+      .catch(function(){if(waAc()){indir(true);toast('Görsel indirildi; WhatsApp\'ta sohbete sürükleyip ekleyin.');}});
   }
-  var acts=h('div',{class:'acts wa-acts'});
+  var nf=r.fotolar.filter(function(f){return f.et!=='surec';}).length;
+  var acts=h('div',{class:'wa-acts'}),ipucu=h('p',{class:'hint wa-ipucu'});
   function butonlar(){
     acts.textContent='';
-    var ana=h('button',{type:'button',class:'btn btn-wa btn-lg',onclick:gonder},ic('chat'),st.gorsel?'WhatsApp\'a görselle gönder':'WhatsApp\'ta aç');
+    var ana=h('button',{type:'button',class:'btn btn-wa btn-lg wa-gonder',onclick:gonder},ic('chat'),'WhatsApp\'ta gönder');
     if(!no&&!(st.gorsel&&paylasir))ana.disabled=true;
-    acts.appendChild(ana);
-    if(st.gorsel){
-      if(paylasir&&no&&!(window.matchMedia&&matchMedia('(pointer:coarse)').matches))acts.appendChild(h('button',{type:'button',class:'btn',onclick:masaustu},ic('chat'),'WhatsApp Web (kopyala-yapıştır)'));
-      if(window.ClipboardItem)acts.appendChild(h('button',{type:'button',class:'btn btn-quiet',onclick:function(){kopyala().catch(function(e){toast(e.message,'err');});}},ic('image'),'Görseli kopyala'));
-      acts.appendChild(h('button',{type:'button',class:'btn btn-quiet',onclick:indir},ic('download'),'Görseli indir'));}
+    var dahaB=h('button',{type:'button',class:'btn btn-icon btn-lg wa-daha','aria-label':'Diğer seçenekler','aria-haspopup':'menu','aria-expanded':'false',title:'Diğer seçenekler',onclick:function(){
+      var m=[];
+      if(st.gorsel&&paylasir&&no)m.push({ad:'WhatsApp Web ile gönder',ic:'chat',fn:webGonder});
+      if(st.gorsel&&window.ClipboardItem)m.push({ad:'Görseli kopyala',ic:'image',fn:function(){kopyala().catch(function(e){toast(e.message,'err');});}});
+      if(st.gorsel)m.push({ad:'Görseli indir',ic:'download',fn:indir});
+      m.push({ad:'Metni kopyala',ic:'pen',fn:function(){(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(ta.value):Promise.reject()).then(function(){toast('Mesaj kopyalandı');},function(){toast('Kopyalanamadı; metni seçip kopyalayın.','err');});}});
+      if(nf)m.push({ad:'Önce/sonra fotoğraflarını paylaş',ic:'image',fn:function(){fotoPaylas(r,ta.value);}});
+      menuAc(dahaB,m);}},ic('more'));
+    acts.appendChild(ana);acts.appendChild(dahaB);
+    ipucu.textContent=!no&&!(st.gorsel&&paylasir)?'':!st.gorsel?'Mesaj WhatsApp\'ta hazır açılır; göndermeyi siz onaylarsınız.':paylasir?'Paylaşım menüsünden WhatsApp\'ı ve kişiyi seçin; görsel ve mesaj birlikte gider.':'Mesaj WhatsApp\'ta açılır, görsel kopyalanır: sohbette Ctrl+V ile yapıştırıp gönderin.';
   }
-  butonlar();
-  var nf=r.fotolar.filter(function(f){return f.et!=='surec';}).length;
-  var ipucu=!st.gorsel?'Mesaj WhatsApp\'ta açılır.':paylasir?'“Görselle gönder” paylaşım menüsünü açar: WhatsApp\'ı, sonra kişiyi seçin; görsel ve mesaj birlikte gider. WhatsApp menüde yoksa “WhatsApp Web” düğmesi mesajı açar ve görseli kopyalar, sohbete Ctrl+V ile yapıştırırsınız.':'Mesaj WhatsApp\'ta açılır ve görsel kopyalanır; sohbette Ctrl+V ile yapıştırıp gönderin.';
-  return h('div',{class:'panel'},
-    h('section',{class:'box'},
-      h('div',{class:'box-h'},h('h3',null,'Müşteriye mesaj')),
+  butonlar();oniz();
+  var alici=no?h('div',{class:'wa-alici'},h('span',{class:'hint'},'Alıcı'),h('b',null,adi),h('span',{class:'wa-no'},'+'+no))
+    :h('div',{class:'num bad'},ic('alert'),'Telefon geçersiz. ',h('button',{type:'button',class:'linkbtn',onclick:function(){setTab('bilgi');}},'Numarayı düzeltin'));
+  return h('div',{class:'panel wa-panel'},
+    h('section',{class:'box wa-box'},
+      h('div',{class:'box-h wa-h'},h('h3',null,'Müşteriye mesaj'),
+        h('div',{class:'wa-tsl'},h('label',{class:'hint',for:'waSec'},'Taslak'),(sec.id='waSec',sec),
+          h('button',{type:'button',class:'btn btn-icon btn-quiet','aria-label':'Taslakları düzenle',title:'Taslakları düzenle',onclick:function(){taslakYonet(r);}},ic('pen')))),
       h('div',{class:'wa-grid'},
-        h('div',{class:'msg-grid'},
-          h('div',null,h('p',{class:'step-h wa-step'},'Taslak'),chips),
-          opts,ta,
-          h('div',{class:no?'num':'num bad'},no?['Gönderilecek numara: ',h('b',null,'+'+no)]:[ic('alert'),'Telefon geçersiz. ',h('button',{type:'button',class:'linkbtn',onclick:function(){setTab('bilgi');}},'Numarayı düzeltin'),' (05XX XXX XX XX veya +90 5XX…)']),
-          acts,
-          h('p',{class:'hint',style:'margin:0'},ipucu+' Mesajı siz gönderirsiniz.'),
-          nf?h('div',{class:'wa-foto'},h('span',{class:'hint'},'Önce/sonra fotoğrafları ('+nf+') ayrıca:'),
-            h('button',{type:'button',class:'linkbtn',onclick:function(){fotoPaylas(r,ta.value);}},'Paylaş'),
-            h('button',{type:'button',class:'linkbtn',onclick:function(){fotoIndir(paylasilacak(r));}},'İndir')):null),
-        gorselKutu)));
+        h('div',{class:'wa-yaz'},ta,opts,
+          h('div',{class:'wa-alt'},alici,acts),ipucu),
+        onizKutu)));
 }
 /* Taslak yönetimi: ekle, düzenle, sil; değişkenler tıklanarak eklenir, bu araçla canlı önizleme */
 function taslakYonet(r){
