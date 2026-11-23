@@ -493,7 +493,7 @@ input.f[type=date]{padding-right:8px}
 .avatar{width:32px;height:32px;border-radius:50%;background:var(--top-2);color:var(--top-ink);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
 
 /* ===== Duyarlı ===== */
-@media (min-width:761px) and (min-height:700px){.modal{overflow:visible;max-height:none}}
+@media (min-width:761px) and (min-height:700px){.modal-wrap{overflow-y:auto;overscroll-behavior:contain}.modal{overflow:visible;max-height:none;margin:auto}}
 @media (max-width:1180px){
   .top{grid-template-columns:auto 1fr auto}
   .savestate{display:none}
