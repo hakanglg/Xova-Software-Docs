@@ -548,6 +548,8 @@ input.f[type=date]{padding-right:8px}
 @keyframes waDon{to{transform:rotate(360deg)}}
 .wa-metin{white-space:pre-wrap;overflow-wrap:anywhere;padding:0 2px}
 .wa-saat{position:absolute;right:8px;bottom:4px;font-size:11px;color:#667781}
+.wa-adim ol{margin:0 0 4px;padding-left:22px;display:grid;gap:10px;line-height:1.5}
+.wa-adim kbd{display:inline-block;padding:1px 7px;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:6px;background:var(--sunk);font:600 14px/1.4 var(--font)}
 .wa-buyuk{display:block;width:100%;height:auto;border-radius:8px}
 .ts-list{margin-bottom:14px}
 .ts-row{display:flex;align-items:center;gap:4px;padding:6px 8px;border-top:1px solid var(--line)}
@@ -1247,8 +1249,12 @@ function mesajPanel(r){
     return navigator.clipboard.write([new ClipboardItem({'image/png':png})]).then(function(){if(!sessiz)toast('Görsel kopyalandı. WhatsApp sohbetinde Ctrl+V ile yapıştırın.');});
   }
   function waAc(){var u=waUrl(r,ta.value);if(!u){toast('Telefon numarası geçersiz. Bilgiler sekmesinde 05XX XXX XX XX biçiminde yazın.','err');return false;}window.open(u,'_blank','noopener');return true;}
+  /* bilgisayardaki WhatsApp (uygulama ve Web) görseli bağlantıyla ya da paylaşım menüsünden almıyor:
+     görsel panoya kopyalanır, kullanıcı sohbete yapıştırır; bunu adım adım gösteren pencere açılır */
+  var dokunmatik=!!(window.matchMedia&&matchMedia('(pointer:coarse)').matches);
   function gonder(){
     if(st.gorsel&&!dosya){toast('Görsel henüz hazırlanıyor, birazdan tekrar deneyin.','err');return;}
+    if(st.gorsel&&!dokunmatik){webGonder();return;}
     if(st.gorsel&&paylasir&&navigator.canShare({files:[dosya]})){
       /* bazı uygulamalar görselin yanındaki metni almaz: metin ayrıca panoya kopyalanır */
       if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(ta.value).catch(function(){});
@@ -1261,25 +1267,39 @@ function mesajPanel(r){
   }
   /* bilgisayar: görsel panoya, metin WhatsApp'ta; sohbete Ctrl+V */
   function webGonder(){
-    kopyala(true).then(function(){if(waAc())toast('Görsel kopyalandı, mesaj WhatsApp\'ta açıldı: sohbette Ctrl+V ile görseli yapıştırıp gönderin.');})
-      .catch(function(){if(waAc()){indir(true);toast('Görsel indirildi; WhatsApp\'ta sohbete sürükleyip ekleyin.');}});
+    if(!no){toast('Telefon numarası geçersiz. Bilgiler sekmesinde 05XX XXX XX XX biçiminde yazın.','err');return;}
+    kopyala(true).then(function(){adimlar(true);},function(){indir(true);adimlar(false);});
+  }
+  function adimlar(kop){
+    var kis=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent||'')?'⌘ + V':'Ctrl + V';
+    var ac=h('button',{type:'button',class:'btn btn-wa btn-lg',onclick:function(){if(waAc())m.close();}},ic('chat'),'WhatsApp\'ı aç');
+    var govde=h('div',{class:'wa-adim'},
+      h('ol',null,
+        h('li',null,h('b',null,kop?'Görsel panoya kopyalandı.':'Görsel bilgisayarınıza indirildi.'),' Aşağıdaki düğme WhatsApp\'ta '+titleTr(r.ad||'müşteri')+' sohbetini mesaj yazılı hâlde açar.'),
+        h('li',null,'Sohbette mesaj kutusuna tıklayın, ',kop?[h('kbd',null,kis),' ile görseli yapıştırın.']:'indirilen görseli (İndirilenler klasörü) sohbete sürükleyin.'),
+        h('li',null,'Görsel ve mesaj birlikte gider: ',h('b',null,'Gönder'),'’e basın.')),
+      h('div',{class:'acts'},
+        kop?h('button',{type:'button',class:'btn btn-quiet',onclick:function(){kopyala().catch(function(e){toast(e.message,'err');});}},ic('image'),'Tekrar kopyala'):null,
+        ac));
+    var m=modal('Görseli WhatsApp\'a ekleyin','Bilgisayardaki WhatsApp görseli bağlantıyla almıyor; bu yüzden görseli sohbete siz yapıştırırsınız.',govde);
+    setTimeout(function(){ac.focus();},0);
   }
   var nf=r.fotolar.filter(function(f){return f.et!=='surec';}).length;
   var acts=h('div',{class:'wa-acts'}),ipucu=h('p',{class:'hint wa-ipucu'});
   function butonlar(){
     acts.textContent='';
     var ana=h('button',{type:'button',class:'btn btn-wa btn-lg wa-gonder',onclick:gonder},ic('chat'),'WhatsApp\'ta gönder');
-    if(!no&&!(st.gorsel&&paylasir))ana.disabled=true;
+    if(!no&&!(st.gorsel&&paylasir&&dokunmatik))ana.disabled=true;
     var dahaB=h('button',{type:'button',class:'btn btn-icon btn-lg wa-daha','aria-label':'Diğer seçenekler','aria-haspopup':'menu','aria-expanded':'false',title:'Diğer seçenekler',onclick:function(){
       var m=[];
-      if(st.gorsel&&paylasir&&no)m.push({ad:'WhatsApp Web ile gönder',ic:'chat',fn:webGonder});
+      if(st.gorsel&&dokunmatik&&no)m.push({ad:'Kopyala-yapıştır ile gönder',ic:'chat',fn:webGonder});
       if(st.gorsel&&window.ClipboardItem)m.push({ad:'Görseli kopyala',ic:'image',fn:function(){kopyala().catch(function(e){toast(e.message,'err');});}});
       if(st.gorsel)m.push({ad:'Görseli indir',ic:'download',fn:indir});
       m.push({ad:'Metni kopyala',ic:'pen',fn:function(){(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(ta.value):Promise.reject()).then(function(){toast('Mesaj kopyalandı');},function(){toast('Kopyalanamadı; metni seçip kopyalayın.','err');});}});
       if(nf)m.push({ad:'Önce/sonra fotoğraflarını paylaş',ic:'image',fn:function(){fotoPaylas(r,ta.value);}});
       menuAc(dahaB,m);}},ic('more'));
     acts.appendChild(ana);acts.appendChild(dahaB);
-    ipucu.textContent=!no&&!(st.gorsel&&paylasir)?'':!st.gorsel?'Mesaj WhatsApp\'ta hazır açılır; göndermeyi siz onaylarsınız.':paylasir?'Paylaşım menüsünden WhatsApp\'ı ve kişiyi seçin; görsel ve mesaj birlikte gider.':'Mesaj WhatsApp\'ta açılır, görsel kopyalanır: sohbette Ctrl+V ile yapıştırıp gönderin.';
+    ipucu.textContent=!no&&!(st.gorsel&&paylasir&&dokunmatik)?'':!st.gorsel?'Mesaj WhatsApp\'ta hazır açılır; göndermeyi siz onaylarsınız.':paylasir&&dokunmatik?'Paylaşım menüsünden WhatsApp\'ı ve kişiyi seçin; görsel ve mesaj birlikte gider.':'Görsel kopyalanır, mesaj WhatsApp\'ta hazır açılır; görseli sohbete yapıştırıp gönderirsiniz.';
   }
   butonlar();oniz();
   var alici=no?h('div',{class:'wa-alici'},h('span',{class:'hint'},'Alıcı'),h('b',null,adi),h('span',{class:'wa-no'},'+'+no))
