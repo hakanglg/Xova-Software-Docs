@@ -73,6 +73,7 @@ button{cursor:pointer}
 
 /* ===== Üst çubuk ===== */
 .top{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:auto minmax(280px,560px) 1fr auto;align-items:center;gap:20px;padding:12px 24px;background:var(--top);color:var(--top-ink)}
+@media (min-width:1100px){.top{grid-template-columns:max-content minmax(240px,560px) 1fr auto}}
 .brand{display:flex;align-items:center;gap:12px;min-width:0}
 .mark{width:40px;height:40px;border-radius:8px;background:var(--acc);color:var(--on-acc);display:grid;place-items:center;font-weight:700;font-size:15px;letter-spacing:.02em;flex:none}
 .brand-txt{min-width:0}
@@ -84,7 +85,7 @@ button{cursor:pointer}
 .brand-sub{font-size:var(--t-sm);color:var(--top-ink-2)}
 .search{position:relative}
 .search .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#6C7681;pointer-events:none}
-.search input{width:100%;height:48px;border:0;border-radius:10px;padding:0 84px 0 44px;background:#fff;color:var(--ink);font-size:var(--t-md)}
+.search input{width:100%;height:48px;border:0;border-radius:10px;padding:0 14px 0 44px;background:#fff;color:var(--ink);font-size:var(--t-md)}
 .search input::placeholder{color:#69727D}
 .search input:focus{outline:3px solid var(--acc);outline-offset:0}
 .search kbd{position:absolute;right:10px;top:50%;transform:translateY(-50%);font:600 13px var(--font);color:var(--ink-3);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:2px 6px;background:var(--sunk)}
@@ -145,16 +146,17 @@ button{cursor:pointer}
 .card-job.none{color:var(--ink-3)}
 .thumb{width:64px;height:48px;border-radius:6px;object-fit:cover;background:var(--sunk);align-self:start}
 .tag{display:inline-flex;align-items:center;height:22px;padding:0 7px;border-radius:5px;background:var(--sunk);border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink-2)}
-.card-f{display:flex;align-items:center;gap:4px;padding:6px 8px 8px 14px;border-top:1px solid #EDF0F2}
-.age{font-size:var(--t-sm);color:var(--ink-3);margin-right:auto;display:flex;align-items:center;gap:6px;white-space:nowrap;min-width:0}
+.card-f{display:flex;align-items:center;gap:8px;padding:8px 10px 10px;border-top:1px solid #EDF0F2}
+.age{grid-column:1/-1;font-size:15px;color:var(--ink-3);display:flex;align-items:center;gap:6px;white-space:nowrap;min-width:0}
 .age.warn{color:var(--warn);font-weight:600}
 .age .ico{width:16px;height:16px}
-.card-f .btn{min-height:44px;padding:0 8px 0 12px;font-size:15px;gap:2px}
-.card-f .btn-icon{width:44px;padding:0;color:var(--wa);border-color:transparent;background:transparent}
-.card-f .btn-icon:hover{background:#E6F3EB}
-.btn-next{border-color:var(--line);background:var(--sunk)}
+.card-f .btn{min-height:44px;padding:0 12px;font-size:16px;gap:6px}
+.btn-msg{color:var(--wa);border-color:#BFDCC9;background:#fff}
+.btn-msg:hover{background:#E6F3EB;border-color:var(--wa)}
+.btn-msg .ico{width:20px;height:20px}
+.card-f .btn-next{margin-left:auto;background:var(--ink);border-color:var(--ink);color:#fff;font-weight:700;padding:0 10px 0 16px}
 .btn-next .ico{width:18px;height:18px}
-.btn-next:hover{background:var(--dbg);border-color:var(--dc)}
+.btn-next:hover{background:#000;border-color:#000}
 
 .mob-cols{display:none}
 
@@ -576,6 +578,8 @@ input.f[type=date]{padding-right:8px}
   .savestate{display:none}
   .pano{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+/* tablet: arama kutusu ikinci satırda tam genişlik, üst düğmeler yazılı kalır */
+@media (min-width:761px) and (max-width:1099px){.top{grid-template-columns:minmax(0,1fr) auto;row-gap:10px}.search{grid-column:1/-1;grid-row:2}}
 @media (max-width:860px){
   .picker{grid-template-columns:1fr;grid-template-areas:'islem' 'car' 'parca'}
   .lines-h{display:none}
@@ -638,8 +642,9 @@ input.f[type=date]{padding-right:8px}
   .bnav .bn-yeni .ico{width:28px;height:28px;padding:12px;border-radius:18px;background:var(--acc);color:var(--on-acc);box-shadow:0 6px 16px rgba(242,185,15,.45);margin-top:-22px}
   .kb-acik .bnav{display:none}
   .kb-acik body,body.lock{padding-bottom:0}
-  .mob-cols{display:flex;overflow-x:auto;scrollbar-width:none;gap:6px;padding:10px 12px}
-  .mob-cols button{flex:none;min-height:40px;padding:0 14px}
+  .mob-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:10px 12px}
+  .mob-cols button{min-height:48px;padding:0 4px;gap:5px;font-size:15px;border-radius:12px}
+  .mob-cols .dot{display:none}
   /* Liste: mobil satır */
   .lf{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -12px 4px;padding:10px 12px 4px;gap:8px}
   .lf-seg{flex:none;overflow:visible}
@@ -712,13 +717,12 @@ input.f[type=date]{padding-right:8px}
     <div class="search" id="searchBox">
       <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
       <input id="ara" type="search" autocomplete="off" spellcheck="false" placeholder="Plaka, ad veya telefonun son 4 hanesi" aria-label="Araç ara: plaka, ad soyad veya telefon" role="combobox" aria-expanded="false" aria-controls="sonuc" aria-autocomplete="list">
-      <kbd aria-hidden="true">Ctrl K</kbd>
       <div id="sonuc" class="results" role="listbox" aria-label="Arama sonuçları" hidden></div>
     </div>
     <span id="kayitDurum" class="savestate" aria-live="polite"></span>
     <div class="top-acts">
       <span id="kullanici" class="kullanici"></span>
-      <button id="ayar" class="btn btn-dark btn-icon" type="button" aria-label="Ayarlar" title="Ayarlar" aria-haspopup="menu" aria-expanded="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"></svg></button>
+      <button id="ayar" class="btn btn-dark" type="button" aria-haspopup="menu" aria-expanded="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"></svg><span>Ayarlar</span></button>
       <button id="csv" class="btn btn-dark" type="button" title="Excel çıktısı"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 3v18"/></svg><span>Excel çıktısı</span></button>
       <button id="yeni" class="btn btn-primary" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Yeni araç</button>
     </div>
@@ -730,7 +734,7 @@ input.f[type=date]{padding-right:8px}
   <nav id="bnav" class="bnav" aria-label="Ana menü">
     <button type="button" data-v="pano"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"></svg>Pano</button>
     <button type="button" data-v="liste"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"></svg>Liste</button>
-    <button type="button" class="bn-yeni" id="bnYeni" aria-label="Yeni araç"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"></svg></button>
+    <button type="button" class="bn-yeni" id="bnYeni"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"></svg>Yeni araç</button>
     <button type="button" id="bnCsv"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"></svg>Excel</button>
     <button type="button" id="bnAyar" aria-label="Ayarlar" aria-haspopup="menu" aria-expanded="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"></svg>Ayarlar</button>
   </nav>
@@ -751,8 +755,8 @@ input.f[type=date]{padding-right:8px}
 'use strict';
 var KEY='rsr-takip-v2',TR='tr-TR',SVGNS='http://www.w3.org/2000/svg';
 var DURUM=['Bekliyor','İşlemde','Hazır','Teslim edildi'];
-var SONRAKI=['İşleme al','Hazır','Teslim et'];
-var SONRAKI_UZUN=['İşleme al','Hazır olarak işaretle','Teslim edildi olarak işaretle'];
+var SONRAKI=['İşe başla','İş bitti','Teslim et'];
+var SONRAKI_UZUN=['İşe başla','İş bitti, hazır olarak işaretle','Teslim edildi olarak işaretle'];
 var db={firma:'RESTORFX TEKİRDAĞ',kayitlar:[],ornek:false,v:3,ozel:{markalar:[],modeller:{}}};
 var view='pano',mobCol=1,durumF='acik',gunF='',gunB='',q='',cur=null,tab='isler',wa={},saveTimer=null,selIdx=-1,lastFocus=null;
 var $=function(id){return document.getElementById(id);};
@@ -2294,11 +2298,11 @@ function kart(r){
         h('span',{class:'card-model',style:'display:block'},aracAd(r)||'Araç yazılmamış'),
         h('span',{class:'card-cust',style:'display:block'},r.ad||'Müşteri adı yok')),
       once?h('img',{class:'thumb',src:once.src,alt:'',loading:'lazy'}):null,
-      h('span',{class:'card-job'+(oz?'':' none')},oz||'İş girilmemiş')),
+      h('span',{class:'card-job'+(oz?'':' none')},oz||'İş girilmemiş'),
+      h('span',{class:'age'+(uyar?' warn':'')},uyar?ic('alert'):ic('clock'),yas)),
     kayitMenu(r),
     h('div',{class:'card-f'},
-      h('span',{class:'age'+(uyar?' warn':'')},uyar?ic('alert'):ic('clock'),yas),
-      h('button',{type:'button',class:'btn btn-icon','aria-label':(r.plaka||'Araç')+' için WhatsApp mesajı yaz',title:'WhatsApp mesajı',onclick:function(){wa[r.id]={tpl:r.durum===2?0:r.durum===0?2:0};kayitAc(r.id,'mesaj');}},ic('chat')),
+      h('button',{type:'button',class:'btn btn-msg','aria-label':(r.plaka||'Araç')+' için WhatsApp mesajı yaz',onclick:function(){wa[r.id]=null;kayitAc(r.id,'mesaj');}},ic('chat'),'Mesaj'),
       r.durum<3?h('button',{type:'button',class:'btn btn-next','aria-label':(r.plaka||'Araç')+': '+SONRAKI_UZUN[r.durum],onclick:function(){setDurum(r,r.durum+1);}},SONRAKI[r.durum],ic('next')):null));
   return c;
 }
@@ -2308,7 +2312,7 @@ function panoCiz(){
   DURUM.forEach(function(n,i){
     var all=db.kayitlar.filter(function(r){return r.durum===i;});
     var list=i===3?sirali(all).slice(0,5):sirali(all).reverse();
-    mc.appendChild(h('button',{type:'button',class:'s'+i,'aria-pressed':mobCol===i?'true':'false',onclick:function(){mobCol=i;panoCiz();}},h('span',{class:'dot'}),n,h('small',null,String(all.length))));
+    mc.appendChild(h('button',{type:'button',class:'s'+i,'aria-pressed':mobCol===i?'true':'false','aria-label':n+', '+all.length+' araç',onclick:function(){mobCol=i;panoCiz();}},h('span',{class:'dot'}),i===3?'Teslim':n,h('small',null,String(all.length))));
     var body=h('div',{class:'col-b'});
     if(!list.length)body.appendChild(h('div',{class:'col-empty'},BOS[i]));
     list.forEach(function(r){body.appendChild(kart(r));});
