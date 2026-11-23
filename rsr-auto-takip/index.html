@@ -332,6 +332,12 @@ input.f[type=date]{padding-right:8px}
 .del{color:var(--ink-3);border-color:transparent;background:transparent}
 .del:hover{color:var(--danger);background:#FCEEEC;border-color:transparent}
 .lines-add{margin-top:10px}
+.l-not{grid-column:2/-1;display:grid;gap:6px;justify-items:start}
+.not-r{display:flex;align-items:center;gap:6px;width:100%}
+.not-r .f{flex:1;min-width:0;min-height:40px;background:#FFFBEA;border-color:#EADFB4;resize:none;overflow:hidden;line-height:1.35;padding-top:9px;padding-bottom:9px}
+.not-r{align-items:flex-start}.not-r .not-ic{padding-top:12px}
+.not-ic{display:grid;place-items:center;width:28px;color:var(--ink-3)}.not-ic .ico{width:16px;height:16px}
+.not-ekle{display:inline-flex;align-items:center;gap:4px;font-size:var(--t-sm);text-decoration:none;min-height:30px}.not-ekle .ico{width:16px;height:16px}
 .total{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:16px;padding:16px 20px;border-radius:var(--r);background:var(--top);color:var(--top-ink)}
 .total span{font-weight:600}
 .total small{color:var(--top-ink-2);font-size:var(--t-sm);font-weight:500;margin-left:6px}
@@ -514,6 +520,7 @@ input.f[type=date]{padding-right:8px}
   .line{grid-template-columns:1fr 1fr 48px;row-gap:8px;padding:12px 0}
   .line .c-tarih{grid-column:1}.line .c-islem{grid-column:2/4}
   .line .c-acik{grid-column:1/-1}.line .c-tutar{grid-column:1/3}.line .c-del{grid-column:3;align-self:end}
+  .l-not{grid-column:1/-1}
   .lbl-m{display:block;font-size:13px;color:var(--ink-3);font-weight:600;margin-bottom:4px}
   .photos{grid-template-columns:1fr}
   .thumbs{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -784,7 +791,8 @@ function plakaAlan(r,inp,degisti){
 function pill(i){return h('span',{class:'pill s'+i},DURUM[i]);}
 
 /* ---------- veri ---------- */
-function bosSatir(gun){return {tarih:gun,islem:'',turId:'',aciklama:'',tutar:''};}
+function bosSatir(gun){return {tarih:gun,islem:'',turId:'',aciklama:'',tutar:'',notlar:[]};}
+function satirNotlari(s){return (Array.isArray(s.notlar)?s.notlar:[]).map(function(x){return String(x||'').trim();}).filter(Boolean);}
 function bosKayit(gun){return {id:uid(),gun:gun,ad:'',tel:'',plaka:'',arac:'',marka:'',model:'',eksper:'',durum:0,satirlar:[bosSatir(gun)],fotolar:[]};}
 function bos(r){
   return !r.plaka.trim()&&!r.ad.trim()&&!r.tel.trim()&&!r.arac.trim()&&!r.eksper.trim()&&!r.fotolar.length&&
@@ -1680,7 +1688,8 @@ function satirBolum(r){
       h('div',{class:'c-del'},h('button',{type:'button',class:'btn btn-icon del','aria-label':n+'. kalemi sil',title:'Kalemi sil',onclick:function(){
         var eski=r.satirlar.slice();
         r.satirlar.splice(i,1);if(!r.satirlar.length)r.satirlar.push(bosSatir(todayIso()));save();panelYenile();
-        toast('Kalem silindi','',{label:'Geri al',fn:function(){r.satirlar=eski;save();panelYenile();}});}},ic('trash')))));
+        toast('Kalem silindi','',{label:'Geri al',fn:function(){r.satirlar=eski;save();panelYenile();}});}},ic('trash'))),
+      notBolum(r,s,i,n)));
   });
   box.appendChild(h('button',{type:'button',class:'btn lines-add',onclick:function(){satirEkle(r);}},ic('plus'),'Boş kalem ekle'));
   box.appendChild(h('div',{class:'total'},h('span',null,'Genel toplam',h('small',null,'bu aracın kalemleri')),h('b',{id:'toplam'},para(toplam(r))||'—')));
@@ -1710,6 +1719,25 @@ function parcaSecici(r,s,n){
     sonraki:function(){setTimeout(function(){var e=c.el.closest('.line');var f=e&&e.querySelector('.c-tutar input');if(f)f.focus();},0);}});
   c.inp.setAttribute('aria-label',n+'. kalem açıklaması');
   return c.el;
+}
+/* kalem notları: bir kaleme birden çok not; Excel'de kalemin altında satır satır çıkar */
+function notBolum(r,s,i,n){
+  if(!Array.isArray(s.notlar))s.notlar=[];
+  var box=h('div',{class:'l-not'});
+  s.notlar.forEach(function(t,j){
+    var inp=h('textarea',{class:'f not-f',rows:'1',placeholder:'Not yazın','aria-label':n+'. kalem, '+(j+1)+'. not',spellcheck:'true'},t||'');
+    var boy=function(){inp.style.height='auto';inp.style.height=(inp.scrollHeight+2)+'px';};
+    inp.addEventListener('input',function(){s.notlar[j]=inp.value;saveSoon();boy();});
+    requestAnimationFrame(boy);
+    box.appendChild(h('div',{class:'not-r'},h('span',{class:'not-ic','aria-hidden':'true'},ic('pen')),inp,
+      h('button',{type:'button',class:'btn btn-icon btn-quiet','aria-label':n+'. kalemin '+(j+1)+'. notunu sil',title:'Notu sil',onclick:function(){
+        var eski=s.notlar.slice();s.notlar.splice(j,1);save();panelYenile();
+        if(eski[j]&&String(eski[j]).trim())toast('Not silindi','',{label:'Geri al',fn:function(){s.notlar=eski;save();panelYenile();}});}},ic('x'))));
+  });
+  box.appendChild(h('button',{type:'button',class:'linkbtn not-ekle',onclick:function(){
+    s.notlar.push('');save();panelYenile();
+    var l=$('lines').querySelectorAll('.line')[i],f=l&&l.querySelectorAll('.not-f');if(f&&f.length)f[f.length-1].focus();}},ic('plus'),'Not ekle'));
+  return box;
 }
 function toplamYaz(r){var t=$('toplam');if(t)t.textContent=para(toplam(r))||'—';}
 function satirEkle(r){
@@ -2106,13 +2134,13 @@ function donemMetin(a,b){return a===b?fmt(a):fmt(a)+'–'+fmt(b);}
 function tablo(a,b){
   var out=[];
   db.kayitlar.forEach(function(r){r.satirlar.forEach(function(s){
-    var t=s.tarih||r.gun;if(r.gun>=a&&r.gun<=b&&(s.islem.trim()||s.aciklama.trim()||String(s.tutar).trim()))out.push({t:t,r:r,s:s});});});
+    var t=s.tarih||r.gun;if(r.gun>=a&&r.gun<=b&&(s.islem.trim()||s.aciklama.trim()||String(s.tutar).trim()||satirNotlari(s).length))out.push({t:t,r:r,s:s});});});
   out.sort(function(x,y){return x.t<y.t?-1:x.t>y.t?1:(norm(x.r.plaka)<norm(y.r.plaka)?-1:norm(x.r.plaka)>norm(y.r.plaka)?1:0);});
   var sum=0;
   var data=out.map(function(o){
     var n=parseTutar(o.s.tutar);sum+=n;
-    aracNormalize(o.r);return [fmt(o.t),(o.r.ulke&&o.r.plaka?o.r.ulke+' ':'')+o.r.plaka,o.r.ad,o.r.tel,aracAd(o.r),o.r.marka,o.r.model,o.s.islem,o.s.aciklama,n?n:'',o.r.eksper,DURUM[o.r.durum]];});
-  return {head:['TARİH','PLAKA','AD SOYAD','TELEFON','ARAÇ','MARKA','MODEL','YAPILAN İŞLEM','AÇIKLAMA','TUTAR','EKSPER/SİGORTA','DURUM'],data:data,sum:sum};
+    aracNormalize(o.r);return [fmt(o.t),(o.r.ulke&&o.r.plaka?o.r.ulke+' ':'')+o.r.plaka,o.r.ad,o.r.tel,aracAd(o.r),o.r.marka,o.r.model,o.s.islem,o.s.aciklama,n?n:'',o.r.eksper,DURUM[o.r.durum],satirNotlari(o.s).join(' · ')];});
+  return {head:['TARİH','PLAKA','AD SOYAD','TELEFON','ARAÇ','MARKA','MODEL','YAPILAN İŞLEM','AÇIKLAMA','TUTAR','EKSPER/SİGORTA','DURUM','NOTLAR'],data:data,sum:sum};
 }
 function csvHucre(v){
   v=String(v==null?'':v);
@@ -2156,7 +2184,7 @@ function gunGrup(a,b){
   var gunler={};
   db.kayitlar.forEach(function(r){
     var t=r.gun;if(!t||t<a||t>b)return;
-    var s=r.satirlar.filter(function(x){return x.islem.trim()||x.aciklama.trim()||String(x.tutar).trim();});
+    var s=r.satirlar.filter(function(x){return x.islem.trim()||x.aciklama.trim()||String(x.tutar).trim()||satirNotlari(x).length;});
     (gunler[t]||(gunler[t]={t:t,araclar:[]})).araclar.push({r:r,s:s});
   });
   return Object.keys(gunler).sort().map(function(k){var l=gunler[k].araclar;
@@ -2190,7 +2218,7 @@ function xlsxUret(a,b){
 function xlsxYaz(a,b,gunler,km){
   var L='ABCDEFGH',W=[13,24,42,17,2,34,2,34];
   /* stiller */
-  var S={yok:0,kalin:1,bas:2,tutar:3,topTutar:4,baslik:5,plaka:6,ad:7,tel:8,bilgi:9,metin:10,tarih:11,topEt:12,alt:13,fEt:14,bilgiK:15,sayi:16,topSayi:17};
+  var S={yok:0,kalin:1,bas:2,tutar:3,topTutar:4,baslik:5,plaka:6,ad:7,tel:8,bilgi:9,metin:10,tarih:11,topEt:12,alt:13,fEt:14,bilgiK:15,sayi:16,topSayi:17,not:18,notBos:19};
   function cs(ref,v,st){return '<c r="'+ref+'" t="inlineStr" s="'+(st||0)+'"><is><t xml:space="preserve">'+xe(v)+'</t></is></c>';}
   function cn(ref,v,st){return '<c r="'+ref+'" s="'+st+'"><v>'+v+'</v></c>';}
   function satir(n,hc,ht){var h='';for(var i=0;i<L.length;i++){var x=hc[i],ref=L[i]+n;
@@ -2220,7 +2248,10 @@ function xlsxYaz(a,b,gunler,km){
       rows+=satir(n,[{v:'TARİH',s:S.bas},{v:'YAPILAN İŞLEM',s:S.bas},{v:'AÇIKLAMA / PARÇA',s:S.bas},{v:'TUTAR',s:S.bas}],20);n++;
       if(!o.s.length)rows+=satir(n++,[{v:fmt(r.gun),s:S.tarih},{v:'İş girilmemiş',s:S.metin},{v:'',s:S.metin},{v:'',s:S.tutar}],20);
       o.s.forEach(function(s){var t=parseTutar(s.tutar);aracTop+=t;
-        rows+=satir(n++,[{v:fmt(s.tarih||r.gun),s:S.tarih},{v:cumle(s.islem)||'—',s:S.metin},{v:cumle(s.aciklama)||'',s:S.metin},{v:t||'',s:S.tutar}],20);});
+        rows+=satir(n++,[{v:fmt(s.tarih||r.gun),s:S.tarih},{v:cumle(s.islem)||'—',s:S.metin},{v:cumle(s.aciklama)||'',s:S.metin},{v:t||'',s:S.tutar}],20);
+        /* kalem notları: kalemin hemen altında, İşlem–Tutar sütunları birleşik */
+        satirNotlari(s).forEach(function(nt){var sat=Math.max(1,Math.ceil(nt.length/88))+(nt.match(/\n/g)||[]).length;
+          rows+=satir(n,[{s:S.notBos},{v:'Not: '+nt,s:S.not},{s:S.not},{s:S.not}],Math.max(18,sat*14+4));mrg.push('B'+n+':D'+n);n++;});});
       rows+=satir(n,[{v:'ARAÇ TOPLAMI',s:S.topEt},{s:S.topEt},{s:S.topEt},{v:aracTop||'',s:S.topTutar}],22);mrg.push('A'+n+':C'+n);n++;
       /* fotoğraf yüksekliği kadar yer bırak */
       var en=0;fotos.forEach(function(p){var w=230,hh=Math.round(w*p.k.h/p.k.w);if(hh>176){hh=176;w=Math.round(hh*p.k.w/p.k.h);}p.cx=w;p.cy=hh;en=Math.max(en,hh);});
@@ -2260,15 +2291,15 @@ function xlsxYaz(a,b,gunler,km){
       (p.dr?'<drawing r:id="rIdDr"/>':'')+'</worksheet>';}
   /* stil tablosu */
   var F=function(b,sz,c){return '<font>'+(b?'<b/>':'')+'<sz val="'+sz+'"/>'+(c?'<color rgb="'+c+'"/>':'')+'<name val="Calibri"/></font>';};
-  var fonts=[F(0,11),F(1,11),F(1,16),F(0,10,'FF5C6570'),F(1,15,'FFFFFFFF'),F(1,12,'FFFFFFFF'),F(0,11,'FFFFFFFF'),F(1,9,'FF5C6570')];
+  var fonts=[F(0,11),F(1,11),F(1,16),F(0,10,'FF5C6570'),F(1,15,'FFFFFFFF'),F(1,12,'FFFFFFFF'),F(0,11,'FFFFFFFF'),F(1,9,'FF5C6570'),'<font><i/><sz val="10"/><color rgb="FF4B545E"/><name val="Calibri"/></font>'];
   var FL=function(c){return '<fill><patternFill patternType="solid"><fgColor rgb="'+c+'"/><bgColor indexed="64"/></patternFill></fill>';};
-  var fills=['<fill><patternFill patternType="none"/></fill>','<fill><patternFill patternType="gray125"/></fill>',FL('FFDDE1E6'),FL('FF22272D'),FL('FFF1F3F5'),FL('FFFFF2C7')];
+  var fills=['<fill><patternFill patternType="none"/></fill>','<fill><patternFill patternType="gray125"/></fill>',FL('FFDDE1E6'),FL('FF22272D'),FL('FFF1F3F5'),FL('FFFFF2C7'),FL('FFFFFBEA')];
   var IN='<left style="thin"><color rgb="FFC3C9D0"/></left><right style="thin"><color rgb="FFC3C9D0"/></right><top style="thin"><color rgb="FFC3C9D0"/></top><bottom style="thin"><color rgb="FFC3C9D0"/></bottom><diagonal/>';
   var borders=['<border><left/><right/><top/><bottom/><diagonal/></border>','<border>'+IN+'</border>'];
   var X=function(nf,f,fl,bd,al){return '<xf numFmtId="'+nf+'" fontId="'+f+'" fillId="'+fl+'" borderId="'+bd+'" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1"'+(al?' applyAlignment="1"><alignment '+al+'/></xf>':'/>');};
   var VC='vertical="center"';
   var xfs=[X(0,0,0,0),X(0,1,0,0),X(0,1,2,1,VC),X(4,0,0,1,VC),X(4,1,5,1,VC),X(0,2,0,0,VC),X(0,4,3,0,VC+' indent="1"'),X(0,5,3,0,VC),X(0,6,3,0,VC),X(0,0,4,0,VC),
-    X(0,0,0,1,VC+' wrapText="1"'),X(0,0,0,1,VC),X(0,1,5,1,VC+' horizontal="right"'),X(0,3,0,0,VC),X(0,7,0,0,'vertical="bottom"'),X(0,1,4,0,VC+' indent="1"'),X(3,0,0,1,VC),X(3,1,5,1,VC)];
+    X(0,0,0,1,VC+' wrapText="1"'),X(0,0,0,1,VC),X(0,1,5,1,VC+' horizontal="right"'),X(0,3,0,0,VC),X(0,7,0,0,'vertical="bottom"'),X(0,1,4,0,VC+' indent="1"'),X(3,0,0,1,VC),X(3,1,5,1,VC),X(0,8,6,1,VC+' wrapText="1" indent="1"'),X(0,0,6,1,VC)];
   var styles=H+'<styleSheet '+NS+'><fonts count="'+fonts.length+'">'+fonts.join('')+'</fonts><fills count="'+fills.length+'">'+fills.join('')+'</fills><borders count="'+borders.length+'">'+borders.join('')+'</borders>'+
     '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="'+xfs.length+'">'+xfs.join('')+'</cellXfs>'+
     '<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
